@@ -1,0 +1,11 @@
+%----------------------------------------------------------------------------
+\chapter{Összefoglalás}
+%----------------------------------------------------------------------------
+
+A célként kitűzött scenario alapú monitor generátor kibővítése részlegesen sikerült.
+
+A szöveges scenario leíró nyelv támogatja TPSC diagramok specifikálását. Az automata generátort támogatja a TPSC tulajdonságokhoz tartozó minta automaták generálását és képes az üzenet paramétereket is értelmezni. A generátor támogatja az alt, loop és par operátorokat tartalmazó TPSC-khez tartozó időzített automaták generálását.
+
+A generátor a scenario-hoz tartozó automata alapján képes egy monitor forráskódjának generálására. Legenerálja a megfelelő interfészeket amik a monitor és rendszer közti kommunikációhoz szükségesek. Ha az üzenetek megfigyeléséhez szükséges segédfüggvényeket a kommunikációs infrastruktúrához megvalósítják, akkor a monitor képes a rendszer viselkedésének ellenőrzésére.
+
+A monitor forráskód generátor a par, loop és alt operátorok támogatásával kibővíthető. Továbbá tovább lehetne fejleszteni az időzítések kezelésével.

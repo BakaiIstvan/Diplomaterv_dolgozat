@@ -20,7 +20,11 @@ Az update() függvényt a rendszer hívja, hogy továbbítsa az üzenetet a moni
 
 Az üzenetek megfigyeléséhez szükséges segédfüggvényeket a kommunikációs infrastruktúrához kézzel kell megírni. Ezek a monitort az update() függvényen keresztül hívják.
 
-% TODO: kép beíllesztése
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=150mm, keepaspectratio]{figures/17abra.png}
+    \caption{Monitor interfész Java implementációja.}
+\end{figure}
 
 Az időzitő komponenshez tartozik egy időzitő interfész amin keresztül elérhető a komponens. Ezen az interfészen keresztül lehet az óraváltozokat lekérdezni vagy nullázni. Két függvénye van:
 \begin{itemize}
@@ -43,7 +47,12 @@ A monitor interfész és a monitor java osztálya is ebbe a részbe tartozik.
 
 A dinamikus részben található a Specification Java osztály, ami a scenario alapján generált automata forráskódját tartalmazza. Ezt a 20. ábra mutatja be. A dinamikus rész pirosan van bekeretezve és a statikus rész pedig feketén.
 
-% TODO: kép beíllesztése
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=150mm, keepaspectratio]{figures/18abra.png}
+    \caption{A monitor forráskódjának struktúrája.}
+\end{figure}
+
 A szükséges forráskódok generálásához az Xtend technológiát használtam. Az előző fejezetben ismertetett generátort kiegészítettem egy Monitor Java osztállyal, ami a monitor forráskódjának implementációját tartalmazza.
 
 %----------------------------------------------------------------------------
@@ -54,8 +63,35 @@ A 21. ábrán látható egy scenario követelmény, amit egy példa okos telefon
 
 A 23. ábrán látható az okos telefon és a monitor közti kapcsolat megvalósítása Java kódban és a 22. ábrán pedig egy monitor kimenet. A monitor a rendszertől kapott üzenetek alapján jelzi, hogy a követelmény alapján mi a rendszer állapota.
 
-% TODO: képek beíllesztése
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=150mm, keepaspectratio]{figures/19abra.png}
+    \caption{Okos telefon működésére megadott scenario követelmény.}
+\end{figure}
+
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=150mm, keepaspectratio]{figures/20abra.png}
+    \caption{Generált automata Never claim formátumba.}
+\end{figure}
+
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=150mm, keepaspectratio]{figures/21abra.png}
+    \caption{Az okos telefon és hozzá tartozó monitor összecsatolásának Java implementációja.}
+\end{figure}
+
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=150mm, keepaspectratio]{figures/22abra.png}
+    \caption{Az okos telefon Java osztálya.}
+\end{figure}
+
 A 24. ábrán látható az okos telefon Java osztálya. Megtekinthető a monitor és az eszköz közti kommunikáció megvalósítása is.
 
-% TODO: kép beíllesztése
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=150mm, keepaspectratio]{figures/23abra.png}
+    \caption{Monitor kimenete a rendszer működésének egyes fázisaiban.}
+\end{figure}
 A 25. ábrán látszik, hogy a rendszer a működése elején nem felelt meg a monitor követelményének. Amikor a működése végére ért akkor a monitor jelezte, hogy a követelmény teljesült a „Good state” üzenettel. A mintához tartozó Specification osztály a függelékben található. A generált automatát a konstruktorában állítja elő.

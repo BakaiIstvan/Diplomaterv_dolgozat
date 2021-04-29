@@ -25,7 +25,12 @@ Az időzített automaták generálásához egy adatstruktúrát definiáltam, am
 \end{itemize}
 
 A 14. ábrán látható az adatstruktúra UML osztály diagramja.
-% TODO: kép beíllesztése
+
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=150mm, keepaspectratio]{figures/13abra.png}
+    \caption{Az adatstruktúra UML osztály diagramja.}
+\end{figure}
 
 Az automatában lévő állapotok implementációja a State osztályban található. Két attribútuma van: id(String), a címkéje tárolására, és type(StateType), az állapot típusa.
 
@@ -39,5 +44,22 @@ A Specification osztály feladata, hogy összeállítsa a szöveges leírásban 
 \section{Minta példa}
 %----------------------------------------------------------------------------
 
-% TODO: képek beíllesztése
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=150mm, keepaspectratio]{figures/14abra.png}
+    \caption{Példa TPSC diagram.}
+\end{figure}
+
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=150mm, keepaspectratio]{figures/15abra.png}
+    \caption{TPSC scenario szöveges leírása.}
+\end{figure}
+
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=150mm, keepaspectratio]{figures/16abra.png}
+    \caption{Generált időzített automata never claim formátumban.}
+\end{figure}
+
 A fenti 14., 15. és 16. ábrákon látható, hogy a generátor milyen időzített automatát generál a megadott TPSC scenario-ból.
