@@ -8,7 +8,14 @@
 %----------------------------------------------------------------------------
 \chapter*{Kivonat}\addcontentsline{toc}{chapter}{Kivonat}
 
-Jelen dokumentum egy diplomaterv sablon, amely formai keretet ad a BME Villamosmérnöki és Informatikai Karán végző hallgatók által elkészítendő szakdolgozatnak és diplomatervnek. A sablon használata opcionális. Ez a sablon \LaTeX~alapú, a \emph{TeXLive} \TeX-implementációval és a PDF-\LaTeX~fordítóval működőképes.
+A monitorozással történő hibadetektálás létfontosságú egy rendszer működtetésében és karbantartásában. A monitorozás sok hibát fel tud deríteni, amiket a tesztek nem feltétlenül tudnak kideríteni.
+
+Az önálló laboratórium feladat célja az volt, hogy a „Monitor komponensek generálása kontextusfüggő viselkedés ellenőrzésére” című szakdolgozatomban definiált szöveges PSC (Property Sequence Chart) leíró nyelvet kibővítsem úgy, hogy időzítési feltételeket is meg lehessen adni a követelményben. Ilyen követelményeket egyszerűen specifikálhatunk TPSC (Timed Property Sequence Chart) diagramokkal. Az Xtext alapú nyelvet kiegészítettem a TPSC tulajdonságaival.
+
+A monitor generálás következő lépése, hogy a PSC diagramokból TA időzített automatákat generálunk (Timed Automaton). A TA fogja megadni, hogy a megfigyelt kommunikáció helyes viselkedést jelent-e. A szakdolgozatomban készített automata generátort kibővítettem és most már képes a minta alapú módszert használva TA automatákat generálni a TPSC diagramjainkból. A generátor előállítja az automatát.
+
+A szöveges scenario leírásból generált automata alapján legenerálható a monitor forráskódja. A monitor forráskód generátor előállítja a monitor Java implementációját, ami képes egy rendszer monitorozására adott követelmény alapján.
+
 
 
 \vfill
@@ -20,6 +27,7 @@ Jelen dokumentum egy diplomaterv sablon, amely formai keretet ad a BME Villamosm
 %----------------------------------------------------------------------------
 \chapter*{Abstract}\addcontentsline{toc}{chapter}{Abstract}
 
+% TODO: összefoglaló angol verziójának megírása
 This document is a \LaTeX-based skeleton for BSc/MSc~theses of students at the Electrical Engineering and Informatics Faculty, Budapest University of Technology and Economics. The usage of this skeleton is optional. It has been tested with the \emph{TeXLive} \TeX~implementation, and it requires the PDF-\LaTeX~compiler.
 
 
