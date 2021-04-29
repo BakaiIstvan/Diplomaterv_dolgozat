@@ -1,0 +1,14 @@
+%----------------------------------------------------------------------------
+\chapter{Szöveges leíró nyelv PSC kibővítése}
+%----------------------------------------------------------------------------
+
+A nyelvet az Xtext technológia segítségével definiáltam. A nyelv két új elemmel bővült:
+\begin{itemize}
+    \item időzített feltétel
+    \item óraváltozó nullázása
+\end{itemize}
+% TODO: kép beíllesztése
+
+A 11. ábrán látható, hogy egy TPSC diagramot hogyan tudunk leírni a nyelvünk segítségével. Definiálhatjuk a diagramban szereplő objektumokat, a megkötéseket amiket használni fogunk és végül, hogy milyen üzenetek vannak a követelményünkben.
+% TODO: kép beíllesztése
+A 12. ábrán látszik, hogy megjelenik a clockConstraint kulcsszó ami egy időzítési feltétel megadására szolgál. A kulcsszó után kapcsos zárójelek közt megadható a feltétel. A reset kulcsszó az óraváltozó nullázására szolgál.
