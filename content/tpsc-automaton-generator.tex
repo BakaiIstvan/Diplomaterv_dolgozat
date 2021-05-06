@@ -26,7 +26,7 @@ Az időzített automaták generálásához egy adatstruktúrát definiáltam, am
 
 A 14. ábrán látható az adatstruktúra UML osztály diagramja.
 
-\begin{figure}[!ht]
+\begin{figure}[h!]
     \centering
     \includegraphics[width=150mm, keepaspectratio]{figures/13abra.png}
     \caption{Az adatstruktúra UML osztály diagramja.}
@@ -44,22 +44,57 @@ A Specification osztály feladata, hogy összeállítsa a szöveges leírásban 
 \section{Minta példa}
 %----------------------------------------------------------------------------
 
-\begin{figure}[!ht]
+\begin{figure}[h!]
     \centering
     \includegraphics[width=150mm, keepaspectratio]{figures/14abra.png}
     \caption{Példa TPSC diagram.}
 \end{figure}
 
-\begin{figure}[!ht]
-    \centering
-    \includegraphics[width=150mm, keepaspectratio]{figures/15abra.png}
-    \caption{TPSC scenario szöveges leírása.}
-\end{figure}
+\begin{lstlisting}[language=java,frame=single, float=h!, caption={TPSC scenario szöveges leírása.},captionpos=b]
+specification Bank {
+	object User_Interface ui;
+	object ATM atm;
+	object BankDB db;
 
-\begin{figure}[!ht]
-    \centering
-    \includegraphics[width=150mm, keepaspectratio]{figures/16abra.png}
-    \caption{Generált időzített automata never claim formátumban.}
-\end{figure}
+	clock x;
+
+	constraint b {
+		message logout() ui -> atm;
+	}
+
+	scenario transaction {
+		message login() ui -> atm reset x;
+		message wReq() required ui -> atm pastConstraint {b, x < 1} clockConstraint {x < 5};
+		message uDB() atm -> db clockConstraint {x < 10};
+	}
+}
+\end{lstlisting}
+
+\begin{lstlisting}[language=java,frame=single, float=h!, caption={Generált időzített automata never claim formátumban.},captionpos=b]
+never{ /*transactionMonitor*/
+T0_init:
+ if
+ :: (!(ui.login().atm); ) -> goto T0_init
+ :: (ui.login().atm; x = 0) -> goto T0_q1
+ fi;
+T0_q1:
+ if
+ :: (!(ui.wReq().atm); x < 5 & !(ui.logout().atm); x < 1)) -> goto T0_q1
+ :: (ui.wReq().atm; x < 5) -> goto T0_q3
+ :: ((!(!(ui.logout().atm); x < 1); x < 5) || (ui.wReq().atm; )) || (1, x >= 5))) -> goto accept_q2
+ fi;
+accept_q2:
+ if
+ fi;
+T0_q3:
+ if
+ :: (!(atm.uDB().db); x < 10;) -> goto T0_q3
+ :: (atm.uDB().db; x < 10;) -> goto T0_q4
+ fi;
+T0_q4:
+ if
+ fi;
+}
+\end{lstlisting}
 
 A fenti 14., 15. és 16. ábrákon látható, hogy a generátor milyen időzített automatát generál a megadott TPSC scenario-ból.
