@@ -20,17 +20,27 @@ Az update() függvényt a rendszer hívja, hogy továbbítsa az üzenetet a moni
 
 Az üzenetek megfigyeléséhez szükséges segédfüggvényeket a kommunikációs infrastruktúrához kézzel kell megírni. Ezek a monitort az update() függvényen keresztül hívják.
 
-\begin{figure}[!ht]
-    \centering
-    \includegraphics[width=150mm, keepaspectratio]{figures/17abra.png}
-    \caption{Monitor interfész Java implementációja.}
-\end{figure}
+\begin{lstlisting}[language=java,frame=single, float=h!, caption={Monitor interfész Java implementációja.},captionpos=b]
+public interface IMonitor {
+	public boolean goodStateReached();
+	public void update(String sender, String receiver, String messageType, String[] parameters);
+	public boolean requirementSatisfied();
+	public void errorDetected(String sender, String receiver, String messageType, String[] parameters);
+}
+\end{lstlisting}
 
 Az időzitő komponenshez tartozik egy időzitő interfész amin keresztül elérhető a komponens. Ezen az interfészen keresztül lehet az óraváltozokat lekérdezni vagy nullázni. Két függvénye van:
 \begin{itemize}
-    \item getClockVariable(String name): óraváltozó lekérdezése név alapján
-    \item resetClockVariable(String name): óraváltozó nullázása név alapján
+    \item getClock(String clock): óraváltozó lekérdezése név alapján
+    \item resetClock(String clock): óraváltozó nullázása név alapján
 \end{itemize}
+
+\begin{lstlisting}[language=java,frame=single, float=h!, caption={Időzitő interfész Java implementációja.},captionpos=b]
+public interface IClock {
+	public long getClock(String clock);
+	public void resetClock(String clock);
+}
+\end{lstlisting}
 
 %----------------------------------------------------------------------------
 \section{A monitor forráskód megvalósítása}
@@ -43,7 +53,7 @@ A statikus részbe az időzitett automata java osztályai kerülnek:
     \item Automaton: egy automatát megvalósitó osztály
 \end{itemize}
 
-A monitor interfész és a monitor java osztálya is ebbe a részbe tartozik.
+A monitor interfész, a monitor java osztálya, az időzítő interfész és a hozzá tartozó java osztály is ebbe a részbe tartozik.
 
 A dinamikus részben található a Specification Java osztály, ami a scenario alapján generált automata forráskódját tartalmazza. Ezt a 20. ábra mutatja be. A dinamikus rész pirosan van bekeretezve és a statikus rész pedig feketén.
 
@@ -63,29 +73,139 @@ A 21. ábrán látható egy scenario követelmény, amit egy példa okos telefon
 
 A 23. ábrán látható az okos telefon és a monitor közti kapcsolat megvalósítása Java kódban és a 22. ábrán pedig egy monitor kimenet. A monitor a rendszertől kapott üzenetek alapján jelzi, hogy a követelmény alapján mi a rendszer állapota.
 
-\begin{figure}[!ht]
-    \centering
-    \includegraphics[width=150mm, keepaspectratio]{figures/19abra.png}
-    \caption{Okos telefon működésére megadott scenario követelmény.}
-\end{figure}
+\begin{lstlisting}[frame=single, float=ht!, caption={Okos telefon működésére megadott scenario követelmény.},captionpos=b]
+specification spec1 {
+	object User user;
+	object Device device;
+	object Database db;
 
-\begin{figure}[!ht]
-    \centering
-    \includegraphics[width=150mm, keepaspectratio]{figures/20abra.png}
-    \caption{Generált automata Never claim formátumba.}
-\end{figure}
+	constraint error {
+		message closeApp() user -> device;
+	}
 
-\begin{figure}[!ht]
-    \centering
-    \includegraphics[width=150mm, keepaspectratio]{figures/21abra.png}
-    \caption{Az okos telefon és hozzá tartozó monitor összecsatolásának Java implementációja.}
-\end{figure}
+	scenario playlist_generation{
+		message openApp() user -> device;
+		message accessWebcam() device -> device;
+		message getPhoto() required device -> user;
+		message cameraOffline() fail user -> device;
+		message retrieveMood() required strict device -> db;
+		message retrieveMusic() required device -> db;
+		message generatePlaylist() strict db -> device;
+	}
+}
+\end{lstlisting}
 
-\begin{figure}[!ht]
-    \centering
-    \includegraphics[width=150mm, keepaspectratio]{figures/22abra.png}
-    \caption{Az okos telefon Java osztálya.}
-\end{figure}
+\begin{lstlisting}[frame=single, float=ht!, caption={Generált automata Never claim formátumba.},captionpos=b]
+never{ /*playlist_generationMonitor*/
+T0_init:
+ if
+ :: (!(user.openApp().device)) -> goto T0_init
+ :: (user.openApp().device) -> goto T0_q1
+ fi;
+T0_q1:
+ if
+ :: (!(device.accessWebcam().device)) -> goto T0_q1
+ :: (device.accessWebcam().device) -> goto T0_q2
+ fi;
+T0_q2:
+ if
+ :: (!(device.getPhoto().user)) -> goto T0_q2
+ :: (!(device.getPhoto().user)) -> goto accept_q3
+ :: (device.getPhoto().user) -> goto T0_q4
+ fi;
+accept_q3:
+ if
+ fi;
+T0_q4:
+ if
+ :: (!(user.cameraOffline().device)) -> goto T0_q6
+ :: (!(user.cameraOffline().device)) -> goto T0_q4
+ :: (user.cameraOffline().device) -> goto accept_q5
+ fi;
+accept_q5:
+ if
+ fi;
+T0_q6:
+ if
+ :: (device.retrieveMood().db) -> goto T0_q8
+ :: (!(device.retrieveMood().db)) -> goto accept_q7
+ fi;
+accept_q7:
+ if
+ fi;
+T0_q8:
+ if
+ :: (!(device.retrieveMusic().db)) -> goto T0_q8
+ :: (!(device.retrieveMusic().db)) -> goto accept_q9
+ :: (device.retrieveMusic().db) -> goto T0_q10
+ fi;
+accept_q9:
+ if
+ fi;
+T0_q10:
+ if
+ :: (db.generatePlaylist().device) -> goto T0_q11
+ fi;
+T0_q11:
+ if
+ fi;
+}
+\end{lstlisting}
+
+\begin{lstlisting}[language=java, frame=single, float=ht!, caption={Az okos telefon és hozzá tartozó monitor összecsatolásának Java implementációja.},captionpos=b]
+public class Main {
+	public static void monitorStatus(String status) {
+		System.out.println(status);
+	}
+
+	public static void main(String[] args) {
+		Specification specification = new Specification();
+		specification.listAutomatas();
+		IMonitor monitor = new Monitor(specification.getAutomata().get(0));
+
+		User user = new User();
+		Device device = new Device();
+		Database db = new Database();
+		user.device = device;
+		device.user = user;
+		device.db = db;
+		db.device = device;
+		user.monitor = monitor;
+		device.monitor = monitor;
+		db.monitor = monitor;
+
+		user.init();
+	}
+}
+\end{lstlisting}
+
+\begin{lstlisting}[language=java, frame=single, float=ht!, caption={Az okos telefon Java osztálya.},captionpos=b]
+public class Device {
+	public IMonitor monitor;
+	public User user;
+	public Database db;
+
+	void openApp() {
+		monitor.update("user", "device", "openApp", new String[] {});
+		accessWebcam();
+	}
+
+	void accessWebcam() {
+		monitor.update("device", "device", "accessWebcam", new String[] {});
+		user.getPhoto();
+		db.retrieveMood();
+		db.retrieveMusic();
+	}
+
+	void cameraOffline() {
+		monitor.update("user", "device", "cameOffline", new String[] {});
+	}
+
+	void generatePlaylist() {
+		monitor.update("db", "device", "generatePlaylist", new String[] {});
+	}
+}
+\end{lstlisting}
 
 A 24. ábrán látható az okos telefon Java osztálya. Megtekinthető a monitor és az eszköz közti kommunikáció megvalósítása is.
 
@@ -95,3 +215,15 @@ A 24. ábrán látható az okos telefon Java osztálya. Megtekinthető a monitor
     \caption{Monitor kimenete a rendszer működésének egyes fázisaiban.}
 \end{figure}
 A 25. ábrán látszik, hogy a rendszer a működése elején nem felelt meg a monitor követelményének. Amikor a működése végére ért akkor a monitor jelezte, hogy a követelmény teljesült a „Good state” üzenettel. A mintához tartozó Specification osztály a függelékben található. A generált automatát a konstruktorában állítja elő.
+
+%----------------------------------------------------------------------------
+\section{Összetett szerkezetek}
+%----------------------------------------------------------------------------
+
+A monitor forráskód generátor támogatja az alt, par vagy loop operátorokat tartalmazó scenariokat is.
+
+%----------------------------------------------------------------------------
+\section{Időzítési feltételek}
+%----------------------------------------------------------------------------
+
+A monitor forráskód generátor támogatja az időzítési feltételeket tartalmazó scenariokat is.
