@@ -59,7 +59,7 @@ A dinamikus részben található a Specification Java osztály, ami a scenario a
 
 \begin{figure}[!ht]
     \centering
-    \includegraphics[width=150mm, keepaspectratio]{figures/18abra.png}
+    \includegraphics[width=150mm, height= 9cm, keepaspectratio]{figures/monitor_structure.png}
     \caption{A monitor forráskódjának struktúrája.}
 \end{figure}
 
@@ -209,11 +209,30 @@ public class Device {
 
 A 24. ábrán látható az okos telefon Java osztálya. Megtekinthető a monitor és az eszköz közti kommunikáció megvalósítása is.
 
-\begin{figure}[!ht]
-    \centering
-    \includegraphics[width=150mm, keepaspectratio]{figures/23abra.png}
-    \caption{Monitor kimenete a rendszer működésének egyes fázisaiban.}
-\end{figure}
+\begin{lstlisting}[language=java, frame=single, float=ht!, caption={Monitor kimenete a rendszer működésének egyes fázisaiban.},captionpos=b]
+transition: user.openApp().device
+q1
+System is in bad state.
+transition: device.accessWebcam().device
+q2
+System is in bad state.
+transition: device.getPhoto().user
+q4
+System is in bad state.
+transition: !(user.cameraOffline().device)
+q6
+System is in bad state.
+transition: device.retrieveMood().db
+q8
+System is in bad state.
+transition: device.retrieveMusic().db
+q10
+System is in bad state.
+transition: db.generatePlaylist().device
+q11
+System is in good state.
+\end{lstlisting}
+
 A 25. ábrán látszik, hogy a rendszer a működése elején nem felelt meg a monitor követelményének. Amikor a működése végére ért akkor a monitor jelezte, hogy a követelmény teljesült a „Good state” üzenettel. A mintához tartozó Specification osztály a függelékben található. A generált automatát a konstruktorában állítja elő.
 
 %----------------------------------------------------------------------------
