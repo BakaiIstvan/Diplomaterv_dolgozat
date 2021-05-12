@@ -10,7 +10,7 @@
 %\numberwithin{tabular}{section}
 
 %----------------------------------------------------------------------------
-\section{A minta példához tartozó specification osztály}
+\section{A 8.3. fejezet minta példájához tartozó Specification osztály}
 %----------------------------------------------------------------------------
 \begin{lstlisting}[language=java, caption={Specification osztály.},captionpos=b]
 import java.io.FileNotFoundException;
@@ -369,5 +369,35 @@ public class Specification{
 		Specification specification = new Specification();
 		specification.listAutomatas();
 		boolean acceptState = false;
+}
+\end{lstlisting}
+
+%----------------------------------------------------------------------------
+\clearpage\section{A monitor forráskód generátor operátorok támogatása}
+%----------------------------------------------------------------------------
+
+\begin{lstlisting}[language=java, frame=single, float=ht!, caption={7.1. scenariohoz tartozó Main osztály.},captionpos=b]
+public class Main {
+	public static void monitorStatus(String status) {
+		System.out.println(status);
+	}
+
+	public static void main(String[] args) {
+		Specification specification = new Specification();
+		specification.listAutomatas();
+		IMonitor monitor = new Monitor(specification.getAutomata().get(0));
+
+		UserInterface ui = new UserInterface();
+		ATM atm = new ATM();
+		BankDB db = new BankDB();
+		ui.atm = atm;
+		atm.ui = ui;
+		atm.db = db;
+		ui.monitor = monitor;
+		atm.monitor = monitor;
+		db.monitor = monitor;
+
+		ui.start();
+	}
 }
 \end{lstlisting}

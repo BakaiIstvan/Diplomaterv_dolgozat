@@ -8,12 +8,98 @@
 
 A diplomatervezés során elkészített automata generátort kibővítettem úgy, hogy támogassa a TPSC elemekhez tartozó automata minták generálását. Bemenetként egy TPSC scenario szöveges leírását kapja meg amiből a minta alapú módszerrel generál egy TA automatát.
 
-A 13. ábrán látható, hogy a monitor generátor támogatja az alt, par és loop operátorokat tartalmazó TPSC-khez tartozó TA-k generálását is. Továbbá a generátor képes az üzenet paraméterek kezelésére. Például az alt operátor feltételét képes feldolgozni és azt elhelyezni a generált automata megfelelő élén.
+A 7.1. és 7.2. kódrészleteken látható, hogy a monitor generátor támogatja az alt, par és loop operátorokat tartalmazó TPSC-khez tartozó TA-k generálását is.
+Továbbá a generátor képes az üzenet paraméterek kezelésére.
+Például az alt operátor feltételét képes feldolgozni és azt elhelyezni a generált automata megfelelő élén.
+
+\begin{lstlisting}[language=java,frame=single, float=h!, caption={Alt operátort tartalmazó scenario.},captionpos=b]
+specification Bank {
+
+	object UserInterface ui;
+	object ATM atm;
+	object BankDB db;
+
+	bool success = true;
+
+	constraint b {
+		message logout() ui->atm;
+	}
+
+	scenario transaction {
+		message login(success) ui->atm;
+
+		alt (equals(success, true)) {
+			message wReq() ui->atm;
+			message uDB() atm->db;
+		} (equals(success, false)) {
+			message loginUnsuccessful() ui->atm;
+			message lockMachine() required atm->ui;
+		}
+	}
+}
+\end{lstlisting}
+
+\begin{lstlisting}[language=java,frame=single, float=h!, caption={Alt operátort tartalmazó scenario never claim leírása.},captionpos=b]
+bool success = true;
+
+never{ /*transactionMonitor*/
+T0_init:
+ if
+ :: (!(ui.login(success).atm)) -> goto T0_init
+ :: (ui.login(success).atm) -> goto T0_q1
+ fi;
+T0_q1:
+ if
+ :: (epsilon) -> goto T0_qinit0
+ fi;
+T0_qinit0:
+ if
+ :: (epsilon; success == true) -> goto T0_q2
+ :: (epsilon; success == false) -> goto T0_q5
+ fi;
+T0_qfinal1:
+ if
+ fi;
+T0_q2:
+ if
+ :: (!(ui.wReq().atm)) -> goto T0_q2
+ :: (ui.wReq().atm) -> goto T0_q3
+ fi;
+T0_q3:
+ if
+ :: (!(atm.uDB().db)) -> goto T0_q3
+ :: (atm.uDB().db) -> goto T0_q4
+ fi;
+T0_q4:
+ if
+ :: (epsilon) -> goto T0_qfinal1
+ fi;
+T0_q5:
+ if
+ :: (!(ui.loginUnsuccessful().atm)) -> goto T0_q5
+ :: (ui.loginUnsuccessful().atm) -> goto T0_q6
+ fi;
+T0_q6:
+ if
+ :: (!(atm.lockMachine().ui)) -> goto T0_q6
+ :: (!(atm.lockMachine().ui)) -> goto accept_q7
+ :: (atm.lockMachine().ui) -> goto T0_q8
+ fi;
+accept_q7:
+ if
+ fi;
+T0_q8:
+ if
+ :: (epsilon) -> goto T0_qfinal1
+ fi;
+}
+\end{lstlisting}
 
 %----------------------------------------------------------------------------
 \section{Az automata generátor megvalósítása}
 %----------------------------------------------------------------------------
-A generátorhoz az Xtend technológiát használtam. Minden egyes TPSC üzenethez legenerálja a hozzá tartozó minta automatát, majd elvégzi azok összecsatolását.
+A generátorhoz az Xtend technológiát használtam.
+Minden egyes TPSC üzenethez legenerálja a hozzá tartozó minta automatát, majd elvégzi azok összecsatolását.
 
 Az időzített automaták generálásához egy adatstruktúrát definiáltam, amely a következő Java osztályokból áll:
 \begin{itemize}
@@ -24,7 +110,7 @@ Az időzített automaták generálásához egy adatstruktúrát definiáltam, am
     \item Specification
 \end{itemize}
 
-A 14. ábrán látható az adatstruktúra UML osztály diagramja.
+A 7.1. ábrán látható az adatstruktúra UML osztály diagramja.
 
 \begin{figure}[h!]
     \centering
@@ -32,13 +118,23 @@ A 14. ábrán látható az adatstruktúra UML osztály diagramja.
     \caption{Az adatstruktúra UML osztály diagramja.}
 \end{figure}
 
-Az automatában lévő állapotok implementációja a State osztályban található. Két attribútuma van: id(String), a címkéje tárolására, és type(StateType), az állapot típusa.
+Az automatában lévő állapotok implementációja a State osztályban található.
+Két attribútuma van: id(String), a címkéje tárolására, és type(StateType), az állapot típusa.
 
-Az állapot típusának a megadására a StateType enum osztályt definiáltam. NORMAL, ACCEPT, FINAL értékeket lehet benne eltárolni. Az átmenetek implementációjáért felelős osztály a Transition. Három tag változója van: id(String) az üzenet, sender(State), a feladó állapot, és receiver(State) a fogadó állapot.
+Az állapot típusának a megadására a StateType enum osztályt definiáltam.
+NORMAL, ACCEPT, FINAL értékeket lehet benne eltárolni.
+Az átmenetek implementációjáért felelős osztály a Transition.
+Három tag változója van: id(String) az üzenet, sender(State), a feladó állapot, és receiver(State) a fogadó állapot.
 
-Az időzített automata implementációja az Automaton osztályban található. Itt tároljuk az automatában lévő állapotokat és a köztük lévő átmeneteket egy-egy listában. Az Automaton osztály addState(State) és addTransition(Transition) függvényeivel lehet új állapotot és átmenetet hozzáadni az automatához, a collapse(Automaton) függvényével pedig két automatát egyesíteni. Ezt a függvényt használtam az implementációban a minta automaták egyesítésére. Ezen kívül az osztálynak van egy merge(ArrayList<Automaton>) függvénye. Ez az előző fejezetben definiált merge függvény implementációja.
+Az időzített automata implementációja az Automaton osztályban található.
+Itt tároljuk az automatában lévő állapotokat és a köztük lévő átmeneteket egy-egy listában.
+Az Automaton osztály addState(State) és addTransition(Transition) függvényeivel lehet új állapotot és átmenetet hozzáadni az automatához, a collapse(Automaton) függvényével pedig két automatát egyesíteni.
+Ezt a függvényt használtam az implementációban a minta automaták egyesítésére.
+Ezen kívül az osztálynak van egy merge(ArrayList<Automaton>) függvénye.
+Ez az előző fejezetben definiált merge függvény implementációja.
 
-A Specification osztály feladata, hogy összeállítsa a szöveges leírásban specifikált TPSC scenariohoz tartozó időzített automatát. Ezt követően az automata Never Claim leírását egy .txt kiterjesztésű fájlba írja.
+A Specification osztály feladata, hogy összeállítsa a szöveges leírásban specifikált TPSC scenariohoz tartozó időzített automatát.
+Ezt követően az automata Never Claim leírását egy .txt kiterjesztésű fájlba írja.
 
 %----------------------------------------------------------------------------
 \section{Minta példa}
@@ -97,4 +193,4 @@ T0_q4:
 }
 \end{lstlisting}
 
-A fenti 14., 15. és 16. ábrákon látható, hogy a generátor milyen időzített automatát generál a megadott TPSC scenario-ból.
+A 7.3, 7.4. kódrészleteken és 7.2. ábrán látható, hogy a generátor milyen időzített automatát generál a megadott TPSC scenario-ból.

@@ -6,7 +6,9 @@
 \section{A monitor interfészei}
 %----------------------------------------------------------------------------
 
-A monitorozás alatt lévő rendszer egy közös interfészen keresztül kommunikál a monitorral. Az interfész Java implementációja a 19. ábrán tekinthető meg. A monitor azt vizsgálja, hogy a rendszer a scenario szerint működik-e.
+A monitorozás alatt lévő rendszer egy közös interfészen keresztül kommunikál a monitorral.
+Az interfész Java implementációja a 8.1. kódrészleten tekinthető meg.
+A monitor azt vizsgálja, hogy a rendszer a scenario szerint működik-e.
 
 Monitor interfész:
 \begin{itemize}
@@ -16,9 +18,15 @@ Monitor interfész:
     \item errorDetected(): detektált hiba jelzésére szolgál
 \end{itemize}
 
-Az update() függvényt a rendszer hívja, hogy továbbítsa az üzenetet a monitornak. Paraméterként az üzenet küldőjét (sender), fogadóját (receiver), üzenet nevét (messageType) és az üzenet paramétereit várja (parameters). A goodStateReached() függvényt a monitor hívja amikor a rendszer állapota változik. Ha a rendszer nem elfogadó állapotban van akkor igazat ad vissza, ha pedig nem akkor hamisat. A requirementSatisfied() függvényt is a monitor hívja. Ha a követelménynek megfelelt a rendszer viselkedése akkor igazat ad vissza, amúgy hamisat.
+Az update() függvényt a rendszer hívja, hogy továbbítsa az üzenetet a monitornak.
+Paraméterként az üzenet küldőjét (sender), fogadóját (receiver), üzenet nevét (messageType) és az üzenet paramétereit várja (parameters).
+A goodStateReached() függvényt a monitor hívja amikor a rendszer állapota változik.
+Ha a rendszer nem elfogadó állapotban van akkor igazat ad vissza, ha pedig nem akkor hamisat.
+A requirementSatisfied() függvényt is a monitor hívja.
+Ha a követelménynek megfelelt a rendszer viselkedése akkor igazat ad vissza, amúgy hamisat.
 
-Az üzenetek megfigyeléséhez szükséges segédfüggvényeket a kommunikációs infrastruktúrához kézzel kell megírni. Ezek a monitort az update() függvényen keresztül hívják.
+Az üzenetek megfigyeléséhez szükséges segédfüggvényeket a kommunikációs infrastruktúrához kézzel kell megírni.
+Ezek a monitort az update() függvényen keresztül hívják.
 
 \begin{lstlisting}[language=java,frame=single, float=h!, caption={Monitor interfész Java implementációja.},captionpos=b]
 public interface IMonitor {
@@ -29,7 +37,10 @@ public interface IMonitor {
 }
 \end{lstlisting}
 
-Az időzitő komponenshez tartozik egy időzitő interfész amin keresztül elérhető a komponens. Ezen az interfészen keresztül lehet az óraváltozokat lekérdezni vagy nullázni. Két függvénye van:
+Az időzitő komponenshez tartozik egy időzitő interfész amin keresztül elérhető a komponens.
+Ezen az interfészen keresztül lehet az óraváltozokat lekérdezni vagy nullázni.
+Két függvénye van:
+
 \begin{itemize}
     \item getClock(String clock): óraváltozó lekérdezése név alapján
     \item resetClock(String clock): óraváltozó nullázása név alapján
@@ -41,6 +52,8 @@ public interface IClock {
 	public void resetClock(String clock);
 }
 \end{lstlisting}
+
+A 8.2. kódrészlet tartalmazza a IClock java interfészt.
 
 %----------------------------------------------------------------------------
 \section{A monitor forráskód megvalósítása}
@@ -55,7 +68,9 @@ A statikus részbe az időzitett automata java osztályai kerülnek:
 
 A monitor interfész, a monitor java osztálya, az időzítő interfész és a hozzá tartozó java osztály is ebbe a részbe tartozik.
 
-A dinamikus részben található a Specification Java osztály, ami a scenario alapján generált automata forráskódját tartalmazza. Ezt a 20. ábra mutatja be. A dinamikus rész pirosan van bekeretezve és a statikus rész pedig feketén.
+A dinamikus részben található a Specification Java osztály, ami a scenario alapján generált automata forráskódját tartalmazza.
+Ezt a 8.1. ábra mutatja be.
+A dinamikus rész pirosan van bekeretezve és a statikus rész pedig feketén.
 
 \begin{figure}[!ht]
     \centering
@@ -63,15 +78,20 @@ A dinamikus részben található a Specification Java osztály, ami a scenario a
     \caption{A monitor forráskódjának struktúrája.}
 \end{figure}
 
-A szükséges forráskódok generálásához az Xtend technológiát használtam. Az előző fejezetben ismertetett generátort kiegészítettem egy Monitor Java osztállyal, ami a monitor forráskódjának implementációját tartalmazza.
+A szükséges forráskódok generálásához az Xtend technológiát használtam.
+Az előző fejezetben ismertetett generátort kiegészítettem egy Monitor Java osztállyal, ami a monitor forráskódjának implementációját tartalmazza.
 
 %----------------------------------------------------------------------------
-\section{Minta példa}
+\clearpage\section{Minta példa}
 %----------------------------------------------------------------------------
 
-A 21. ábrán látható egy scenario követelmény, amit egy példa okos telefon működésére specifikáltunk. Az okos telefonon van egy zene lejátszási lista generáló alkalmazás. A követelményben azt várjuk el, hogy ha a felhasználó megnyitja az alkalmazást akkor a belső kamera készít az arcáról egy képet. A kép alapján eldönti, hogy milyen a felhasználó kedve és az alapján előállít egy zene lejátszási listát.
+A 8.3. kódrészleten látható egy scenario követelmény, amit egy példa okos telefon működésére specifikáltunk.
+Az okos telefonon van egy zene lejátszási lista generáló alkalmazás.
+A követelményben azt várjuk el, hogy ha a felhasználó megnyitja az alkalmazást akkor a belső kamera készít az arcáról egy képet.
+A kép alapján eldönti, hogy milyen a felhasználó kedve és az alapján előállít egy zene lejátszási listát.
 
-A 23. ábrán látható az okos telefon és a monitor közti kapcsolat megvalósítása Java kódban és a 22. ábrán pedig egy monitor kimenet. A monitor a rendszertől kapott üzenetek alapján jelzi, hogy a követelmény alapján mi a rendszer állapota.
+A 8.5. kódrészleten látható az okos telefon és a monitor közti kapcsolat megvalósítása Java kódban.
+A monitor a rendszertől kapott üzenetek alapján jelzi, hogy a követelmény alapján mi a rendszer állapota.
 
 \begin{lstlisting}[frame=single, float=ht!, caption={Okos telefon működésére megadott scenario követelmény.},captionpos=b]
 specification spec1 {
@@ -207,7 +227,8 @@ public class Device {
 }
 \end{lstlisting}
 
-A 24. ábrán látható az okos telefon Java osztálya. Megtekinthető a monitor és az eszköz közti kommunikáció megvalósítása is.
+A 8.6. kódrészlet az okos telefon Java osztálya.
+Megtekinthető a monitor és az eszköz közti kommunikáció megvalósítása is.
 
 \begin{lstlisting}[language=java, frame=single, float=ht!, caption={Monitor kimenete a rendszer működésének egyes fázisaiban.},captionpos=b]
 transition: user.openApp().device
@@ -233,19 +254,28 @@ q11
 System is in good state.
 \end{lstlisting}
 
-A 25. ábrán látszik, hogy a rendszer a működése elején nem felelt meg a monitor követelményének. Amikor a működése végére ért akkor a monitor jelezte, hogy a követelmény teljesült a „Good state” üzenettel. A mintához tartozó Specification osztály a függelékben található. A generált automatát a konstruktorában állítja elő.
+A 8.7. kódrészleten látszik, hogy a rendszer a működése elején nem felelt meg a monitor követelményének.
+Amikor a működése végére ért akkor a monitor jelezte, hogy a követelmény teljesült a „Good state” üzenettel.
+A mintához tartozó Specification osztály a függelékben található.
+A generált automatát a konstruktorában állítja elő.
 
 %----------------------------------------------------------------------------
 \section{Összetett szerkezetek}
 %----------------------------------------------------------------------------
 
-A monitor forráskód generátor támogatja az alt, par vagy loop operátorokat tartalmazó scenariokat is. Erre példát a függelékben lehet találni.
+A monitor forráskód generátor támogatja az alt, par vagy loop operátorokat tartalmazó scenariokat is.
+Erre példát a függelékben lehet találni.
 
 %----------------------------------------------------------------------------
-\section{Időzítési feltételek}
+\clearpage\section{Időzítési feltételek}
 %----------------------------------------------------------------------------
 
 A monitor forráskód generátor támogatja az időzítési feltételeket tartalmazó scenariokat is.
+A 8.8. kódrészletben található scenario első üzenetén a "reset x" címke jelzi a monitornak, hogy az "x" óraváltozó nullázni kell.
+Egy óraváltozó felvételét is a "reset" címkével lehet végrehajtani.
+A 8.9. kódrészlet a példához tartozó Main java osztály leírását tartalmaza, a 8.10. kódrészlet pedig a rendszerhez tartozó Computer java osztályt.
+A 8.11. kódrészleten megtekinthető a monitor kimenete.
+A kimenet végén lévő "System is in good state." üzenet jelzi, hogy a rendszer működése megfelelt a követeménynek.
 
 \begin{lstlisting}[language=java, frame=single, float=ht!, caption={Időzítési feltételeket tartalmazó scenario.},captionpos=b]
 specification Email {
