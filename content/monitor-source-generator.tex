@@ -227,3 +227,99 @@ A monitor forráskód generátor támogatja az alt, par vagy loop operátorokat 
 %----------------------------------------------------------------------------
 
 A monitor forráskód generátor támogatja az időzítési feltételeket tartalmazó scenariokat is.
+
+\begin{lstlisting}[language=java, frame=single, float=ht!, caption={Időzítési feltételeket tartalmazó scenario.},captionpos=b]
+specification Email {
+
+	object Computer computer;
+	object Server server;
+
+	clock x;
+
+	constraint constraints{
+		message logout() computer -> server;
+	}
+
+	constraint c {
+		message login() server -> computer;
+	}
+
+	scenario sendEmail{
+		message checkEmail() computer -> computer reset x;
+		message sendUnsentEmail() required computer -> server;
+		message newEmail() computer -> server pastConstraint {constraints};
+		message downloadEmail() computer -> server clockConstraint {x < 10};
+	}
+}
+\end{lstlisting}
+
+\begin{lstlisting}[language=java, frame=single, float=ht!, caption={Időzítéses példához tartozó Main osztály.},captionpos=b]
+public class Main {
+	public static void monitorStatus(String status) {
+		System.out.println(status);
+	}
+
+	public static void main(String[] args) {
+		Specification specification = new Specification();
+		specification.listAutomatas();
+		IClock clock = new Clock();
+		IMonitor monitor = new Monitor(specification.getAutomata().get(0), clock);
+
+		Server server = new Server(monitor);
+		Computer computer = new Computer(server, monitor);
+	}
+}
+\end{lstlisting}
+
+\begin{lstlisting}[language=java, frame=single, float=ht!, caption={A Computer java osztálya.},captionpos=b]
+public class Computer {
+	public Server server;
+	public IMonitor monitor;
+
+	Computer(Server server, IMonitor monitor) {
+		this.server = server;
+		this.monitor = monitor;
+		monitor.update("computer", "computer", "checkEmail", new String[] {});
+		checkEmail();
+	}
+
+	void checkEmail() {
+		monitor.update("computer", "server", "sendUnsentEmail", new String[] {});
+		server.sendUnsentEmail();
+
+		monitor.update("computer", "server", "newEmail", new String[] {});
+		server.newEmail();
+
+		monitor.update("computer", "server", "downloadEmail", new String[] {});
+		server.downloadEmail();
+	}
+}
+\end{lstlisting}
+
+\begin{lstlisting}[language=java, frame=single, float=ht!, caption={Időzítéses példa monitor kimenete.},captionpos=b]
+Received Message: computer.checkEmail().computer
+Transition: !(computer.checkEmail().computer)
+Transition: computer.checkEmail().computer
+transition triggered: computer.checkEmail().computer
+q1
+System is in bad state.
+Received Message: computer.sendUnsentEmail().server
+Transition: !(computer.sendUnsentEmail().server)
+Transition: !(computer.sendUnsentEmail().server)
+Transition: computer.sendUnsentEmail().server
+transition triggered: computer.sendUnsentEmail().server
+q3
+System is in bad state.
+Received Message: computer.newEmail().server
+Transition: !(computer.logout().server) & !(computer.newEmail().server)
+Transition: computer.newEmail().server
+transition triggered: computer.newEmail().server
+q4
+System is in bad state.
+Received Message: computer.downloadEmail().server
+Transition: !(computer.downloadEmail().server)
+Transition: computer.downloadEmail().server
+transition triggered: computer.downloadEmail().server
+q5
+System is in good state.
+\end{lstlisting}
