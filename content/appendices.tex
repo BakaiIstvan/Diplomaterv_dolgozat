@@ -10,23 +10,364 @@
 %\numberwithin{tabular}{section}
 
 %----------------------------------------------------------------------------
-\section{A TeXstudio felülete}
+\section{A minta példához tartozó specification osztály}
 %----------------------------------------------------------------------------
-\begin{figure}[!ht]
-\centering
-\includegraphics[width=150mm, keepaspectratio]{figures/TeXstudio.png}
-\caption{A TeXstudio \LaTeX-szerkesztő.}
-\end{figure}
+\begin{lstlisting}[language=java, caption={Az okos telefon Java osztálya.},captionpos=b]
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.TreeSet;
 
-%----------------------------------------------------------------------------
-\clearpage\section{Válasz az ,,Élet, a világmindenség, meg minden'' kérdésére}
-%----------------------------------------------------------------------------
-A Pitagorasz-tételből levezetve
-\begin{align}
-c^2=a^2+b^2=42.
-\end{align}
-A Faraday-indukciós törvényből levezetve
-\begin{align}
-\rot E=-\frac{dB}{dt}\hspace{1cm}\longrightarrow \hspace{1cm}
-U_i=\oint\limits_\mathbf{L}{\mathbf{E}\mathbf{dl}}=-\frac{d}{dt}\int\limits_A{\mathbf{B}\mathbf{da}}=42.
-\end{align}
+public class Specification{
+	private String id = "spec1";
+	private ArrayList<Automaton> automatas;
+	
+	public Specification(){
+		automatas = new ArrayList<Automaton>();
+		String str;
+		String str1;
+		String pre;
+		String succ;
+		State actualState;
+		State acceptState;
+		State finalState;
+		State newState;
+		State acceptState_new;
+		Automaton a = new Automaton("playlist_generation");
+		Automaton b;
+		Map<String, Automaton> altauto;
+		ArrayList<Automaton> parauto;
+		Automaton loopauto;
+		Automaton expression;
+		int counter = 0;
+		
+		b = new Automaton("auto7");
+		actualState = new State("q" + counter, StateType.NORMAL);
+		counter++;
+		b.addState(actualState);
+		b.setInitial(actualState);
+											
+		b.addTransition(new Transition("!(" + "user" + "." +	
+			"openApp" + "("
+			+ ")"
+			
+			+ "." + "device)", actualState, actualState));
+		
+		newState = new State("q" + counter, StateType.FINAL);
+		counter++;
+		b.addTransition(new Transition("user" + "." +
+		
+		"openApp" + "("
+		+ ")"
+		
+		+ "." + "device" , actualState, newState));
+		b.addState(newState);
+		b.setFinale(newState);
+		a.collapse(b);
+		
+		b = new Automaton("auto7");
+		actualState = new State("q" + counter, StateType.NORMAL);
+		counter++;
+		b.addState(actualState);
+		b.setInitial(actualState);
+											
+		b.addTransition(new Transition("!(" + "device" + "." +	
+			"accessWebcam" + "("
+			+ ")"
+			
+			+ "." + "device)", actualState, actualState));
+		
+		newState = new State("q" + counter, StateType.FINAL);
+		counter++;
+		b.addTransition(new Transition("device" + "." +
+		
+		"accessWebcam" + "("
+		+ ")"
+		
+		+ "." + "device" , actualState, newState));
+		b.addState(newState);
+		b.setFinale(newState);
+		a.collapse(b);
+		
+		b = new Automaton("auto3");
+		actualState = new State("q" + counter, StateType.NORMAL);
+		counter++;
+		b.addState(actualState);
+		b.setInitial(actualState);
+		
+		b.addTransition(new Transition("!(" + "device" + "." +
+		"getPhoto" + "("
+		+ ")"
+		
+		+ "." + "user" + ")", actualState, actualState));
+		
+		acceptState = new State("q" + counter, StateType.ACCEPT);
+		counter++;
+		
+		b.addTransition(new Transition("!(" + "device" + "." +
+			"getPhoto" + "("
+			+ ")"
+			
+			+ "." + "user" + ")", actualState, acceptState));
+		
+		b.addState(acceptState);
+		
+		newState = new State("q" + counter, StateType.FINAL);
+		counter++;
+		b.addTransition(new Transition("device" + "." +
+		"getPhoto" + "("
+		+ ")"
+		+ "." + "user", actualState, newState));
+		b.addState(newState);
+		b.setFinale(newState);
+		a.collapse(b);
+		
+		b = new Automaton("auto5");
+		actualState = new State("q" + counter, StateType.NORMAL);
+		counter++;
+		b.addState(actualState);
+		b.setInitial(actualState);
+											
+		
+		finalState = new State("q" + counter, StateType.FINAL);
+		counter++;
+		b.addState(finalState);
+		b.setFinale(finalState);
+		
+		b.addTransition(new Transition("!(" + "user" + "." +
+					"cameraOffline" + "("
+					+ ")"
+					+ "." + "device)", actualState, finalState));
+		
+		b.addTransition(new Transition("!(" + "user" + "." +
+			"cameraOffline" + "("
+			+ ")"
+			+ "." + "device)", actualState, actualState));
+			
+		newState = new State("q" + counter, StateType.ACCEPT);
+		counter++;
+		b.addTransition(new Transition("user" + "." +
+		"cameraOffline" + "("
+		+ ")"
+		+ "." + "device" , actualState, newState));
+		b.addState(newState);
+		a.collapse(b);
+		
+		
+		b = new Automaton("auto9");
+		actualState = new State("q" + counter, StateType.NORMAL);
+		counter++;
+		b.addState(actualState);
+		b.setInitial(actualState);
+											
+		finalState = new State("q" + counter, StateType.FINAL);
+		counter++;
+		acceptState = new State("q" + counter, StateType.ACCEPT);
+		counter++;
+		b.addTransition(new Transition("device" + "." +
+		"retrieveMood" + "("
+		+ ")"
+		+ "." + "db" , actualState, finalState));
+		b.addTransition(new Transition("!(" + "device" + "." +
+		"retrieveMood" + "("
+		+ ")"
+		+ "." + "db" + ")", actualState, acceptState));
+		b.addState(acceptState);
+		b.addState(finalState);
+		b.setFinale(finalState);
+		a.collapse(b);
+		b = new Automaton("auto3");
+		actualState = new State("q" + counter, StateType.NORMAL);
+		counter++;
+		b.addState(actualState);
+		b.setInitial(actualState);
+		
+		b.addTransition(new Transition("!(" + "device" + "." +
+		"retrieveMusic" + "("
+		+ ")"
+		
+		+ "." + "db" + ")", actualState, actualState));
+		
+		acceptState = new State("q" + counter, StateType.ACCEPT);
+		counter++;
+		
+		b.addTransition(new Transition("!(" + "device" + "." +
+			"retrieveMusic" + "("
+			+ ")"
+			
+			+ "." + "db" + ")", actualState, acceptState));
+		
+		b.addState(acceptState);
+		
+		newState = new State("q" + counter, StateType.FINAL);
+		counter++;
+		b.addTransition(new Transition("device" + "." +
+		"retrieveMusic" + "("
+		+ ")"
+		+ "." + "db", actualState, newState));
+		b.addState(newState);
+		b.setFinale(newState);
+		a.collapse(b);
+		
+		
+		b = new Automaton("auto12");
+		actualState = new State("q" + counter, StateType.NORMAL);
+		counter++;
+		b.addState(actualState);
+		b.setInitial(actualState);
+												
+		newState = new State("q" + counter, StateType.FINAL);
+		counter++;
+		b.addTransition(new Transition("db" + "." +
+		"generatePlaylist" + "("
+		+ ")"
+		+ "." + "device", actualState, newState));
+		b.addState(newState);
+		b.setFinale(newState);
+		a.collapse(b);
+		a.rename();
+		automatas.add(a);
+	}
+	
+	public void listAutomatas(){
+		for(Automaton a : this.automatas){
+			for(State s : a.getStates()){
+				s.writeState();	
+			}
+			
+			for(Transition t : a.getTransitions()){
+				t.writeTransition();
+			}
+		}
+	}
+	
+	public List<Automaton> getAutomata() {
+		return automatas;
+	}
+	
+	public ArrayList<Automaton> par(ArrayList<Automaton> automatas) {
+	        ArrayList<ArrayList<Automaton>> automataList = new ArrayList<>();
+	        permute(automataList, new ArrayList<>(), automatas);
+	        return listConverter((automataList));
+	}
+
+    private void permute(ArrayList<ArrayList<Automaton>> list, ArrayList<Automaton> resultList, ArrayList<Automaton> automatas) {
+        if (resultList.size() == automatas.size()) {
+            list.add(new ArrayList<>(resultList));
+        } else {
+            for (int i = 0; i < automatas.size(); i++) {
+                if (resultList.contains((automatas.get(i)))) {
+                    continue;
+                }
+
+                resultList.add(automatas.get(i));
+                permute(list, resultList, automatas);
+                resultList.remove(resultList.size() - 1);
+            }
+        }
+    }
+
+    private ArrayList<Automaton> listConverter(ArrayList<ArrayList<Automaton>> list) {
+        ArrayList<Automaton> result = new ArrayList<>();
+        for (ArrayList<Automaton> alist : list) {
+            Automaton newauto = new Automaton("listConverter");
+            for (Automaton auto : alist) {
+                newauto.collapse(copyAutomaton(auto));
+            }
+            result.add(newauto);
+        }
+        return result;
+    }
+    
+    public Map<String, Automaton> loopSetup(Automaton loopauto, int min, int max) {
+	        	Map<String, Automaton> result = new HashMap<>();
+	    	    
+	            for (int i = min; i <= max; i++) {
+	                Automaton newauto = new Automaton("loopauto" + i);
+	                for (int j = 0; j < i; j++) {
+	                    newauto.collapse(copyAutomaton(loopauto));
+	                }
+	                result.put("loop" + i, newauto);
+	            }
+	            return result;
+	        }
+    
+    public Automaton copyAutomaton(Automaton referenceAuto) {
+            Automaton result = new Automaton("copy automaton");
+            int count = 0;
+            State previousSender = new State();
+            State referencePreviousSender = new State();
+    
+            for (Transition t : referenceAuto.getTransitions()) {
+                State sender = new State();
+                State receiver = new State();
+                Transition transition = new Transition();
+                Automaton temp = new Automaton("temp");
+    
+                transition.setId(t.getId());
+    
+                if (t.getSender() == referencePreviousSender) {
+                    receiver.setId("c" + count);
+                    count++;
+                    receiver.setType(t.getReceiver().getType());
+    
+                    transition.setSender(previousSender);
+                    transition.setReceiver(receiver);
+                    temp.addState(previousSender);
+                    temp.addState(receiver);
+                    temp.setInitial(previousSender);
+                    temp.setFinale(receiver);
+                } else {
+                    if (t.getSender() == t.getReceiver()) {
+                        sender.setId("c" + count);
+                        count++;
+                        sender.setType(t.getSender().getType());
+    
+                        transition.setSender(sender);
+                        transition.setReceiver(sender);
+    
+                        temp.addState(sender);
+                        temp.setInitial(sender);
+                        temp.setFinale(sender);
+                    } else {
+                        sender.setId("c" + count);
+                        count++;
+                        sender.setType(t.getSender().getType());
+    
+                        receiver.setId("c" + count);
+                        count++;
+                        receiver.setType(t.getReceiver().getType());
+    
+                        transition.setSender(sender);
+                        transition.setReceiver(receiver);
+    
+                        temp.addState(sender);
+                        temp.addState(receiver);
+                        temp.setInitial(sender);
+                        temp.setFinale(receiver);
+                    }
+                    previousSender = sender;
+                    referencePreviousSender = t.getSender();
+                }
+    
+                temp.addTransition(transition);
+                result.collapse(temp);
+            }
+    
+            return result;
+        }
+	
+	public static void main(String[] args) throws FileNotFoundException, UnsupportedEncodingException{
+		Specification specification = new Specification();
+		specification.listAutomatas();
+		boolean acceptState = false;
+}
+\end{lstlisting}
