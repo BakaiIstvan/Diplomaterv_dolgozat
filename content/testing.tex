@@ -60,7 +60,107 @@ Például loop operátor esetén a minimum, köztes és maximum üzenet szekvenc
 Ha a maximumnál többször szerepel az üzenet szekvencia akkor hibát kell, hogy jelezen.
 Üzenet paraméterek tesztelése esetén azt szeretnénk vizsgálni, hogy a monitor helyesen értelmezi e az üzenet paramétereket.
 Az időzítések tesztelésénél az a fontos, hogy a monitor képes-e az óraváltozók alapján az időzitési feltételeket kiértékelni.
-Például ha az üzenet a feltétel alapján időben érkezik meg akkor helyes kimenetet adjon
-, vissza ha feltétel szerint később érkezik meg akkor a monitornak hibát kell jeleznie.
+Például ha az üzenet a feltétel alapján időben érkezik meg akkor helyes kimenetet adjon, vissza ha feltétel szerint később érkezik meg akkor a monitornak hibát kell jeleznie.
 
 Egy integrációs teszt akkor sikeres ha a monitor kimenete megegyezik az elvárt kimenettel.
+
+%----------------------------------------------------------------------------
+\clearpage
+%----------------------------------------------------------------------------
+
+Az Xtext keretrendszer a definiált DSL nyelvünkhöz generál egy Maven projekt architektúrát.
+A nyelvünk így elérhető maven plugin formájában is, amit felhasználhatunk az integrációs teszteinkhez.
+Elég csupán egy maven projektet felkonfigurálni a saját dsl plugin-ünkkel és elkészítethetjük a saját tesztelési keretrendszerünket.
+A 9.3. ábrán és a 9.1. kódrészléten látható egy ilyen integrációs teszthez tartozó maven projekt felépítése és a hozzá tartozó teszteset.
+
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=150mm, height=9cm, keepaspectratio]{figures/integration_test_structure.png}
+    \caption{Példa integrációs teszt projekt struktúrája.}
+\end{figure}
+
+\begin{lstlisting}[language=java, frame=single, float=ht!, caption={Integrációs teszteset.},captionpos=b]
+package hu.bme.mit.dipterv.text.example;
+
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.Assertions;
+
+import generated.Specification;
+import generated.IClock;
+import generated.IMonitor;
+import generated.Monitor;
+import generated.Clock;
+
+public class MonitorPassingTest {
+
+	@Test
+	public void testMonitorPassing() {
+		Specification specification = new Specification();
+		specification.listAutomatas();
+		IClock clock = new Clock();
+		IMonitor monitor = new Monitor(specification.getAutomata().get(0), clock);
+
+		Server server = new Server(monitor);
+		Computer computer = new Computer(server, monitor);
+		Assertions.assertTrue(monitor.goodStateReached());
+	}
+}
+\end{lstlisting}
+
+\begin{lstlisting}[language=java, frame=single, float=ht!, caption={Integrációs teszteset eredménye.},captionpos=b]
+-------------------------------------------------------
+T E S T S
+-------------------------------------------------------
+Running hu.bme.mit.dipterv.text.example.MonitorPassingTest
+q0 NORMAL
+q1 NORMAL
+q2 ACCEPT
+q3 NORMAL
+q4 NORMAL
+q5 FINAL
+!(computer.checkEmail().computer) q0->q0
+computer.checkEmail().computer q0->q1
+!(computer.sendUnsentEmail().server) q1->q1
+!(computer.sendUnsentEmail().server) q1->q2
+computer.sendUnsentEmail().server q1->q3
+!(computer.logout().server) & !(computer.newEmail().server) q3->q3
+computer.newEmail().server q3->q4
+!(computer.downloadEmail().server) q4->q4
+computer.downloadEmail().server q4->q5
+Received Message: computer.checkEmail().computer
+Transition: !(computer.checkEmail().computer)
+Transition: computer.checkEmail().computer
+transition triggered: computer.checkEmail().computer
+q1
+
+Received Message: computer.sendUnsentEmail().server
+Transition: !(computer.sendUnsentEmail().server)
+Transition: !(computer.sendUnsentEmail().server)
+Transition: computer.sendUnsentEmail().server
+transition triggered: computer.sendUnsentEmail().server
+q3
+
+Received Message: computer.newEmail().server
+Transition: !(computer.logout().server) & !(computer.newEmail().server)
+Transition: computer.newEmail().server
+transition triggered: computer.newEmail().server
+q4
+
+Received Message: computer.downloadEmail().server
+Transition: !(computer.downloadEmail().server)
+Transition: computer.downloadEmail().server
+transition triggered: computer.downloadEmail().server
+q5
+
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.025 sec
+
+Results :
+
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0
+\end{lstlisting}
+
+A 9.2. kódrészlet a Maven teszt kimenetét tartalmazza.
+
+Ezt a projekt struktúrát felhasználva a teszteink köré tudunk egy Maven alapú Continuous Integration (CI) állítani.
+
+A függelékben található egy példa unit teszt eset az automata generátor tesztelésére.
