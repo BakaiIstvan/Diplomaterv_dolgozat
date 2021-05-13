@@ -6,8 +6,8 @@
 \section{Időzített automata generátor tesztelése}
 %----------------------------------------------------------------------------
 
-A generált időzített automaták forráskodját unit tesztek segítségével szeretnénk tesztelni.
-Az Xtext keretrendszer által nyujtott eszközök erre célra jól alkalmazhatok.
+A generált időzített automaták forráskódját unit tesztek segítségével szeretnénk tesztelni.
+Az Xtext keretrendszer által nyújtott eszközök erre célra jól alkalmazhatók.
 
 \begin{figure}[!ht]
     \centering
@@ -27,18 +27,22 @@ Tesztelési kategoriák:
 
 Az üzenet típusok egyenkénti tesztelésénél az összes üzenet típust le szeretnénk fedni.
 Az üzenet kombinációkból a főbb eseteket szeretnénk tesztelni.
-Például sima üzenet után required üzenet és ezek váltakozása a fail üzeneteket is bele értve.
-A scenario operátoroknál azt fontos tesztelni, hogy a különálló üzenetekhez tartozó automata minták jól illeszkedjenek a operátorral elátott üzenetek automatájával.
+Például a 3 üzenet típus lehetséges sorrendjeinek kombinációi.
+A scenario operátoroknál azt fontos tesztelni, hogy a különálló üzenetekhez tartozó automata minták jól illeszkedjenek az operátorral elátott üzenetek automatájával.
+Például sima üzenet után következik egy alt konstrukció vagy esetleg egy loop után egy elvárt üzenet.
 
-Egy unit teszt akkor sikeres ha a generált automata forráskódja megegyezik az elvárt automata forráskodjával.
+Egy unit teszt akkor sikeres ha a generált automata forráskódja megegyezik az elvárt automata forráskódjával.
+Az elvárt automata forráskódját egy korábbi generálásból adjuk meg.
+Manuálisan győződünk meg a forráskód helyeségéről.
 
 %----------------------------------------------------------------------------
 \clearpage\section{Monitor forráskód generátor tesztelése }
 %----------------------------------------------------------------------------
 
 A generált monitor forráskodját integrációs tesztek segítségével szeretnénk tesztelni.
-Az Xtext keretrendszer a specifikált dsl nyelvhez generál egy maven plugin-t.
-Ezt a plugin-t betölthetjük egy egyszerű maven projektbe és használhatjuk is az elkészített dsl nyelvünket.
+A teszteinkben egy példa rendszer java implementációját integráljuk a generált monitor komponenssel.
+Az Xtext keretrendszer a specifikált DSL (Domain Specific Language) nyelvhez generál egy Maven plugin-t.
+Ezt a plugin-t betölthetjük egy egyszerű maven projektbe és használhatjuk is az elkészített DSL nyelvünket, azaz létrehozhatunk a projektben a saját DSL-ünkhöz tartozó fájlokat, melyekben megadhatjuk saját scenario-inkat.
 
 \begin{figure}[!ht]
     \centering
@@ -60,9 +64,11 @@ Például loop operátor esetén a minimum, köztes és maximum üzenet szekvenc
 Ha a maximumnál többször szerepel az üzenet szekvencia akkor hibát kell, hogy jelezen.
 Üzenet paraméterek tesztelése esetén azt szeretnénk vizsgálni, hogy a monitor helyesen értelmezi e az üzenet paramétereket.
 Az időzítések tesztelésénél az a fontos, hogy a monitor képes-e az óraváltozók alapján az időzitési feltételeket kiértékelni.
-Például ha az üzenet a feltétel alapján időben érkezik meg akkor helyes kimenetet adjon, vissza ha feltétel szerint később érkezik meg akkor a monitornak hibát kell jeleznie.
+Például ha az üzenet a feltétel alapján időben érkezik meg akkor helyes kimenetet adjon vissza ha feltétel szerint később érkezik meg akkor a monitornak hibát kell jeleznie.
 
 Egy integrációs teszt akkor sikeres ha a monitor kimenete megegyezik az elvárt kimenettel.
+Az elvárt kimenetet a rendszer manuális tesztelése határoz meg.
+A tesztelő dönti el, hogy helyesen kell hogy működjön vagy sem amit a monitornak jeleznie kell.
 
 %----------------------------------------------------------------------------
 \clearpage

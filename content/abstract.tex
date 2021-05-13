@@ -8,19 +8,25 @@
 %----------------------------------------------------------------------------
 \chapter*{Kivonat}\addcontentsline{toc}{chapter}{Kivonat}
 
-A monitorozással történő hibadetektálás létfontosságú egy rendszer működtetésében és karbantartásában.
+A monitorozással történő hibadetektálás kiemelt fontosságú egy kritikus rendszer működtetésében és karbantartásában.
 A monitorozás sok hibát fel tud deríteni, amiket a tesztek nem feltétlenül tudnak kideríteni.
 
 A diplomaterv feladat célja az volt, hogy a korábban elkészített monitor komponens generátort kiegészítsem úgy, hogy időzített üzenet szekvencia specifikáció alapján is képes legyen monitor komponenseket generálni.
-Ilyen követelményeket egyszerűen specifikálhatunk TPSC (Timed Property Sequence Chart) diagramokkal.
+Ilyen követelményeket egyszerűen specifikálhatunk TPSC (Timed Property Sequence Chart) diagramokkal. A korrábban elkészített Xtext alapú PSC nyelvet kiegészítettem a TPSC tulajdonságaival.
 
-A monitor generálás következő lépése, hogy a TPSC diagramokból TA időzített automatákat generálunk (Timed Automaton).
+A monitor generálás következő lépése, hogy a TPSC diagramokból időzített automatákat generálunk (Timed Automaton).
 A TA fogja megadni, hogy a megfigyelt kommunikáció helyes viselkedést jelent-e.
 A szakdolgozatomban készített automata generátort kibővítettem és most már képes a minta alapú módszert használva TA automatákat generálni a TPSC diagramjainkból.
 A generátor előállítja az automatát.
 
 A szöveges scenario leírásból generált automata alapján legenerálható a monitor forráskódja.
 A monitor forráskód generátor előállítja a monitor \textit{Java} implementációját, ami képes egy rendszer monitorozására adott követelmény alapján.
+
+A diplomaterv további feladatai közzé tartozik a TPSC scenario-k vizualizációja, a generált forráskódok tesztelése és a generált monitor komponens illesztése a Gamma keretrendszerrel.
+A cél az, hogy elosztott komponens alapú rendszerek szimulációja közben monitorozható legyen a TPSC üzenet szekvencia specifikáció teljesülése illetve az ebben rögzített tulajdonságok megsértése.
+Továbbá a monitorozás működését is demonstrálni kell.
+
+Az időzítési feltételeket tartalmazó üzeneteket tudja értelmezni és feldolgozni a monitor, valamint a teszt keretrendszer első verziója is elkészült.
 
 \vfill
 \selectenglish

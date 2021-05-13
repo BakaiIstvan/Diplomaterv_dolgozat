@@ -20,9 +20,8 @@ Monitor interfész:
 
 Az update() függvényt a rendszer hívja, hogy továbbítsa az üzenetet a monitornak.
 Paraméterként az üzenet küldőjét (sender), fogadóját (receiver), üzenet nevét (messageType) és az üzenet paramétereit várja (parameters).
-A goodStateReached() függvényt a monitor hívja amikor a rendszer állapota változik.
-Ha a rendszer nem elfogadó állapotban van akkor igazat ad vissza, ha pedig nem akkor hamisat.
-A requirementSatisfied() függvényt is a monitor hívja.
+A goodStateReached() függvény jelzi, hogy a rendszer jelenlegi működése megfelel-e a követelménynek.
+A requirementSatisfied() függvény visszaadja, hogy a követelmény teljesült-e.
 Ha a követelménynek megfelelt a rendszer viselkedése akkor igazat ad vissza, amúgy hamisat.
 
 Az üzenetek megfigyeléséhez szükséges segédfüggvényeket a kommunikációs infrastruktúrához kézzel kell megírni.
@@ -58,7 +57,7 @@ A 8.2. kódrészlet tartalmazza a IClock java interfészt.
 %----------------------------------------------------------------------------
 \section{A monitor forráskód megvalósítása}
 %----------------------------------------------------------------------------
-A generált forráskód struktúrája egy statikus és egy dinamikus részből áll.
+A generált forráskód struktúrája egy statikus és egy generált dinamikus részből áll.
 A statikus részbe az időzitett automata java osztályai kerülnek:
 \begin{itemize}
     \item State: egy állapotot leíró osztály
@@ -70,7 +69,7 @@ A monitor interfész, a monitor java osztálya, az időzítő interfész és a h
 
 A dinamikus részben található a Specification Java osztály, ami a scenario alapján generált automata forráskódját tartalmazza.
 Ezt a 8.1. ábra mutatja be.
-A dinamikus rész pirosan van bekeretezve és a statikus rész pedig feketén.
+A dinamikus rész pirosan van bekeretezve és a statikus rész pedig sötét vörösen.
 
 \begin{figure}[!ht]
     \centering
@@ -79,13 +78,12 @@ A dinamikus rész pirosan van bekeretezve és a statikus rész pedig feketén.
 \end{figure}
 
 A szükséges forráskódok generálásához az Xtend technológiát használtam.
-Az előző fejezetben ismertetett generátort kiegészítettem egy Monitor Java osztállyal, ami a monitor forráskódjának implementációját tartalmazza.
 
 %----------------------------------------------------------------------------
-\clearpage\section{Minta példa}
+\clearpage\section{Mintapélda}
 %----------------------------------------------------------------------------
 
-A 8.3. kódrészleten látható egy scenario követelmény, amit egy példa okos telefon működésére specifikáltunk.
+A 8.3. kódrészleten látható egy scenario követelmény, amit egy okos telefon működésére specifikáltunk.
 Az okos telefonon van egy zene lejátszási lista generáló alkalmazás.
 A követelményben azt várjuk el, hogy ha a felhasználó megnyitja az alkalmazást akkor a belső kamera készít az arcáról egy képet.
 A kép alapján eldönti, hogy milyen a felhasználó kedve és az alapján előállít egy zene lejátszási listát.
@@ -172,7 +170,7 @@ T0_q11:
 }
 \end{lstlisting}
 
-\begin{lstlisting}[language=java, frame=single, float=ht!, caption={Az okos telefon és hozzá tartozó monitor összecsatolásának Java implementációja.},captionpos=b]
+\begin{lstlisting}[language=java, frame=single, float=ht!, caption={Az okos telefon és hozzá tartozó monitor fel konfigurálásának Java implementációja.},captionpos=b]
 public class Main {
 	public static void monitorStatus(String status) {
 		System.out.println(status);

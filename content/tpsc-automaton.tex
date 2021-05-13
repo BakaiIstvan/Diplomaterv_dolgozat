@@ -26,7 +26,7 @@ Például a 4.1. és 4.2. ábrákon láthatóak a különböző PSC üzenetekhez
 
 A minta automatánkban található szürke állapotok reprezentálják a végállapotokat.
 A megkötéseket az automatáknál egy átmenettel definiáljuk ami a nem kívánt üzenetek negáltjainak az ÉS kapcsolata.
-Például az 4.1. ábrán lévő 3. automata mintán látható „b, $\delta ’\&!a, \delta$” címkéjű hurokélen, a „b” azt jelzi, hogy amig nem jött nem kivánt üzenet addig maradjunk az S0 állapotban.
+Például az 4.1. ábrán lévő 3. automata mintán látható „b, $\delta ’\&!a, \delta$” címkéjű hurokélen, a „b” címke minden olyan üzenetnek felel meg, amelyek nincsenek a nem kivánt üzenetek halmazában.
 A címke teljes jelentése az, hogy ha $\delta$’ időn belül nem jött nem kivánt üzenet és $\delta$ időn belül nem az „a” üzenet jött akkor maradjunk az s0 állapotban.
 Ezekből az automata részekből lesznek meghatározott illesztési szabályokkal a scenario-hoz tartozó teljes időzített automaták.
 Ennek az az alapelve, hogy a scenario-n végig menve az előző minta végállapotát a következő minta kezdőállapotával kell egyesíteni.
@@ -34,7 +34,7 @@ Ezt a folyamatot mutatják be a 4.3., 4.4. és 4.5. ábrák.
 
 \begin{figure}[!ht]
     \centering
-    \includegraphics[width=150mm, keepaspectratio]{figures/7abra.png}
+    \includegraphics[width=60mm, keepaspectratio]{figures/7abra.png}
     \caption{TPSC részlet.}
 \end{figure}
 
@@ -46,6 +46,6 @@ Ezt a folyamatot mutatják be a 4.3., 4.4. és 4.5. ábrák.
 
 \begin{figure}[!ht]
     \centering
-    \includegraphics[width=150mm, keepaspectratio]{figures/9abra.png}
+    \includegraphics[width=130mm, keepaspectratio]{figures/9abra.png}
     \caption{Az összeállított automata.}
 \end{figure}

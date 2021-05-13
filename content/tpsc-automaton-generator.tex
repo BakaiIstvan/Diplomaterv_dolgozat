@@ -6,9 +6,11 @@
 \section{Az automata generátor célja}
 %----------------------------------------------------------------------------
 
-A diplomatervezés során elkészített automata generátort kibővítettem úgy, hogy támogassa a TPSC elemekhez tartozó automata minták generálását. Bemenetként egy TPSC scenario szöveges leírását kapja meg amiből a minta alapú módszerrel generál egy TA automatát.
+Az önálló laboratórium során elkészített automata generátort kibővítettem úgy, hogy támogassa a TPSC elemekhez tartozó automata minták generálását. Bemenetként egy TPSC scenario szöveges leírását kapja meg amiből a minta alapú módszerrel generál egy TA automatát.
 
 A 7.1. és 7.2. kódrészleteken látható, hogy a monitor generátor támogatja az alt, par és loop operátorokat tartalmazó TPSC-khez tartozó TA-k generálását is.
+A 7.2. kódrészlet a generált automata "never claim" leírását tartalmazza.
+A Never claim a Promela nyelv része, ezzel egy rendszer viselkedését lehet definiálni.
 Továbbá a generátor képes az üzenet paraméterek kezelésére.
 Például az alt operátor feltételét képes feldolgozni és azt elhelyezni a generált automata megfelelő élén.
 
@@ -131,18 +133,18 @@ Itt tároljuk az automatában lévő állapotokat és a köztük lévő átmenet
 Az Automaton osztály addState(State) és addTransition(Transition) függvényeivel lehet új állapotot és átmenetet hozzáadni az automatához, a collapse(Automaton) függvényével pedig két automatát egyesíteni.
 Ezt a függvényt használtam az implementációban a minta automaták egyesítésére.
 Ezen kívül az osztálynak van egy merge(ArrayList<Automaton>) függvénye.
-Ez az előző fejezetben definiált merge függvény implementációja.
+Ez a függvény a minta automata ágak egyesítésére szolgál.
 
 A Specification osztály feladata, hogy összeállítsa a szöveges leírásban specifikált TPSC scenariohoz tartozó időzített automatát.
 Ezt követően az automata Never Claim leírását egy .txt kiterjesztésű fájlba írja.
 
 %----------------------------------------------------------------------------
-\section{Minta példa}
+\section{Mintapélda}
 %----------------------------------------------------------------------------
 
 \begin{figure}[h!]
     \centering
-    \includegraphics[width=150mm, keepaspectratio]{figures/14abra.png}
+    \includegraphics[width=130mm, keepaspectratio]{figures/14abra.png}
     \caption{Példa TPSC diagram.}
 \end{figure}
 
