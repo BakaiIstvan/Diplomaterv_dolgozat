@@ -45,13 +45,45 @@ Szigorú sorrendezésre is ad megoldást a PSC, ami azt jelenti, hogy megadhatju
 A PSC-ben egy üzenetre megkötést is rakhatunk.
 Megadhatjuk, hogy melyek azok az üzenetek amik nem kívántak az üzenetünk előtt vagy után.
 A különböző PSC tulajdonságok megtalálhatok a 2.1. ábrán.
+A nyelv a következő tulajdonságokat támogatja:
+
+\begin{itemize}
+    \item \textit{Sima üzenet (e)}: egy üzenet a scenario-ban, amely ha nem történik meg az a monitor szempontjából nem jelent hibát.
+    Viszont ha megjelenik, akkor a scenario-ban utána következő üzenetek ellenőrzésére kell áttérni.
+    Egy előfeltételt reprezentál.
+    \item \textit{Elvárt üzenet (r)}: egy üzenet amelynek elmaradása hibajelzéshez kell vezessen.
+    \item \textit{Nem kívánt üzenet (f)}: amennyiben a monitor egy ilyen üzenetet detektál, akkor hibát jelez.
+    \item \textit{Üzenet megkötés (constraint)}: Egy üzenetre lehet megkötést is helyezni.
+    Egy megkötés több üzenetet tartalmazhat.
+    Két fajta megkötést definiál a nyelv: múlt- és jövőbéli.
+    A múltbéli üzenet megkötés esetén, az üzenetünk megtörténte előtt, a megkötésben szereplő üzenetek egyike se történhet meg.
+    Jövőbéli megkötés esetén, pedig az üzenetünk megtörténte után nem történhetnek meg a megkötésben szereplő üzenetek.
+    \item \textit{Megkötött sorrendezés (strict ordering)}: A PSC az üzenet lefutási sorrendjének a specifikálására is lehetőséget ad.
+    Egy „a” üzenet megtörténte után, egy adott „b” üzenetnek kell bekövetkeznie.
+    Ha „b” üzenet helyet egy másik üzenet követi az „a” üzenetet, akkor a monitor hibát jelez.
+\end{itemize}
+
 A nyelv támogat összetett szerkezeteket is:
 
 \begin{itemize}
-    \item Alt operátor: az alt operátorral alternatív üzenet szekvenciákat lehet definiálni.
-    \item Par operátor: a par operátorral meghatározható az üzenet szekvenciák párhuzamos futása.
-    \item Loop operátor: a loop operátorral megadhatjuk, hogy egy üzenet szekvencia többször is lefuthat egymás után.
+    \item \textit{Alt operátor}: az alt operátorral alternatív üzenet szekvenciákat lehet definiálni.
+    \item \textit{Par operátor}: a par operátorral meghatározható az üzenet szekvenciák párhuzamos futása.
+    \item \textit{Loop operátor}: a loop operátorral megadhatjuk, hogy egy üzenet szekvencia többször is lefuthat egymás után.
 \end{itemize}
+
+Egy üzeneten egyszerre megkötés és sorrendezés is lehet.
+Az üzenetek típusát az átmenetén lévő karakterrel jelöljük.
+Az „e” karakter jelzi, hogy az üzenet sima, az „r” karakter az elvárt üzenetet jelenti, az „f” pedig a nem kívánt üzenetet.
+Azt meg kell jegyezni, hogy nem kívánt üzenetekre nem lehet jövőbéli megkötéseket rakni.
+Ezen kívül, ha egy üzeneten megkötött sorrendezést alkalmazunk, akkor nem lehet rajta múltbéli megkötés.
+
+A megkötéseket egy ponttal jelöljük, amit az átmeneten helyezünk el.
+Ha a pont az átmenet elején van (a feladóhoz közel), akkor az múltbéli megkötést jelöl.
+Ha pedig a végén helyezkedik el, akkor a jövőbéli megkötést jelöli.
+A megkötésben lévő üzeneteket egy lista formájába lehet megadni ’{’ ’}’ jelek közt, a következő módon: <megkötés neve> = {C1.I1.Cj, ..., Ck.In.Ct}, ahol az üzenetek vesszővel elválasztva, „Feladó.Üzenet.Címzett” formában szerepelnek.
+A specifikált megkötés nevét pedig az átmeneten lévő pont alá írjuk.
+
+Az üzenetek megkötött sorrendezésének jelölésénél az objektum „life line” vonalát az érintett átmenetek közt folytonossá változtatjuk
 
 \begin{figure}[!ht]
     \centering
