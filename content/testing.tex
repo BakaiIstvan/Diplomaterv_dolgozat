@@ -36,7 +36,7 @@ Az elvárt automata forráskódját egy korábbi generálásból adjuk meg.
 Manuálisan győződünk meg a forráskód helyeségéről.
 
 %----------------------------------------------------------------------------
-\clearpage\section{Monitor forráskód generátor tesztelése }
+\clearpage\section{Monitor forráskód generátor tesztelése}
 %----------------------------------------------------------------------------
 
 A generált monitor forráskodját integrációs tesztek segítségével szeretnénk tesztelni.
@@ -84,6 +84,9 @@ A 9.3. ábrán és a 9.1. kódrészléten látható egy ilyen integrációs tesz
     \includegraphics[width=150mm, height=9cm, keepaspectratio]{figures/integration_test_structure.png}
     \caption{Példa integrációs teszt projekt struktúrája.}
 \end{figure}
+
+A 9.3. ábrán lévő \textit{generated} csomag tartalmazza a scenariohoz tartozó generált automata forráskódját és a monitor forráskódját.
+A \textit{hu.bme.mit.dipterv.text.example} csomag a tesztelt rendszer \textit{Java} implementációját tartalmazza.
 
 \begin{lstlisting}[language=java, frame=single, float=ht!, caption={Integrációs teszteset.},captionpos=b]
 package hu.bme.mit.dipterv.text.example;
@@ -167,6 +170,38 @@ Tests run: 1, Failures: 0, Errors: 0, Skipped: 0
 
 A 9.2. kódrészlet a Maven teszt kimenetét tartalmazza.
 
-Ezt a projekt struktúrát felhasználva a teszteink köré tudunk egy Maven alapú Continuous Integration (CI) állítani.
+Ezt a projekt struktúrát felhasználva a teszteink köré tudunk egy Maven alapú Continuous Integration-t (CI) állítani.
 
 A függelékben található egy példa unit teszt eset az automata generátor tesztelésére.
+
+%----------------------------------------------------------------------------
+\clearpage\section{Continuous Integration}
+%----------------------------------------------------------------------------
+
+Az időzített automata és monitor forráskód generátorok automatikus tesztelése a Travis CI segítségével történik.
+A CI minden feltöltött új commit esetén lefut.
+A CI különböző fázisai a következők:
+
+\begin{itemize}
+    \item I. Teljes Xtext projekt fordítása (Maven)
+    \item II. Unit tesztek futtatása
+    \item III. Intergrációs tesztek futtatása
+\end{itemize}
+
+A generátorokhoz tartozó Xtext projekten lefut egy Maven build, amely az új feltöltött verzió tartalmazza.
+Ez a build állítja elő a DSL nyelvhez tartozó Maven plugin-t is.
+A fordítással együtt lefutnak a unit tesztek is.
+Ezt követően hajtódnak végre az integrációs tesztek, amelyek a frissen fordított Maven plugint használják.
+Ha az összes fázis sikeresen lefutott, akkor az adott commit nem rontott el semmilyen korábbi funkciót.
+
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=150mm, keepaspectratio]{figures/github_ci_check.png}
+    \caption{GitHub repository commit-ok és hozzá tartozó CI check-ek.}
+\end{figure}
+
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=150mm, keepaspectratio]{figures/travis_overview.png}
+    \caption{Travis CI build-ek eredményei.}
+\end{figure}
