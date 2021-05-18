@@ -370,3 +370,7 @@ transition triggered: computer.downloadEmail().server
 q5
 System is in good state.
 \end{lstlisting}
+
+Az óraváltozók és időzítések megvalósításához az "org.apache.commons.lang3" könyvtár "time" csomag \textit{StopWatch} osztályát használtam.
+Ha az automata élén van egy időzítési feltétel akkor a monitor komponens az időzítő komponenstől elkéri a feltételben szereplő óraváltozóban tárol időt és kiértekeli a feltételt.
+Ha a feltétel teljesül, akkor az időzítés szempontjából a tranzíció megtörténhet.
