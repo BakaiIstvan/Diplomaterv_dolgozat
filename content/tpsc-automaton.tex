@@ -49,3 +49,8 @@ Ezt a folyamatot mutatják be a 4.3., 4.4. és 4.5. ábrák.
     \includegraphics[width=130mm, keepaspectratio]{figures/9abra.png}
     \caption{Az összeállított automata.}
 \end{figure}
+
+A monitor szempontjából az automata akkor jelez hibás működést ha elfogadó állapotba kerül.
+Ilyenkor a követelmény már nem teljesíthető.
+Ha az automata egy sima állapotban van, akkor az helyes működést jelent viszont a követelmény még ekkor sem teljesült.
+A követelmény akkor teljesül amikor az automata a végső (FINAL) állapotba kerül és nem érkezik további amely elmozditaná őt onnan.

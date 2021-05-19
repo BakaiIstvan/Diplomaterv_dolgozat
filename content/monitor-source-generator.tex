@@ -274,6 +274,10 @@ Egy óraváltozó felvételét is a "reset" címkével lehet végrehajtani.
 A 8.9. kódrészlet a példához tartozó Main java osztály leírását tartalmaza, a 8.10. kódrészlet pedig a rendszerhez tartozó Computer java osztályt.
 A 8.11. kódrészleten megtekinthető a monitor kimenete.
 A kimenet végén lévő "System is in good state." üzenet jelzi, hogy a rendszer működése megfelelt a követeménynek.
+A kimenetben szereplő "bad state" üzenetek megtévesztőek lehetnek.
+A dolgozat 4. fejezetében említettem, hogy milyen esetekben helyes vagy helytelen a monitor szempontjából a rendszer viselkedése.
+A "bad state" üzenet nem feltétlen jelenti azt, hogy a rendszer viselkedése helytelen csupán azt, hogy a feltétel még nem teljesült.
+A monitor tovább szeretném fejleszteni a diplomaterv során, úgy hogy pontosabban jelezze a rendszer működésének állapotát.
 
 \begin{lstlisting}[language=java, frame=single, float=ht!, caption={Időzítési feltételeket tartalmazó scenario.},captionpos=b]
 specification Email {

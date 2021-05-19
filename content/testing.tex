@@ -77,6 +77,7 @@ A tesztelő dönti el, hogy helyesen kell hogy működjön vagy sem amit a monit
 Az Xtext keretrendszer a definiált DSL nyelvünkhöz generál egy Maven projekt architektúrát.
 A nyelvünk így elérhető maven plugin formájában is, amit felhasználhatunk az integrációs teszteinkhez.
 Elég csupán egy maven projektet felkonfigurálni a saját dsl plugin-ünkkel és elkészítethetjük a saját tesztelési keretrendszerünket.
+Ezek a maven projektek a szülő projektünkben helyezkedhetnek el, így a projekt struktúrában közvetlen a nyelvünk mellett vannak.
 A 9.3. ábrán és a 9.1. kódrészléten látható egy ilyen integrációs teszthez tartozó maven projekt felépítése és a hozzá tartozó teszteset.
 
 \begin{figure}[!ht]
@@ -193,6 +194,7 @@ Ez a build állítja elő a DSL nyelvhez tartozó Maven plugin-t is.
 A fordítással együtt lefutnak a unit tesztek is.
 Ezt követően hajtódnak végre az integrációs tesztek, amelyek a frissen fordított Maven plugint használják.
 Ha az összes fázis sikeresen lefutott, akkor az adott commit nem rontott el semmilyen korábbi funkciót.
+A CI-hoz tartozó script-et a 9.3. kódrészlet tartalmazza.
 
 \begin{figure}[!ht]
     \centering
@@ -205,3 +207,18 @@ Ha az összes fázis sikeresen lefutott, akkor az adott commit nem rontott el se
     \includegraphics[width=150mm, keepaspectratio]{figures/travis_overview.png}
     \caption{Travis CI build-ek eredményei.}
 \end{figure}
+
+\begin{lstlisting}[language=java, frame=single, float=ht!, caption={Travis CI-hoz tartozó .travis.yml script.},captionpos=b]
+language: java
+install: true
+jdk:
+    - openjdk11
+
+os:
+    - linux
+
+script:
+    - mvn clean install -U
+    - cd hu.bme.mit.dipterv.text.example
+    - mvn clean install -U
+\end{lstlisting}
