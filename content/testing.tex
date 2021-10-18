@@ -222,3 +222,238 @@ script:
     - cd hu.bme.mit.dipterv.text.example
     - mvn clean install -U
 \end{lstlisting}
+
+%----------------------------------------------------------------------------
+\clearpage\section{Tesztesetek}
+%----------------------------------------------------------------------------
+
+\subsection{Egyszerű időzítési megkötéseket tartalmazó tesztszenárió}
+
+A tesztesetekhez tartozó scenario követelmény megtalálható az x. ábrán.
+
+\begin{lstlisting}[language=java, frame=single, float=ht!, caption={Integrációs teszteset.},captionpos=b]
+specification Email {
+
+	object Computer computer;
+	object Server server;
+
+	integer timeout = 10;
+	string receiver = "John";
+	string subject = "Next meeting";
+
+	clock x;
+
+	constraint constraints {
+		message logout() computer -> server;
+	}
+
+	scenario sendEmail{
+		message checkEmail() computer -> computer reset x;
+		required message sendUnsentEmail() computer -> server;
+		pastConstraint {constraints} message newEmail(receiver, subject) computer -> server;
+		message downloadEmail(timeout) computer -> server clockConstraint {>(x,10)};
+	}
+}
+\end{lstlisting}
+
+A rendszerben egy szervergépből és egy felhasználói számitogépből áll.
+A szerver egy e-mail szervert szimulál, aminek a számitogép különböző kéréseket küldhet.
+Például lekérdezheti tőle a kapott e-mail vagy új e-mail küldhet.
+A követelményben leírjuk, hogy a rendszernek mi a helyes viselkedése e-mail küldés esetén.
+Ha a computer a \textit{checkEmail} hívást használva talál elküldendő e-mail az továbbítja a szervernek.
+Ezt az \textit{elvárt} \textit{sendUnsentEmail} üzenet jelzi.
+Ezt követően meg kell jelenjen a rendszer működésében a \textit{newEmail} üzenet.
+A ehelyett \textit{logout} üzenet érkezik a hibás működést jelent.
+A \textit{newEmail} üzenetet a \textit{downloadEmail} üzenet követi.
+Ezen az üzeneten van egy 10 másodperces időzítési feltétel, ami a letöltést szimulálja.
+
+A szenárióhoz tartozó tesztesetek a következők:
+
+\begin{itemize}
+    \item testNetworkRequirementSatisfied
+    \item testNetworkNoErrors
+    \item testNetworkWithErrors
+    \item testNetworkWithNoDelay
+\end{itemize}
+
+A \textit{testNetworkRequirementSatisfied} tesztesetben a rendszer helyes működését szimuláljuk és azt ellenőrizzük, hogy a generált monitor képes ezt érzékelni és jelzi.
+A \textit{testNetworkNoErrors} azt vizsgálja, hogy a monitor képes-e érzékelni, hogy a rendszer nem felelt meg a követelménynek.
+Itt úgy manipuláljuk a teszt rendszer, hogy lehagyjuk a letöltés részt a működésből.
+Ilyenkor a rendszer nem felel meg a követelménynek, viszont még jó állapotban marad, mert nem történt hiba.
+A \textit{testNetworkWithErrors} tesztesetnél a \textit{sendUnsentEmail} üzenet után egy \textit{logout} üzenetet küldünk a monitor és azt vizsgáljuk képes-e detektálni ezt a hibát.
+A \textit{testNetworkWithNoDelay}-nél pedig túl gyorsan küldjük a működés végén a \textit{downloadEmail} üzenetet és azt ellenőrizzük képes e a monitor ezt a hibát érzékelni.
+
+\subsection{Többféle üzenetet és megkötést tartalmazó egyszerű tesztszenárió}
+
+\begin{lstlisting}[language=java, frame=single, float=ht!, caption={Integrációs teszteset.},captionpos=b]
+    specification Photo{
+
+        object User user;
+        object Device device;
+        object Database db;
+
+        clock x;
+
+        constraint error {
+            message closeApp() user -> device;
+        }
+
+        scenario playlist_generation{
+            message openApp() user -> device reset x;
+            message accessWebcam() device -> device clockConstraint {<=(x, 5)} reset x;
+            required futureConstraint {error} message getPhoto() device -> user;
+            fail message cameraOffline() user -> device;
+            required strict message retrieveMood() device -> db;
+            required message retrieveMusic() device -> db;
+            strict message generatePlaylist() db -> device clockConstraint {<(x, 15)};
+        }
+    }
+\end{lstlisting}
+
+A tesztrendszerünk egy zene lista generáló alkalmazás, ami egy felhasználót, mobileszközt és adatbázist tartalmaz.
+A felhasználó "kedve" alapján generálja a listát, amit az arc kifejezése alapján határoz meg.
+A követelményben a rendszer alap működése van leírva egészen az elejétől, amikor a felhasználó megnyítja az alkalmazást.
+A követelmény leírás megtekinthető az x. ábrán.
+
+A szenárióhoz tartozó tesztesetek a következők:
+
+\begin{itemize}
+    \item testMobileRequirementSatisfied
+    \item testMobileWithError
+    \item testMobileWithDelay
+    \item testMobileWithTooMuchDelay
+\end{itemize}
+
+A teszteseteket a monitor hiba detektáló képeségét tesztelik.
+A \textit{testMobileWithDelay} és \textit{testMobileWithTooMuchDelay} tesztesetek az \textit{x <= 5} időzítési feltétel beteljesülését ellenőrzik.
+A \textit{testMobileWithDelay} 5 másodperces késleltetéssel küldjük az \textit{accessWebcam} üzenetet, míg a másiknál 6 másodperces késleltetéssel.
+Az első esetben a monitornak helyes működést kell érzékelnie a következőben pedig hibás működést.
+
+\subsection{Alt operátort tartalmazó tesztszenárió}
+
+A tesztszenárióhoz tartozó rendszerünk egy banki rendszer.
+A szenárió megtalálható az x. ábrán.
+
+\begin{lstlisting}[language=java, frame=single, float=ht!, caption={Integrációs teszteset.},captionpos=b]
+specification Bank {
+
+    object UserInterface ui;
+    object ATM atm;
+    object BankDB db;
+
+    bool success = true;
+
+    constraint b {
+        message logout() ui->atm;
+    }
+
+    scenario transaction {
+        message login(success) ui->atm;
+
+        alt (equals(success, true)) {
+            pastConstraint {b} message wReq() ui->atm;
+            message uDB() atm->db;
+        } (equals(success, false)) {
+            message loginUnsuccessful() ui->atm;
+            required message lockMachine() atm->ui;
+        }
+    }
+}
+\end{lstlisting}
+
+A rendszer egy felhasználói felületből, ATM-ből és banki adatbázisból áll.
+A követelményünkben két lehetséges működést írunk le.
+A \textit{success} paraméter jelzi, hogy melyik működés a helyes.
+A szenárióhoz tartozó tesztesetek a következők:
+
+\begin{itemize}
+    \item testBankMonitorPassing
+    \item testBankMonitorFailing
+\end{itemize}
+
+A tesztesetekkel azt vizsgáljuk, hogy a monitor képes-e a helytelen ág lefutását hibának érzékelni és a helyes viselkedés esetén detektálni a követelmény teljesítését.
+
+\subsection{Par operátort tartalmazó tesztszenárió}
+
+\begin{lstlisting}[language=java, frame=single, float=ht!, caption={Integrációs teszteset.},captionpos=b]
+specification Email {
+    object Computer computer;
+    object Server server;
+
+    constraint constraints{
+        message logout() computer -> server;
+    }
+
+    scenario email {
+        par {
+            case checkEmail {
+                message checkEmail() computer -> computer;
+            }
+
+            case newEmail {
+                pastConstraint {constraints} message newEmail() computer -> server;
+            }
+        }
+    }
+}
+\end{lstlisting}
+
+Ehhez a tesztszenárióhoz az első szenárióban lévő teszt rendszert használtuk fel.
+A szenárióhoz tartozó tesztesetek a következők:
+
+\begin{itemize}
+    \item testNetworkRequirementSatisfied
+    \item testNetworkOtherRequirementSatisfied
+\end{itemize}
+
+Azt vizsgáljuk, hogy a monitor képes mindkét permutáció esetén érzékelni a követelmény teljesítését.
+
+\subsection{Komplex tesztszenárió loop és alt operátorokkal}
+
+\begin{lstlisting}[language=java, frame=single, float=ht!, caption={Integrációs teszteset.},captionpos=b]
+specification Connection {
+
+    object Computer computer;
+    object Server server;
+
+    string receiver = "John";
+    string subject = "Next Meeting";
+    bool success = false;
+
+    clock x;
+    clock y;
+
+    constraint logout {
+        message logout() computer -> server;
+    }
+
+    constraint delete {
+        message deleteEmail(subject) computer -> server;
+    }
+
+    scenario authentication {
+        loop (1, 3) {
+            message login() computer -> computer reset x;
+            pastConstraint {logout} message attemptLogin() computer -> server reset y;
+        }
+
+        alt (equals(success, true)) {
+            message checkEmail() computer -> server clockConstraint {<(x, 2)};
+            required futureConstraint {delete} message newEmail(receiver, subject) computer -> server reset x;
+        } (equals(success, false)) {
+            required message logoutUser() server -> computer clockConstraint {>(y, 3)};
+            message lockComputer() server -> computer reset y;
+        }
+    }
+}
+\end{lstlisting}
+
+\begin{itemize}
+    \item testNetworkRequirementSatisfied
+    \item testNetworkRequirementSatisfiedTwice
+    \item testNetworkRequirementSatisfiedThreeTimes
+    \item testNetworkRequirementSatisfiedFourTimes
+    \item testNetworkAltTrueCase
+    \item testNetworkLogoutTooFast
+    \item testNetworkLogoutConstrait
+\end{itemize}
