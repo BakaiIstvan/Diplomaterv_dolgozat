@@ -224,10 +224,8 @@ script:
 \end{lstlisting}
 
 %----------------------------------------------------------------------------
-\clearpage\section{Tesztesetek}
+\clearpage\section{Tesztesetek}\subsection{Egyszerű időzítési megkötéseket tartalmazó tesztszenárió}
 %----------------------------------------------------------------------------
-
-\subsection{Egyszerű időzítési megkötéseket tartalmazó tesztszenárió}
 
 A tesztesetekhez tartozó scenario követelmény megtalálható az x. ábrán.
 
@@ -256,6 +254,12 @@ specification Email {
 }
 \end{lstlisting}
 
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=150mm, keepaspectratio]{figures/diagramExample.png}
+    \caption{Szenárió diagram.}
+\end{figure}
+
 A rendszerben egy szervergépből és egy felhasználói számitogépből áll.
 A szerver egy e-mail szervert szimulál, aminek a számitogép különböző kéréseket küldhet.
 Például lekérdezheti tőle a kapott e-mail vagy új e-mail küldhet.
@@ -283,7 +287,9 @@ Ilyenkor a rendszer nem felel meg a követelménynek, viszont még jó állapotb
 A \textit{testNetworkWithErrors} tesztesetnél a \textit{sendUnsentEmail} üzenet után egy \textit{logout} üzenetet küldünk a monitor és azt vizsgáljuk képes-e detektálni ezt a hibát.
 A \textit{testNetworkWithNoDelay}-nél pedig túl gyorsan küldjük a működés végén a \textit{downloadEmail} üzenetet és azt ellenőrizzük képes e a monitor ezt a hibát érzékelni.
 
-\subsection{Többféle üzenetet és megkötést tartalmazó egyszerű tesztszenárió}
+%----------------------------------------------------------------------------
+\clearpage\subsection{Többféle üzenetet és megkötést tartalmazó egyszerű tesztszenárió}
+%----------------------------------------------------------------------------
 
 \begin{lstlisting}[language=java, frame=single, float=ht!, caption={Integrációs teszteset.},captionpos=b]
     specification Photo{
@@ -310,6 +316,12 @@ A \textit{testNetworkWithNoDelay}-nél pedig túl gyorsan küldjük a működés
     }
 \end{lstlisting}
 
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=150mm, keepaspectratio]{figures/diagramMobileExample.png}
+    \caption{Szenárió diagram.}
+\end{figure}
+
 A tesztrendszerünk egy zene lista generáló alkalmazás, ami egy felhasználót, mobileszközt és adatbázist tartalmaz.
 A felhasználó "kedve" alapján generálja a listát, amit az arc kifejezése alapján határoz meg.
 A követelményben a rendszer alap működése van leírva egészen az elejétől, amikor a felhasználó megnyítja az alkalmazást.
@@ -329,7 +341,9 @@ A \textit{testMobileWithDelay} és \textit{testMobileWithTooMuchDelay} teszteset
 A \textit{testMobileWithDelay} 5 másodperces késleltetéssel küldjük az \textit{accessWebcam} üzenetet, míg a másiknál 6 másodperces késleltetéssel.
 Az első esetben a monitornak helyes működést kell érzékelnie a következőben pedig hibás működést.
 
-\subsection{Alt operátort tartalmazó tesztszenárió}
+%----------------------------------------------------------------------------
+\clearpage\subsection{Alt operátort tartalmazó tesztszenárió}
+%----------------------------------------------------------------------------
 
 A tesztszenárióhoz tartozó rendszerünk egy banki rendszer.
 A szenárió megtalálható az x. ábrán.
@@ -361,6 +375,12 @@ specification Bank {
 }
 \end{lstlisting}
 
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=150mm, keepaspectratio]{figures/diagramAltExample.png}
+    \caption{Szenárió diagram.}
+\end{figure}
+
 A rendszer egy felhasználói felületből, ATM-ből és banki adatbázisból áll.
 A követelményünkben két lehetséges működést írunk le.
 A \textit{success} paraméter jelzi, hogy melyik működés a helyes.
@@ -373,7 +393,9 @@ A szenárióhoz tartozó tesztesetek a következők:
 
 A tesztesetekkel azt vizsgáljuk, hogy a monitor képes-e a helytelen ág lefutását hibának érzékelni és a helyes viselkedés esetén detektálni a követelmény teljesítését.
 
-\subsection{Par operátort tartalmazó tesztszenárió}
+%----------------------------------------------------------------------------
+\clearpage\subsection{Par operátort tartalmazó tesztszenárió}
+%----------------------------------------------------------------------------
 
 \begin{lstlisting}[language=java, frame=single, float=ht!, caption={Integrációs teszteset.},captionpos=b]
 specification Email {
@@ -398,6 +420,12 @@ specification Email {
 }
 \end{lstlisting}
 
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=150mm, keepaspectratio]{figures/diagramParExample.png}
+    \caption{Szenárió diagram.}
+\end{figure}
+
 Ehhez a tesztszenárióhoz az első szenárióban lévő teszt rendszert használtuk fel.
 A szenárióhoz tartozó tesztesetek a következők:
 
@@ -408,7 +436,9 @@ A szenárióhoz tartozó tesztesetek a következők:
 
 Azt vizsgáljuk, hogy a monitor képes mindkét permutáció esetén érzékelni a követelmény teljesítését.
 
-\subsection{Komplex tesztszenárió loop és alt operátorokkal}
+%----------------------------------------------------------------------------
+\clearpage\subsection{Komplex tesztszenárió loop és alt operátorokkal}
+%----------------------------------------------------------------------------
 
 \begin{lstlisting}[language=java, frame=single, float=ht!, caption={Integrációs teszteset.},captionpos=b]
 specification Connection {
@@ -447,6 +477,12 @@ specification Connection {
     }
 }
 \end{lstlisting}
+
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=150mm, keepaspectratio]{figures/diagramOperatorExample.png}
+    \caption{Szenárió diagram.}
+\end{figure}
 
 \begin{itemize}
     \item testNetworkRequirementSatisfied
