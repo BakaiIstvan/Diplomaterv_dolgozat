@@ -3,37 +3,24 @@
 %----------------------------------------------------------------------------
 
 %----------------------------------------------------------------------------
-\section{Időzített automata generátor tesztelése}
+\section{Tesztelési célok}
 %----------------------------------------------------------------------------
 
-A generált időzített automaták forráskódját unit tesztek segítségével szeretnénk tesztelni.
-Az Xtext keretrendszer által nyújtott eszközök erre célra jól alkalmazhatók.
-
-\begin{figure}[!ht]
-    \centering
-    \includegraphics[width=150mm, height=9cm, keepaspectratio]{figures/unit_test_flow.png}
-    \caption{Unit tesztelés folyamatábrája.}
-\end{figure}
-
-A 9.1. ábrán látható a unit tesztelés tervének folyamatábrája.
-A teszteléssel az a célunk, hogy minél nagyobb magabiztosággal biztosítjuk a generátor helyes működését.
-Tesztelési kategoriák:
+A generált monitor forráskód tesztelésére a következő célokat fogalmazuk meg:
 
 \begin{itemize}
-    \item Üzenet típusok egyenkénti tesztelése
-    \item Üzenet típusokból összeállított kombinációk tesztelése
-    \item Scenario operátorok tesztelése
+    \item Az összes üzenet típus megjelenése a különböző teszt szenáriókban
+    \item Időzített feltételek helyes kiértékelése
+    \item Üzenet megkötések tesztelése
+    \item Alt és Par operátorok esetén, az üzenet szekvencia ágak helyes kiértékelése
+    \item Loop operátor esetén a minimális és maximálás üzenet ismétlődések tesztelése
+    \item Összetett szenárió tesztelése, ami több operátort tartalmaz
+    \item Egymást követő elvárt üzeneteket tartalmazó szenárió tesztelése
+    \item Egymást követő fail üzeneteket tartalmazó szenárió tesztelése
+    \item Regular üzenet tesztelése (ha megjelenik a rendszer működésében akkor ki kell értékelni a szenárió többi részét, ha nem jelenik meg a monitor helyes működést kell jelezzen és, hogy a követelmény nem teljesült)
+    \item Több óraváltozót tartalmazó szenárió tesztelése
+    \item Egymást követő üzenetek kombinációinak tesztelése (pl. elvárt üzenetet követő fail, elvárt üzenetet követő reguláris, stb.)
 \end{itemize}
-
-Az üzenet típusok egyenkénti tesztelésénél az összes üzenet típust le szeretnénk fedni.
-Az üzenet kombinációkból a főbb eseteket szeretnénk tesztelni.
-Például a 3 üzenet típus lehetséges sorrendjeinek kombinációi.
-A scenario operátoroknál azt fontos tesztelni, hogy a különálló üzenetekhez tartozó automata minták jól illeszkedjenek az operátorral elátott üzenetek automatájával.
-Például sima üzenet után következik egy alt konstrukció vagy esetleg egy loop után egy elvárt üzenet.
-
-Egy unit teszt akkor sikeres ha a generált automata forráskódja megegyezik az elvárt automata forráskódjával.
-Az elvárt automata forráskódját egy korábbi generálásból adjuk meg.
-Manuálisan győződünk meg a forráskód helyeségéről.
 
 %----------------------------------------------------------------------------
 \clearpage\section{Monitor forráskód generátor tesztelése}
@@ -185,7 +172,6 @@ A CI különböző fázisai a következők:
 
 \begin{itemize}
     \item I. Teljes Xtext projekt fordítása (Maven)
-    \item II. Unit tesztek futtatása
     \item III. Intergrációs tesztek futtatása
 \end{itemize}
 
@@ -278,6 +264,8 @@ A szenárióhoz tartozó tesztesetek a következők:
     \item testNetworkNoErrors
     \item testNetworkWithErrors
     \item testNetworkWithNoDelay
+    \item testNetworkFirstFail
+    \item testNetworkSecondFail
 \end{itemize}
 
 A \textit{testNetworkRequirementSatisfied} tesztesetben a rendszer helyes működését szimuláljuk és azt ellenőrizzük, hogy a generált monitor képes ezt érzékelni és jelzi.
@@ -334,6 +322,7 @@ A szenárióhoz tartozó tesztesetek a következők:
     \item testMobileWithError
     \item testMobileWithDelay
     \item testMobileWithTooMuchDelay
+    \item testMobileMissingRequiredMessage
 \end{itemize}
 
 A teszteseteket a monitor hiba detektáló képeségét tesztelik.
@@ -389,6 +378,8 @@ A szenárióhoz tartozó tesztesetek a következők:
 \begin{itemize}
     \item testBankMonitorPassing
     \item testBankMonitorFailing
+    \item testBankMonitorFalseCasePassing
+    \item testBankMonitorFalseCaseFailing
 \end{itemize}
 
 A tesztesetekkel azt vizsgáljuk, hogy a monitor képes-e a helytelen ág lefutását hibának érzékelni és a helyes viselkedés esetén detektálni a követelmény teljesítését.
@@ -490,6 +481,43 @@ specification Connection {
     \item testNetworkRequirementSatisfiedThreeTimes
     \item testNetworkRequirementSatisfiedFourTimes
     \item testNetworkAltTrueCase
+    \item testNetworkAltTrueCaseSatisfied
     \item testNetworkLogoutTooFast
     \item testNetworkLogoutConstrait
 \end{itemize}
+
+\clearpage\section{Tesztelés összefoglaló}
+
+\begin{table}[h!]
+    \begin{center}
+      \label{tab:table1}
+      \begin{tabular}{|p{2 cm}|p{2 cm}|p{2 cm}|p{2 cm}|p{2 cm}|p{2 cm}|}
+        \hline
+        \textbf{Tesztelési célok} & \textbf{Egyszerű tesztszenárió} & \textbf{Több üzenetet tartalmazó tesztszenárió} & \textbf{Alt operátort tartalmazó tesztszenárió} & \textbf{Par operátort tartalmazó tesztszenárió} & \textbf{Komplex tesztszenárió tesztszenárió}\\
+        \hline
+        Összes üzenet típus megjelenése & 1110.1 & a\\
+        \hline
+        Időzített feltételek tesztelése & 10.1 & b\\
+        \hline
+        Üzenet megkötések tesztelése & 23.113231 & c\\
+        \hline
+        Alt és Par tesztelése & 23.113231 & c\\
+        \hline
+        Loop operátor min és max tesztelése & 23.113231 & c\\
+        \hline
+        Több operátort tartalmazó szenárió tesztelése & 23.113231 & c\\
+        \hline
+        Egymást követő elvárt üzenetek & 23.113231 & c\\
+        \hline
+        Egymást követő fail üzenetek & 23.113231 & c\\
+        \hline
+        Sima üzenet tesztelése & 23.113231 & c\\
+        \hline
+        Több óraváltozó & 23.113231 & c\\
+        \hline
+        Egymás követő üzenetek kombinációi & 23.113231 & c\\
+        \hline
+      \end{tabular}
+      \caption{Összefoglaló táblázat}
+    \end{center}
+\end{table}
