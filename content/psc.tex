@@ -1,5 +1,6 @@
 %----------------------------------------------------------------------------
-\chapter{PSC – Property Sequence Charts}
+\chapter{Monitorozás alapjai}
+\section{PSC – Property Sequence Charts}
 %----------------------------------------------------------------------------
 A Message Sequence Chart-nak nagyon sok hiányossága van.
 Nem lehet vele megkötéseket definiálni vagy egy üzenetről eldönteni, hogy az egy elvárt vagy nem kívánt üzenet.
@@ -106,3 +107,86 @@ Az ATM ezután, ha nem történt \textit{logout} egy elvárt üzenetet küld a B
 
 A scenario-ink specifikálására most már rendelkezésünkre áll egy grafikus nyelv.
 A következőkben az lesz a feladatunk, hogy ezeket a diagramokat úgy transzformáljunk, hogy monitor kódot lehessen belőlük készíteni.
+
+
+%----------------------------------------------------------------------------
+\clearpage\section{TPSC – Timed Property Sequence Charts}
+%----------------------------------------------------------------------------
+A TPSC[2] a PSC-nek egy kiterjesztése.
+A PSC üzenetekre időzítési feltételeket specifikálhatunk.
+
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=150mm, keepaspectratio]{figures/4abra.png}
+    \caption{PSC kiterjesztése időzítési feltételekkel[2].}
+\end{figure}
+
+A TPSC óraváltozókat (x, y) használ az időzítéshez.
+Ezekre meg lehet adni feltételeket, valamint az óraváltozót lehet nullázni.
+A nullázással adott eseménytől (pl. üzenet vételétől) kezdve indul az időzítés, majd rákövetkező események időbeliségét ez alapján lehet ellenőrizni.
+
+A 3.1. ábrán látható, hogy például az \textit{e: a} sima üzenet \textit{e: a; x < t, y := 0} üzenetre bővül.
+Elvárjuk, hogy az \textit{a} üzenet \textit{t} idő előtt történjen meg és egy \textit{y} óraváltozót nullázunk.
+Az \textit{e: a} üzenet egy sima üzenet, szóval ha nem történik meg a specifikált idő intervallumban az nem jelent hibát.
+Viszont \textit{r: a} üzenetnél már elvárt, hogy \textit{t} időn belül megtörténjen. \textit{f: a} üzenet esetében viszont akkor jelez hibát a monitor, ha üzenet megtörtént \textit{t} időn belül.
+
+Egy megkötésre is meg lehet adni időzítési feltételt.
+Így megadhatjuk, hogy mennyi ideig nem szabad jönnie a megkötésben szereplő nem kivánt üzenetek egyikének.
+Ha a feltételben megadott idő után történik akkor az nem jelent hibát a monitor szempontjából.
+
+% !TeX spellcheck = hu_HU
+% !TeX encoding = UTF-8
+% !TeX program = xelatex
+%----------------------------------------------------------------------------
+\clearpage\section{TPSC scenario-ból automata készítése}
+%----------------------------------------------------------------------------
+
+A monitorozás alapja, hogy TPSC scenario-kból időzített automatákat (Timed Automata) tudjunk készíteni.
+Egy TA állapotokból, elfogadó állapotokból, feltételekből, akciókból és bemenetekkel címkézett állapotátmenetekből áll.
+Akkor fogad el egy bemenet sorozatot, ha ennek során elérünk az automata végállapotába.
+Ha elfogadó állapotot érünk el, akkor az a monitor szempontjából hibát jelent.
+Az alapelv az az, hogy minden TPSC elemhez tartozik egy minta automata (pattern) ami leírja a szemantikáját.
+Például a 4.1. és 4.2. ábrákon láthatóak a különböző PSC üzenetekhez tartozó minták.
+
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=150mm, keepaspectratio]{figures/5abra.png}
+    \caption{Sima üzenetekhez tartozó minták[2].}
+\end{figure}
+
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=150mm, keepaspectratio]{figures/6abra.png}
+    \caption{Elvárt üzenetekhez tartozó minták[2].}
+\end{figure}
+
+A minta automatánkban található szürke állapotok reprezentálják a végállapotokat.
+A megkötéseket az automatáknál egy átmenettel definiáljuk ami a nem kívánt üzenetek negáltjainak az ÉS kapcsolata.
+Például az 4.1. ábrán lévő 3. automata mintán látható „b, $\delta ’\&!a, \delta$” címkéjű hurokélen, a „b” címke minden olyan üzenetnek felel meg, amelyek nincsenek a nem kivánt üzenetek halmazában.
+A címke teljes jelentése az, hogy ha $\delta$’ időn belül nem jött nem kivánt üzenet és $\delta$ időn belül nem az „a” üzenet jött akkor maradjunk az s0 állapotban.
+Ezekből az automata részekből lesznek meghatározott illesztési szabályokkal a scenario-hoz tartozó teljes időzített automaták.
+Ennek az az alapelve, hogy a scenario-n végig menve az előző minta végállapotát a következő minta kezdőállapotával kell egyesíteni.
+Ezt a folyamatot mutatják be a 4.3., 4.4. és 4.5. ábrák.
+
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=60mm, keepaspectratio]{figures/7abra.png}
+    \caption{TPSC részlet.}
+\end{figure}
+
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=150mm, keepaspectratio]{figures/8abra.png}
+    \caption{Alkalmazott automata minták.}
+\end{figure}
+
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=130mm, keepaspectratio]{figures/9abra.png}
+    \caption{Az összeállított automata.}
+\end{figure}
+
+A monitor szempontjából az automata akkor jelez hibás működést ha elfogadó állapotba kerül.
+Ilyenkor a követelmény már nem teljesíthető.
+Ha az automata egy sima állapotban van, akkor az helyes működést jelent viszont a követelmény még ekkor sem teljesült.
+A követelmény akkor teljesül amikor az automata a végső (FINAL) állapotba kerül és nem érkezik további amely elmozditaná őt onnan.
