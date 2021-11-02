@@ -488,36 +488,32 @@ specification Connection {
 
 \clearpage\section{Tesztelés összefoglaló}
 
-\begin{table}[h!]
-    \begin{center}
-      \label{tab:table1}
-      \begin{tabular}{|p{2 cm}|p{2 cm}|p{2 cm}|p{2 cm}|p{2 cm}|p{2 cm}|}
-        \hline
-        \textbf{Tesztelési célok} & \textbf{Egyszerű tesztszenárió} & \textbf{Több üzenetet tartalmazó tesztszenárió} & \textbf{Alt operátort tartalmazó tesztszenárió} & \textbf{Par operátort tartalmazó tesztszenárió} & \textbf{Komplex tesztszenárió tesztszenárió}\\
-        \hline
-        Összes üzenet típus megjelenése & 1110.1 & a\\
-        \hline
-        Időzített feltételek tesztelése & 10.1 & b\\
-        \hline
-        Üzenet megkötések tesztelése & 23.113231 & c\\
-        \hline
-        Alt és Par tesztelése & 23.113231 & c\\
-        \hline
-        Loop operátor min és max tesztelése & 23.113231 & c\\
-        \hline
-        Több operátort tartalmazó szenárió tesztelése & 23.113231 & c\\
-        \hline
-        Egymást követő elvárt üzenetek & 23.113231 & c\\
-        \hline
-        Egymást követő fail üzenetek & 23.113231 & c\\
-        \hline
-        Sima üzenet tesztelése & 23.113231 & c\\
-        \hline
-        Több óraváltozó & 23.113231 & c\\
-        \hline
-        Egymás követő üzenetek kombinációi & 23.113231 & c\\
-        \hline
-      \end{tabular}
-      \caption{Összefoglaló táblázat}
-    \end{center}
-\end{table}
+\begin{longtable}{|p{0.1428\linewidth}|p{0.1428\linewidth}|p{0.1428\linewidth}|p{0.1428\linewidth}|p{0.1428\linewidth}|p{0.1428\linewidth}|}
+\hline
+\textbf{Tesztelési célok} & \textbf{Egyszerű tesztszenárió} & \textbf{Több üzenetet tartalmazó tesztszenárió} & \textbf{Alt operátort tartalmazó tesztszenárió} & \textbf{Par operátort tartalmazó tesztszenárió} & \textbf{Komplex tesztszenárió}\\
+\hline
+Összes üzenet típus megjelenése & X & X & X & X & X\\
+\hline
+Időzítési feltételek tesztelése & X, testNetworkRequirementSatisfied, testNetworkWithNoDelay & X, testMobileRequirementSatisfied, testMobileWithDelay, testMobileWithTooMuchDelay & - & - & X, testNetworkRequirementSatisfied, testNetworkLogoutTooFast\\
+\hline
+Üzenet megkötések tesztelése & X, testNetworkRequirementSatisfied, testNetworkWithErrors & X, testMobileRequirementSatisfied & - & - & X, testNetworkRequirementSatisfied\\
+\hline
+Alt és Par tesztelése & - & - & X & X & X, testNetworkRequirementSatisfied, testNetworkAltTrueCase, testNetworkAltTrueCaseSatisfied\\
+\hline
+Loop operátor min és max tesztelése & - & - & - & - & X, testNetworkRequirementSatisfied, testNetworkRequirementSatisfiedTwice, testNetworkRequirementSatisfiedThreeTimes, testNetworkRequirementSatisfiedFourTimes\\
+\hline
+Több operátort tartalmazó szenárió tesztelése & - & - & - & - & X\\
+\hline
+Egymást követő elvárt üzenetek & - & X, testMobileRequirementSatisfied, testMobileMissingRequiredMessage, testMobileRequiredEventually, testMobileRequiredNotReceived & - & - & -\\
+\hline
+Egymást követő fail üzenetek & X, testNetworkRequirementSatisfied, testNetworkFirstFail, testNetworkSecondFail & - & - & - & -\\
+\hline
+Sima üzenet tesztelése & X, testNetworkRequirementSatisfied & X, testNetworkRequirementSatisfied & X, testNetworkRequirementSatisfied & X, testNetworkRequirementSatisfied & X, testNetworkRequirementSatisfied\\
+\hline
+Több óraváltozó & - & - & - & - & X\\
+\hline
+Egymást követő üzenetek kombinációi & X & X & - & - & -\\
+\hline
+\caption{Összefoglaló táblázat}
+\label{tab:table1}
+\end{longtable}
