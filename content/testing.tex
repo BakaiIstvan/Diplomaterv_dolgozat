@@ -163,7 +163,7 @@ Ezt a projekt struktúrát felhasználva a teszteink köré tudunk egy Maven ala
 A függelékben található egy példa unit teszt eset az automata generátor tesztelésére.
 
 %----------------------------------------------------------------------------
-\clearpage\section{Continuous Integration}
+\clearpage\section{Continuous Integration}\subsection{Travis CI}
 %----------------------------------------------------------------------------
 
 Az időzített automata és monitor forráskód generátorok automatikus tesztelése a Travis CI segítségével történik.
@@ -172,7 +172,7 @@ A CI különböző fázisai a következők:
 
 \begin{itemize}
     \item I. Teljes Xtext projekt fordítása (Maven)
-    \item III. Intergrációs tesztek futtatása
+    \item II. Intergrációs tesztek futtatása
 \end{itemize}
 
 A generátorokhoz tartozó Xtext projekten lefut egy Maven build, amely az új feltöltött verzió tartalmazza.
@@ -207,7 +207,29 @@ script:
     - mvn clean install -U
     - cd hu.bme.mit.dipterv.text.example
     - mvn clean install -U
+    - cd ../hu.bme.mit.dipterv.text.mobileexample
+    - mvn clean install -U
+    - cd ../hu.bme.mit.dipterv.text.altexample
+    - mvn clean install -U
+    - cd ../hu.bme.mit.dipterv.text.parexample
+    - mvn clean install -U
+    - cd ../hu.bme.mit.dipterv.text.operatorexample
+    - mvn clean install -U
 \end{lstlisting}
+
+%----------------------------------------------------------------------------
+\clearpage\subsection{Jenkins CI}
+%----------------------------------------------------------------------------
+
+A github repository egy lokálisan futtatott Jenkins szerverrel is össze van kötve.
+A szerveren lévő \textit{MavenBuild} nevű job minden \textit{master} ágra feltöltött commit-ra lefut.
+A job lefordítja az Xtext projektet és lefuttatja az integrációs teszteket.
+
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=150mm, keepaspectratio]{figures/jenkinsCI.png}
+    \caption{Travis CI build-ek eredményei.}
+\end{figure}
 
 %----------------------------------------------------------------------------
 \clearpage\section{Tesztesetek}\subsection{Egyszerű időzítési megkötéseket tartalmazó tesztszenárió}
@@ -319,10 +341,14 @@ A szenárióhoz tartozó tesztesetek a következők:
 
 \begin{itemize}
     \item testMobileRequirementSatisfied
+    \item testMobileFutureConstraint
+    \item testMobileFutureConstraintEarly
     \item testMobileWithError
     \item testMobileWithDelay
     \item testMobileWithTooMuchDelay
     \item testMobileMissingRequiredMessage
+    \item testMobileRequiredEventually
+    \item testMobileRequiredNotReceived
 \end{itemize}
 
 A teszteseteket a monitor hiba detektáló képeségét tesztelik.
@@ -496,7 +522,7 @@ specification Connection {
 \hline
 Időzítési feltételek tesztelése & X, testNetworkRequirementSatisfied, testNetworkWithNoDelay & X, testMobileRequirementSatisfied, testMobileWithDelay, testMobileWithTooMuchDelay & - & - & X, testNetworkRequirementSatisfied, testNetworkLogoutTooFast\\
 \hline
-Üzenet megkötések tesztelése & X, testNetworkRequirementSatisfied, testNetworkWithErrors & X, testMobileRequirementSatisfied & - & - & X, testNetworkRequirementSatisfied\\
+Üzenet megkötések tesztelése & X, testNetworkRequirementSatisfied, testNetworkWithErrors & X, testMobileRequirementSatisfied, testMobileFutureConstraint, testMobileFutureConstraintEarly & - & - & X, testNetworkRequirementSatisfied\\
 \hline
 Alt és Par tesztelése & - & - & X & X & X, testNetworkRequirementSatisfied, testNetworkAltTrueCase, testNetworkAltTrueCaseSatisfied\\
 \hline
