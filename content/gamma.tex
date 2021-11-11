@@ -1,3 +1,48 @@
 %----------------------------------------------------------------------------
 \chapter{Gamma keretrendszer integráció}
 %----------------------------------------------------------------------------
+
+\section{Gamma keretrendszer}
+
+Rövid leírás a keretrendszerről.
+
+\clearpage\section{Generált monitor integrációja}
+
+\begin{lstlisting}[language=java, frame=single, float=ht!, caption={Szenárió szöveges leírása.},captionpos=b]
+specification Light{
+
+    object TrafficLight light;
+    object Controller controller;
+
+    scenario sendEmail{
+        message displayRed() controller -> light;
+        fail message displayRed() controller -> light;
+    }
+}
+\end{lstlisting}
+
+\begin{lstlisting}[language=java, frame=single, float=ht!, caption={Szenárió szöveges leírása.},captionpos=b]
+Received Message: controller.displayRed().light
+[Monitor] available transition are: 
+------------------------------------
+controller.displayRed().light, q0->q1, , 
+!(controller.displayRed().light), q0->q0, , 
+=----------------------------------=
+Transition: controller.displayRed().light, q0->q1, , 
+transition triggered: controller.displayRed().light, q0->q1, , 
+q1
+[GammaMonitorTest] Received status from monitor: System is in good state.
+Received Message: controller.displayGreen().light
+[Monitor] available transition are: 
+------------------------------------
+!(controller.displayRed().light), q1->q3, , 
+controller.displayRed().light, q1->q2, , 
+!(controller.displayRed().light), q1->q1, , 
+=----------------------------------=
+Transition: !(controller.displayRed().light), q1->q3, , 
+transition triggered: !(controller.displayRed().light), q1->q3, , 
+q3
+[GammaMonitorTest] Received status from monitor: System is in good state.
+[GammaMonitorTest] Received status from monitor: Requirement satisfied
+[GammaMonitorTest] Monitor reported that the requirement was satisfied
+\end{lstlisting}
