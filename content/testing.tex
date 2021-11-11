@@ -518,27 +518,39 @@ specification Connection {
 \hline
 \textbf{Tesztelési célok} & \textbf{Egyszerű tesztszenárió} & \textbf{Több üzenetet tartalmazó tesztszenárió} & \textbf{Alt operátort tartalmazó tesztszenárió} & \textbf{Par operátort tartalmazó tesztszenárió} & \textbf{Komplex tesztszenárió}\\
 \hline
-Összes üzenet típus megjelenése & X & X & X & X & X\\
+Egyszerű üzenet megjelenése & X & X & X & X & X\\
 \hline
-Időzítési feltételek tesztelése & X, testNetworkRequirementSatisfied, testNetworkWithNoDelay & X, testMobileRequirementSatisfied, testMobileWithDelay, testMobileWithTooMuchDelay & - & - & X, testNetworkRequirementSatisfied, testNetworkLogoutTooFast\\
+Elvárt üzenet megjelenése & X & X & X & - & X\\
 \hline
-Üzenet megkötések tesztelése & X, testNetworkRequirementSatisfied, testNetworkWithErrors & X, testMobileRequirementSatisfied, testMobileFutureConstraint, testMobileFutureConstraintEarly & - & - & X, testNetworkRequirementSatisfied\\
+Nem kivánt (fail) üzenet megjelenése & X & X & - & - & -\\
 \hline
-Alt és Par tesztelése & - & - & X & X & X, testNetworkRequirementSatisfied, testNetworkAltTrueCase, testNetworkAltTrueCaseSatisfied\\
+Strict üzenet tesztelése & - & X & - & - & -\\
 \hline
-Loop operátor min és max tesztelése & - & - & - & - & X, testNetworkRequirementSatisfied, testNetworkRequirementSatisfiedTwice, testNetworkRequirementSatisfiedThreeTimes, testNetworkRequirementSatisfiedFourTimes\\
+Időzítési feltételek tesztelése & X & X & - & - & X\\
+\hline
+Past megkötés tesztelése & X & - & X & X & X\\
+\hline
+Future megkötés tesztelése & - & X & - & - & X\\
+\hline
+Alt operátor tesztelése & - & - & X & - & X\\
+\hline
+Par operátor tesztelése & - & - & - & X & -\\
+\hline
+Loop operátor tesztelése & - & - & - & - & X\\
 \hline
 Több operátort tartalmazó szenárió tesztelése & - & - & - & - & X\\
 \hline
-Egymást követő elvárt üzenetek & - & X, testMobileRequirementSatisfied, testMobileMissingRequiredMessage, testMobileRequiredEventually, testMobileRequiredNotReceived & - & - & -\\
+Egymást követő elvárt üzenetek & - & X & - & - & -\\
 \hline
-Egymást követő fail üzenetek & X, testNetworkRequirementSatisfied, testNetworkFirstFail, testNetworkSecondFail & - & - & - & -\\
+Egymást követő fail üzenetek & X & - & - & - & -\\
 \hline
-Sima üzenet tesztelése & X, testNetworkRequirementSatisfied & X, testMobileRequirementSatisfied, testMobileScenarioNeverStarts & X, testBankRequirementSatisfied & X, testNetworkRequirementSatisfied & X, testNetworkRequirementSatisfied\\
+Sima üzenet tesztelése & X & X & X & X & X\\
 \hline
 Több óraváltozó & - & - & - & - & X\\
 \hline
-Egymást követő üzenetek kombinációi & X & X & - & - & -\\
+Elvárt után fail üzenet & X & - & - & - & -\\
+\hline
+Fail után elvárt üzenet & - & X & - & - & -\\
 \hline
 \caption{Összefoglaló táblázat}
 \label{tab:table1}
