@@ -163,10 +163,10 @@ Ezt a projekt struktúrát felhasználva a teszteink köré tudunk egy Maven ala
 A függelékben található egy példa unit teszt eset az automata generátor tesztelésére.
 
 %----------------------------------------------------------------------------
-\clearpage\section{Continuous Integration}\subsection{Travis CI}
+\clearpage\section{Continuous Integration}\subsection{Github Actions CI}
 %----------------------------------------------------------------------------
 
-Az időzített automata és monitor forráskód generátorok automatikus tesztelése a Travis CI segítségével történik.
+Az időzített automata és monitor forráskód generátorok automatikus tesztelése a Github Actions segítségével történik.
 A CI minden feltöltött új commit esetén lefut.
 A CI különböző fázisai a következők:
 
@@ -190,46 +190,50 @@ A CI-hoz tartozó script-et a 9.3. kódrészlet tartalmazza.
 
 \begin{figure}[!ht]
     \centering
-    \includegraphics[width=150mm, keepaspectratio]{figures/travis_overview.png}
-    \caption{Travis CI build-ek eredményei.}
+    \includegraphics[width=150mm, keepaspectratio]{figures/github_ci_builds.png}
+    \caption{Github Actions CI build-ek eredményei.}
 \end{figure}
 
-\begin{lstlisting}[language=java, frame=single, float=ht!, caption={Travis CI-hoz tartozó .travis.yml script.},captionpos=b]
-language: java
-install: true
-jdk:
-    - openjdk11
+\begin{lstlisting}[language=java, frame=single, float=ht!, caption={Github Actions CI-hoz tartozó .yml script.},captionpos=b]
+# This workflow will build a Java project with Maven, and cache/restore any dependencies to improve the workflow execution time
+# For more information see: https://help.github.com/actions/language-and-framework-guides/building-and-testing-java-with-maven
 
-os:
-    - linux
+name: Java CI with Maven
 
-script:
-    - mvn clean install -U
-    - cd hu.bme.mit.dipterv.text.example
-    - mvn clean install -U
-    - cd ../hu.bme.mit.dipterv.text.mobileexample
-    - mvn clean install -U
-    - cd ../hu.bme.mit.dipterv.text.altexample
-    - mvn clean install -U
-    - cd ../hu.bme.mit.dipterv.text.parexample
-    - mvn clean install -U
-    - cd ../hu.bme.mit.dipterv.text.operatorexample
-    - mvn clean install -U
+on:
+    push:
+    branches: [ master ]
+    pull_request:
+    branches: [ master ]
+
+jobs:
+    build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up JDK 11
+        uses: actions/setup-java@v2
+        with:
+        java-version: '11'
+        distribution: 'adopt'
+        cache: maven
+    - name: Build with Maven
+        run: mvn clean install -U
+    - name: Test example project
+        run: cd hu.bme.mit.dipterv.text.example; mvn clean install -U
+    - name: Test mobileexample project
+        run: cd hu.bme.mit.dipterv.text.mobileexample; mvn clean install -U
+    - name: Test altexample project
+        run: cd hu.bme.mit.dipterv.text.altexample; mvn clean install -U
+    - name: Test parexample project
+        run: cd hu.bme.mit.dipterv.text.parexample; mvn clean install -U
+    - name: Test operatorexample project
+        run: cd hu.bme.mit.dipterv.text.operatorexample; mvn clean install -U
+    - name: Test gamma integration project
+        run: cd hu.bme.mit.dipterv.text.gammaexample; mvn clean install -U
 \end{lstlisting}
-
-%----------------------------------------------------------------------------
-\clearpage\subsection{Jenkins CI}
-%----------------------------------------------------------------------------
-
-A github repository egy lokálisan futtatott Jenkins szerverrel is össze van kötve.
-A szerveren lévő \textit{MavenBuild} nevű job minden \textit{master} ágra feltöltött commit-ra lefut.
-A job lefordítja az Xtext projektet és lefuttatja az integrációs teszteket.
-
-\begin{figure}[!ht]
-    \centering
-    \includegraphics[width=150mm, keepaspectratio]{figures/jenkinsCI.png}
-    \caption{Travis CI build-ek eredményei.}
-\end{figure}
 
 %----------------------------------------------------------------------------
 \clearpage\section{Tesztesetek}\subsection{Egyszerű időzítési megkötéseket tartalmazó tesztszenárió}
