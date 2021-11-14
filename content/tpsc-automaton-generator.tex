@@ -103,13 +103,21 @@ T0_q8:
 A generátorhoz az Xtend technológiát használtam.
 Minden egyes TPSC üzenethez legenerálja a hozzá tartozó minta automatát, majd elvégzi azok összecsatolását.
 
-Az időzített automaták generálásához egy adatstruktúrát definiáltam, amely a következő Java osztályokból áll:
+Az időzített automaták generálásához egy adatstruktúrát definiáltam, amely a következő Java osztályokból és interfészekből áll:
 \begin{itemize}
+    \item AltExpressionInterface
+    \item Automaton
+    \item BasicTransition
+    \item ClockConstraint
+    \item ClockExpressionInterface
+    \item Constraint
+    \item EpsilonTransition
+    \item OperatorFunctions
     \item State
     \item StateType
     \item Transition
-    \item Automaton
-    \item Specification
+    \item UnwantedConstraint
+    \item WantedConstraint
 \end{itemize}
 
 A 7.1. ábrán látható az adatstruktúra UML osztály diagramja.
@@ -150,6 +158,7 @@ Ezt követően az automata Never Claim leírását egy .txt kiterjesztésű fáj
 
 \begin{lstlisting}[language=java,frame=single, float=h!, caption={TPSC scenario szöveges leírása.},captionpos=b]
 specification Bank {
+
 	object User_Interface ui;
 	object ATM atm;
 	object BankDB db;
@@ -162,8 +171,8 @@ specification Bank {
 
 	scenario transaction {
 		message login() ui -> atm reset x;
-		message wReq() required ui -> atm pastConstraint {b, x < 1} clockConstraint {x < 5};
-		message uDB() atm -> db clockConstraint {x < 10};
+		required pastConstraint {b, <(x, 1)} message wReq() ui -> atm clockConstraint {<(x, 5)};
+		message uDB() atm -> db clockConstraint {<(x, 10)};
 	}
 }
 \end{lstlisting}

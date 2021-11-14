@@ -92,7 +92,8 @@ A 8.5. kódrészleten látható az okos telefon és a monitor közti kapcsolat m
 A monitor a rendszertől kapott üzenetek alapján jelzi, hogy a követelmény alapján mi a rendszer állapota.
 
 \begin{lstlisting}[frame=single, float=ht!, caption={Okos telefon működésére megadott scenario követelmény.},captionpos=b]
-specification spec1 {
+specification Photo{
+
 	object User user;
 	object Device device;
 	object Database db;
@@ -104,11 +105,11 @@ specification spec1 {
 	scenario playlist_generation{
 		message openApp() user -> device;
 		message accessWebcam() device -> device;
-		message getPhoto() required device -> user;
-		message cameraOffline() fail user -> device;
-		message retrieveMood() required strict device -> db;
-		message retrieveMusic() required device -> db;
-		message generatePlaylist() strict db -> device;
+		required message getPhoto() device -> user;
+		fail message cameraOffline() user -> device;
+		required strict message retrieveMood() device -> db;
+		required message retrieveMusic() device -> db;
+		strict message generatePlaylist() db -> device;
 	}
 }
 \end{lstlisting}
