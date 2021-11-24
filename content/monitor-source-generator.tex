@@ -1,9 +1,9 @@
 %----------------------------------------------------------------------------
-\chapter{Monitor forráskód generátor}
+\section{Monitor forráskód generátor}
 %----------------------------------------------------------------------------
 
 %----------------------------------------------------------------------------
-\section{A monitor interfészei}
+\subsection{A monitor interfészei}
 %----------------------------------------------------------------------------
 
 A monitorozás alatt lévő rendszer egy közös interfészen keresztül kommunikál a monitorral.
@@ -55,7 +55,7 @@ public interface IClock {
 A 8.2. kódrészlet tartalmazza a IClock java interfészt.
 
 %----------------------------------------------------------------------------
-\section{A monitor forráskód megvalósítása}
+\subsection{A monitor forráskód megvalósítása}
 %----------------------------------------------------------------------------
 A generált forráskód struktúrája egy statikus és egy generált dinamikus részből áll.
 A statikus részbe az időzitett automata java osztályai kerülnek:
@@ -80,7 +80,7 @@ A dinamikus rész pirosan van bekeretezve és a statikus rész pedig sötét vö
 A szükséges forráskódok generálásához az Xtend technológiát használtam.
 
 %----------------------------------------------------------------------------
-\clearpage\section{Mintapélda}
+\clearpage\subsection{Mintapélda}
 %----------------------------------------------------------------------------
 
 A 8.3. kódrészleten látható egy scenario követelmény, amit egy okos telefon működésére specifikáltunk.
@@ -259,14 +259,14 @@ A mintához tartozó Specification osztály a függelékben található.
 A generált automatát a konstruktorában állítja elő.
 
 %----------------------------------------------------------------------------
-\section{Összetett szerkezetek}
+\subsection{Összetett szerkezetek}
 %----------------------------------------------------------------------------
 
 A monitor forráskód generátor támogatja az alt, par vagy loop operátorokat tartalmazó scenariokat is.
 Erre példát a függelékben lehet találni.
 
 %----------------------------------------------------------------------------
-\clearpage\section{Időzítési feltételek}
+\clearpage\subsection{Időzítési feltételek}
 %----------------------------------------------------------------------------
 
 A monitor forráskód generátor támogatja az időzítési feltételeket tartalmazó scenariokat is.

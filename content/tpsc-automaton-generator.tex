@@ -1,9 +1,9 @@
 %----------------------------------------------------------------------------
-\chapter{Időzített automata generátor}
+\chapter{Monitor forráskód generálás}\section{Időzített automata generátor}
 %----------------------------------------------------------------------------
 
 %----------------------------------------------------------------------------
-\section{Az automata generátor célja}
+\subsection{Az automata generátor célja}
 %----------------------------------------------------------------------------
 
 Az önálló laboratórium során elkészített automata generátort kibővítettem úgy, hogy támogassa a TPSC elemekhez tartozó automata minták generálását. Bemenetként egy TPSC scenario szöveges leírását kapja meg amiből a minta alapú módszerrel generál egy TA automatát.
@@ -98,7 +98,7 @@ T0_q8:
 \end{lstlisting}
 
 %----------------------------------------------------------------------------
-\section{Az automata generátor megvalósítása}
+\subsection{Az automata generátor megvalósítása}
 %----------------------------------------------------------------------------
 A generátorhoz az Xtend technológiát használtam.
 Minden egyes TPSC üzenethez legenerálja a hozzá tartozó minta automatát, majd elvégzi azok összecsatolását.
@@ -147,7 +147,7 @@ A Specification osztály feladata, hogy összeállítsa a szöveges leírásban 
 Ezt követően az automata Never Claim leírását egy .txt kiterjesztésű fájlba írja.
 
 %----------------------------------------------------------------------------
-\section{Mintapélda}
+\subsection{Mintapélda}
 %----------------------------------------------------------------------------
 
 \begin{figure}[h!]

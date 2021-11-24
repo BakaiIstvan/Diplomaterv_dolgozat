@@ -1,6 +1,11 @@
 %----------------------------------------------------------------------------
-\chapter{Háttérismeretek}\section{Monitorozás alapjai}
-\subsection{PSC – Property Sequence Charts}
+\chapter{Háttérismeretek}\section{A monitorozás alapjai}
+
+\clearpage\section{Időfüggő viselkedés specifikálására alkalmas formalizmusok áttekintése}
+\subsection{MSC - Message Sequence Chart}
+\subsection{MTL - Metric Temporal Logic}
+\subsection{MITL - Metric Interval Temporal Logic}
+\subsection{PSC – Property Sequence Chart}
 %----------------------------------------------------------------------------
 A Message Sequence Chart-nak nagyon sok hiányossága van.
 Nem lehet vele megkötéseket definiálni vagy egy üzenetről eldönteni, hogy az egy elvárt vagy nem kívánt üzenet.
@@ -110,7 +115,7 @@ A következőkben az lesz a feladatunk, hogy ezeket a diagramokat úgy transzfor
 
 
 %----------------------------------------------------------------------------
-\clearpage\subsection{TPSC – Timed Property Sequence Charts}
+\clearpage\section{A TPSC bemutatása}
 %----------------------------------------------------------------------------
 A TPSC[2] a PSC-nek egy kiterjesztése.
 A PSC üzenetekre időzítési feltételeket specifikálhatunk.
@@ -138,7 +143,7 @@ Ha a feltételben megadott idő után történik akkor az nem jelent hibát a mo
 % !TeX encoding = UTF-8
 % !TeX program = xelatex
 %----------------------------------------------------------------------------
-\clearpage\subsection{TPSC scenario-ból automata készítése}
+\clearpage\section{TPSC szcenário alapú automata konstrukció}
 %----------------------------------------------------------------------------
 
 A monitorozás alapja, hogy TPSC scenario-kból időzített automatákat (Timed Automata) tudjunk készíteni.
