@@ -1,8 +1,64 @@
 %----------------------------------------------------------------------------
 \chapter{Háttérismeretek}\section{A monitorozás alapjai}
 
+Egy monitor feladata az, hogy futási időben egy rendszert megfigyeljen, elemezzen és egy adott követelmény alapján felismerje a rendszer helytelen viselkedését.
+Ezt a helytelen viselkedést jelzi a rendszernek, de néhány esetben a rendszer működését is befolyásolhatja.
+Ez egy kritikus rendszernél különösen fontos lehet hiszen, egy ilyen rendszernél elvárt, hogy folyamatosan biztonságosan tudjon működni.
+Ezen kívül, a monitornak időmérésre is szüksége van, mert a követelmény tartalmazhat időziteseket is.
+Az 1.1. ábra bemutatja a monitorozás koncepcióját.
+
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=150mm, keepaspectratio]{figures/1abra.png}
+    \caption{Kontextusfüggő rendszerek monitorozása időzítési feltételekkel.}
+\end{figure}
+
+A scenario alapú monitorozás során a kommunikáció megfigyelésével szeretnénk felismerni a problémákat a rendszerünkben.
+A rendszerben lévő objektumok közti interakciókat, üzeneteket fogja megfigyelni a monitor.
+A követelményt scenario formájában adjuk meg az üzenet szekvenciák specifikálásához.
+Szekvencia diagramok segítségével egyszerűen megadhatunk ilyeneket.
+A diagramokat a későbbiekben olyan alakra kell majd hoznunk, hogy abból a monitor létrehozható legyen.
+
 \clearpage\section{Időfüggő viselkedés specifikálására alkalmas formalizmusok áttekintése}
 \subsection{MSC - Message Sequence Chart}
+
+Az egyik legelterjedtebb scenario alapú modellezésre használt vizuális formalizmus a
+Message Sequence Charts (MSC). A nyelv célja két, vagy több üzeneteket cserélő
+objektum között az interakciónak a leírása. A Unified Modelling Language (UML) 2.0
+szekvencia diagram leíró részét nagyban inspirálta ez a nyelv.
+
+Az MSC főbb elemei:
+
+\begin{itemize}
+    \item MSC head, lifeline és end
+    \item Objektum létrehozása
+    \item Üzenet csere
+    \item Függvényhívás és válasz
+    \item Timer-ek
+    \item Idő intervallumok
+    \item Összetett szerkezetek: alt, opt, parallel, loop (high-MSC)
+\end{itemize}
+
+Az összetett szerkezetek a high-MSC (h-MSC) nevű MSC kiterjesztésben találhatók.
+
+Ezzel a nyelvvel már könnyedén lehet a scenarioban lévő üzeneteket specifikálni, és azokat a
+rendszer komponenseket, amelyek ezeket az üzeneteket egymásnak küldik.
+
+Az UML és az MSC sokban hasonlítanak, de az alapelveik különbözőek.
+
+MSC-ben a függőleges vonalak („life line”-ok) autonóm entitásokat képviselnek, míg a
+szekvencia diagramok esetén ezek egy objektumot reprezentálnak. MSC esetén az
+entitásoknak nem szükséges ugyanazon a számítógépen lenniük.
+
+MSC-ben egy átmenet egy aszinkron üzenetet reprezentál, amely két entitás között jött létre,
+míg az UML szekvencia diagram leíró nyelvében, egy átmenet egy függvényhívást jelent.
+
+Az MSC-nek sajnos sok hiányossága is tapasztalható. Hiányzik belőle az üzenetek
+típusossága. Egy követelmény megfogalmazásakor fontos, hogy meg tudjuk mondani, melyek
+az elvárt üzenetek vagy, hogy melyek jelentenek hibát. Az is nagy hiányosságnak számít,
+hogy az üzenetekre nem lehetséges megkötéseket megadni. Ez egyben megnehezíti egy
+követelmény leírását is.
+
 \subsection{MTL - Metric Temporal Logic}
 \subsection{MITL - Metric Interval Temporal Logic}
 \subsection{PSC – Property Sequence Chart}
