@@ -4,10 +4,51 @@
 
 \section{Gamma keretrendszer}
 
-A Gamma keretrendszerrel komponensalapú reaktív rendszereket lehet tervezni, és az a célja hogy támogassa az elosztott rendszerek modelallapú fejlesztését.
+A \textit{Gamma} keretrendszerrel komponensalapú reaktív rendszereket lehet tervezni, és az a célja hogy támogassa az elosztott rendszerek modelallapú fejlesztését.
 A létrehozott rendszert a keretrendszerrel lehet tesztelni, ellenőrizni és szimulálni is.
+A keretrendszernek a \textit{Yakindu} modellező eszköz használja, amit kiegészít egy modellező réteggel ahol meg valósítható a komponensek közti kommunikációs hálózat.
+A komponensek hierarchikusan helyezkednek el egymás mellett, ami megkönnyíti egyes komponensek többszöri felhasználását.
+A tervezett rendszerhez a keretrendszer képes Java forráskódot is generálni.
+A modelhez generálhatoak tesztesetek vagy akár verifikálható az UPPAAL model ellenőrző eszköz használatával.
+
+A monitor illesztéséhez a \textit{Gamma} \textit{tutorial} csomagjában lévő rendszert használtam.
+Ez egy irányitórendszer modelje, ami egy kereszteződésben lévő közlekedési lámpák működtetésért felel.
+A jelző lámpák általános három fokozatú lámpák és a piros-zöld-sárga-piros jelzéseket ismétlik.
+A rendszer támogat még egy megszakító állapotot, amit a rendőrség kapcsolhat be.
+Ilyenkor minden lámpa sárgán villog.
 
 \clearpage\section{Generált monitor integrációja}
+
+A keretrendszer a \textit{gamma.monitor} csomagba generálja a beépített monitor forráskódja.
+Ezt a \textit{Gamma} monitort cseréltem le a saját a monitor komponensemhez tartozó forráskóddal megvalósítva a szükséges interfészeket.
+
+\begin{lstlisting}[language=java, frame=single, float=ht!, caption={Monitor komponenshez tartozó kódrészlet.},captionpos=b]
+public void runComponent() {
+    Queue<Event> eventQueue = getProcessQueue();
+    while (!eventQueue.isEmpty()) {
+            Event event = eventQueue.remove();
+            switch (event.getEvent()) {
+                case "LightInputs.DisplayNone":
+                    update("controller", "light", "displayNone", new HashMap<String, Object>());
+                break;
+                case "LightInputs.DisplayYellow":
+                    update("controller", "light", "displayYellow", new HashMap<String, Object>());
+                break;
+                case "LightInputs.DisplayRed":
+                    update("controller", "light", "displayRed", new HashMap<String, Object>());
+                break;
+                case "LightInputs.DisplayGreen":
+                    update("controller", "light", "displayGreen", new HashMap<String, Object>());
+                break;
+                default:
+                    throw new IllegalArgumentException("No such event!");
+            }
+    }
+    notifyListeners();
+}
+\end{lstlisting}
+
+A \textit{Gamma} rendszer és a monitor komponens közti kommunikáció megvalósítása a 7.1-es kódrészletben látható.
 
 \begin{lstlisting}[language=java, frame=single, float=ht!, caption={Szenárió szöveges leírása.},captionpos=b]
 specification Light{
