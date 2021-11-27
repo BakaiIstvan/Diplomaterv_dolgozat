@@ -49,6 +49,7 @@ public void runComponent() {
 \end{lstlisting}
 
 A \textit{Gamma} rendszer és a monitor komponens közti kommunikáció megvalósítása a 7.1-es kódrészletben látható.
+Ez a rendszer eseményeit továbbítja a generált monitornak a megfelelő alakra alakítva.
 
 \begin{lstlisting}[language=java, frame=single, float=ht!, caption={Szenárió szöveges leírása.},captionpos=b]
 specification Light{
@@ -63,7 +64,11 @@ specification Light{
 }
 \end{lstlisting}
 
-\begin{lstlisting}[language=java, frame=single, float=ht!, caption={Szenárió szöveges leírása.},captionpos=b]
+A 7.2-es kódrészlet tartalmazza a követelmény szcenáriót.
+Elvárjuk, hogy ha pirosan világított a lámpa akkor a következő állapotta a lámpának ne legyen megint piros.
+Ezt egy \textit{fail} üzenet segítségével tudjuk elérni.
+
+\begin{lstlisting}[language=java, frame=single, float=ht!, caption={Monitor kimenete.},captionpos=b]
 Received Message: controller.displayRed().light
 [Monitor] available transition are: 
 ------------------------------------
@@ -88,3 +93,6 @@ q3
 [GammaMonitorTest] Received status from monitor: Requirement satisfied
 [GammaMonitorTest] Monitor reported that the requirement was satisfied
 \end{lstlisting}
+
+A 7.3-as kódrészlet a monitor kimenetét.
+A monitor helyes működést érzékelt, a rendszer jó állapotban van és megfelelt a követelménynek.
