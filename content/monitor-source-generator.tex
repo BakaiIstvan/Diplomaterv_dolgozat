@@ -7,32 +7,34 @@
 %----------------------------------------------------------------------------
 
 A monitorozás alatt lévő rendszer egy közös interfészen keresztül kommunikál a monitorral.
-Az interfész Java implementációja a 8.1. kódrészleten tekinthető meg.
+Az interfész \textit{Java} implementációja a 5.5. kódrészleten tekinthető meg.
 A monitor azt vizsgálja, hogy a rendszer a scenario szerint működik-e.
 
 Monitor interfész:
 \begin{itemize}
-    \item update(): a monitorban tárolt rendszer állapotát frissíti a paraméterben kapott üzenet alapján.
-    \item goodStateReached(): a rendszer aktuális állapotát jelzi.
-    \item requirementSatisfied(): jelzi hogy a rendszer megfelel-e a követelménynek
-    \item errorDetected(): detektált hiba jelzésére szolgál
+    \item \textit{update()}: a monitorban tárolt rendszer állapotát frissíti a paraméterben kapott üzenet alapján.
+    \item \textit{goodStateReached()}: a rendszer aktuális állapotát jelzi.
+    \item \textit{requirementSatisfied()}: jelzi hogy a rendszer megfelel-e a követelménynek.
+    \item \textit{errorDetected()}: detektált hiba jelzésére szolgál.
+    \item \textit{noMoreMessages()}: a rendszer jelezheti a kommunikáció végét.
 \end{itemize}
 
-Az update() függvényt a rendszer hívja, hogy továbbítsa az üzenetet a monitornak.
+Az \textit{update()} függvényt a rendszer hívja, hogy továbbítsa az üzenetet a monitornak.
 Paraméterként az üzenet küldőjét (sender), fogadóját (receiver), üzenet nevét (messageType) és az üzenet paramétereit várja (parameters).
-A goodStateReached() függvény jelzi, hogy a rendszer jelenlegi működése megfelel-e a követelménynek.
-A requirementSatisfied() függvény visszaadja, hogy a követelmény teljesült-e.
+A \textit{goodStateReached()} függvény jelzi, hogy a rendszer jelenlegi működése megfelel-e a követelménynek.
+A \textit{requirementSatisfied()} függvény visszaadja, hogy a követelmény teljesült-e.
 Ha a követelménynek megfelelt a rendszer viselkedése akkor igazat ad vissza, amúgy hamisat.
 
 Az üzenetek megfigyeléséhez szükséges segédfüggvényeket a kommunikációs infrastruktúrához kézzel kell megírni.
-Ezek a monitort az update() függvényen keresztül hívják.
+Ezek a monitort az \textit{update()} függvényen keresztül hívják.
 
 \begin{lstlisting}[language=java,frame=single, float=h!, caption={Monitor interfész Java implementációja.},captionpos=b]
 public interface IMonitor {
 	public boolean goodStateReached();
-	public void update(String sender, String receiver, String messageType, String[] parameters);
+	public void update(String sender, String receiver, String messageType, Map<String, Object> parameters);
 	public boolean requirementSatisfied();
-	public void errorDetected(String sender, String receiver, String messageType, String[] parameters);
+	public void errorDetected(String sender, String receiver, String messageType, Map<String, Object> parameters);
+	public void noMoreMessages();
 }
 \end{lstlisting}
 
@@ -41,8 +43,8 @@ Ezen az interfészen keresztül lehet az óraváltozokat lekérdezni vagy nullá
 Két függvénye van:
 
 \begin{itemize}
-    \item getClock(String clock): óraváltozó lekérdezése név alapján
-    \item resetClock(String clock): óraváltozó nullázása név alapján
+    \item \textit{getClock(String clock)}: óraváltozó lekérdezése név alapján.
+    \item \textit{resetClock(String clock)}: óraváltozó nullázása név alapján.
 \end{itemize}
 
 \begin{lstlisting}[language=java,frame=single, float=h!, caption={Időzitő interfész Java implementációja.},captionpos=b]
@@ -52,7 +54,26 @@ public interface IClock {
 }
 \end{lstlisting}
 
-A 8.2. kódrészlet tartalmazza a IClock java interfészt.
+A 5.6. kódrészlet tartalmazza a \textit{IClock} java interfészt.
+
+A monitor az \textit{ISystem} interfészen keresztül tud a rendszernek üzeneteket küldeni a megfigyelt viselkedésről.
+Három függvénye van:
+
+\begin{itemize}
+	\item \textit{receiveMonitorStatus()}: a monitor jelzi a rendszer felé a követelmény alapján az aktuális státuszt.
+	\item \textit{receiveMonitorError()}: a monitor jelzi a rendszer felé ha hibát detektált.
+	\item \textit{receiveMonitorSuccess()}: a monitor jelzi a rendszer felé ha teljesült a követelmény.
+\end{itemize}
+
+\begin{lstlisting}[language=java,frame=single, float=h!, caption={Rendszer interfész Java implementációja.},captionpos=b]
+public interface ISystem {
+	public void receiveMonitorStatus(String message);
+	public void receiveMonitorError(String actualMessage, String lastAcceptedMessage);
+	public void receiveMonitorSuccess();
+}
+\end{lstlisting}
+
+Az 5.7-es kódrészlet tartalmazza az \textit{ISystem} java interfészt.
 
 %----------------------------------------------------------------------------
 \subsection{A monitor forráskód megvalósítása}
