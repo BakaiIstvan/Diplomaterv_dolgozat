@@ -56,7 +56,35 @@ Ez egyben megnehezíti egy követelmény leírását is.
 
 \subsection{MTL - Metric Temporal Logic}
 
-A
+A temporális logikák olyan formális rendszerek amelyekkel kijelentések igazságának logikai időbeli változását vizsgálhatjuk.
+A kijelentések időbeli vizsgálásához temporális operátorokat használunk:
+\begin{itemize}
+    \item \textit{mindig}
+    \item \textit{valamikor}
+    \item \textit{mielőtt}
+    \item \textit{addig, amíg}
+    \item \textit{azelőtt, hogy}
+    \item stb...
+\end{itemize}
+A temporális logikákat két osztályba sorolhatjuk:
+\begin{itemize}
+    \item \textit{lineáris}
+    \item \textit{elágazó}
+\end{itemize}
+A lineáris temporális logikáknál a model egy lefutását vizsgáljuk.
+A logikai idő egy állapotsorozatnak tekintjük, ahol minden állapotnak egy rákövetkezője van.
+Az elágazó temporális logikáknál viszont az összes lehetséges végrehajtást tekintjük.
+A lineárissal ellentétben itt egy állapotnak több rákövetkezője is lehet és a logikai idő egy fa alakjában jelenik meg.
+
+A \textit{Metric Temporal Logic} egy speciális temporális logika.
+Ebben a temporális logikába a temporális operátorok a következők:
+\begin{itemize}
+    \item \textit{addig} (until)
+    \item \textit{következő} (next)
+    \item \textit{ettől} (since)
+    \item \textit{előtt} (previous)
+\end{itemize}
+Az \textit{MTL} egy lineáris temporális logika, amely mind az átlapolt és kitalált idő absztrakciókat tekínti.
 
 \subsection{MITL - Metric Interval Temporal Logic}
 \subsection{PSC – Property Sequence Chart}
