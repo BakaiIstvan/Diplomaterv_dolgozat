@@ -64,7 +64,7 @@ A kijelentések időbeli vizsgálásához temporális operátorokat használunk:
     \item \textit{mielőtt}
     \item \textit{addig, amíg}
     \item \textit{azelőtt, hogy}
-    \item stb...
+    \item \textit{stb...}
 \end{itemize}
 A temporális logikákat két osztályba sorolhatjuk:
 \begin{itemize}
@@ -76,8 +76,7 @@ A logikai idő egy állapotsorozatnak tekintjük, ahol minden állapotnak egy r�
 Az elágazó temporális logikáknál viszont az összes lehetséges végrehajtást tekintjük.
 A lineárissal ellentétben itt egy állapotnak több rákövetkezője is lehet és a logikai idő egy fa alakjában jelenik meg.
 
-A \textit{Metric Temporal Logic} egy speciális temporális logika.
-Ebben a temporális logikába a temporális operátorok a következők:
+A \textit{Metric Temporal Logic} temporális operátorai a következők:
 \begin{itemize}
     \item \textit{addig} (until)
     \item \textit{következő} (next)
@@ -85,8 +84,28 @@ Ebben a temporális logikába a temporális operátorok a következők:
     \item \textit{előtt} (previous)
 \end{itemize}
 Az \textit{MTL} egy lineáris temporális logika, amely mind az átlapolt és kitalált idő absztrakciókat tekínti.
+Logikai jelek tulajdonságait specifikálhatjuk vele az időben.
+
+A szintaxisa a \textit{Linear Temporal Logic}-hoz hasonlít:
+\begin{itemize}
+    \item véges atomi kijelentések halmaza \textit{AP}
+    \item $\neg$ és $\lor$ logikai operátorokat
+    \item $U_I$ (\textit{Until}) temporális modális operátor, ahol egy \textit{I} egy nem negatív számokból álló intervallum
+    \item $S_I$ (\textit{Since}) temporális modális operátor
+\end{itemize}
+
+A \textit{past-MTL} megfelel a teljes \textit{MTL}-nek az \textit{Until} operátor kivételével.
+Hasonlóan, a \textit{future-MTL} a teljes \textit{MTL} a \textit{Since} operátor nélkül.
+
+A cíkkekben változó, hogy az \textit{MTL}-t hogyan definiálják.
+Az \textit{MTL} megegyezik az előbbi \textit{future-MTL}-el vagy a teljes szintaxissal van definiálva.
 
 \subsection{MITL - Metric Interval Temporal Logic}
+
+Az \textit{MITL} egy részhalmaza az \textit{MTL}-nek.
+A definiciója megegyezik a \textit{MTL}-el azzal a megkötéssel, hogy az \textit{I} halmazok \textit{U}-ban és \textit{S}-ben nem egyedülállóak.
+A halmazok határait természetes számok vagy végtelen határolják be.
+
 \subsection{PSC – Property Sequence Chart}
 %----------------------------------------------------------------------------
 A Message Sequence Chart-nak nagyon sok hiányossága van.

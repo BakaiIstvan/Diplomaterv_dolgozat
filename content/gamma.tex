@@ -96,3 +96,234 @@ q3
 
 A 7.3-as kódrészlet a monitor kimenetét.
 A monitor helyes működést érzékelt, a rendszer jó állapotban van és megfelelt a követelménynek.
+
+\begin{lstlisting}[language=java, frame=single, float=ht!, caption={Szenárió szöveges leírása.},captionpos=b]
+specification Light{
+
+    object TrafficLight light;
+    object Controller controller;
+    object Police police;
+    
+    bool success = false;
+    
+    scenario trafficLight {
+        message policeInterruptRaised(success) police -> controller;
+        
+        alt(equals(success, false)) {
+            message displayRed() controller -> light;
+            message displayGreen() controller -> light;
+            message displayYellow() controller -> light;
+        } (equals(success, true)) {
+            message displayYellow() controller -> light;
+        }
+        
+    }
+}
+\end{lstlisting}
+
+\begin{lstlisting}[language=java, frame=single, float=ht!, caption={Szenárió szöveges leírása.},captionpos=b]
+[Automaton] Setting final transition
+[Automaton] Setting final transition
+[GammaMonitorTest] Resetting values
+Received Message: controller.displayRed().light
+[Monitor] available transition are:
+------------------------------------
+police.policeInterruptRaised(success).controller, q0->q1, ,
+!(police.policeInterruptRaised(success).controller), q0->q0, ,
+=----------------------------------=
+Transition: police.policeInterruptRaised(success).controller, q0->q1, ,
+[Monitor] available transition are:
+------------------------------------
+police.policeInterruptRaised(success).controller, q0->q1, ,
+!(police.policeInterruptRaised(success).controller), q0->q0, ,
+=----------------------------------=
+Transition: !(police.policeInterruptRaised(success).controller), q0->q0, ,
+transition triggered: !(police.policeInterruptRaised(success).controller), q0->q0, ,
+q0
+[GammaMonitorTest] Received status from monitor: System is in good state.
+Received Message: controller.displayRed().light
+[Monitor] available transition are:
+------------------------------------
+police.policeInterruptRaised(success).controller, q0->q1, ,
+!(police.policeInterruptRaised(success).controller), q0->q0, ,
+=----------------------------------=
+Transition: police.policeInterruptRaised(success).controller, q0->q1, ,
+[Monitor] available transition are:
+------------------------------------
+police.policeInterruptRaised(success).controller, q0->q1, ,
+!(police.policeInterruptRaised(success).controller), q0->q0, ,
+=----------------------------------=
+Transition: !(police.policeInterruptRaised(success).controller), q0->q0, ,
+transition triggered: !(police.policeInterruptRaised(success).controller), q0->q0, ,
+q0
+[GammaMonitorTest] Received status from monitor: System is in good state.
+Received Message: controller.displayGreen().light
+[Monitor] available transition are:
+------------------------------------
+police.policeInterruptRaised(success).controller, q0->q1, ,
+!(police.policeInterruptRaised(success).controller), q0->q0, ,
+=----------------------------------=
+Transition: police.policeInterruptRaised(success).controller, q0->q1, ,
+[Monitor] available transition are:
+------------------------------------
+police.policeInterruptRaised(success).controller, q0->q1, ,
+!(police.policeInterruptRaised(success).controller), q0->q0, ,
+=----------------------------------=
+Transition: !(police.policeInterruptRaised(success).controller), q0->q0, ,
+transition triggered: !(police.policeInterruptRaised(success).controller), q0->q0, ,
+q0
+[GammaMonitorTest] Received status from monitor: System is in good state.
+Received Message: police.policeInterruptRaised(success).controller
+[Monitor] available transition are:
+------------------------------------
+police.policeInterruptRaised(success).controller, q0->q1, ,
+!(police.policeInterruptRaised(success).controller), q0->q0, ,
+=----------------------------------=
+Transition: police.policeInterruptRaised(success).controller, q0->q1, ,
+transition triggered: police.policeInterruptRaised(success).controller, q0->q1, ,
+q1
+[GammaMonitorTest] Received status from monitor: System is in good state.
+Received Message: controller.displayYellow().light
+[Monitor] available transition are:
+------------------------------------
+epsilon, q1->qinit0
+=----------------------------------=
+Transition: epsilon, q1->qinit0
+[EpsilonTransition]epsilon, q1->qinit0 canTrigger is true
+PrevTransition: epsilon, q1->qinit0
+[Monitor] available transition are:
+------------------------------------
+epsilon, qinit0->q2
+epsilon, qinit0->q4
+=----------------------------------=
+Transition: epsilon, qinit0->q2
+[EpsilonTransition]epsilon, qinit0->q2 canTrigger is true
+PrevTransition: epsilon, qinit0->q2
+[Monitor] available transition are:
+------------------------------------
+!(controller.displayYellow().light), q2->q2, ,
+controller.displayYellow().light, q2->q3, ,
+epsilon, qinit0->q4
+=----------------------------------=
+Transition: !(controller.displayYellow().light), q2->q2, ,
+[Monitor] available transition are:
+------------------------------------
+!(controller.displayYellow().light), q2->q2, ,
+controller.displayYellow().light, q2->q3, ,
+epsilon, qinit0->q4
+=----------------------------------=
+Transition: controller.displayYellow().light, q2->q3, ,
+[Monitor] available transition are:
+------------------------------------
+!(controller.displayYellow().light), q2->q2, ,
+controller.displayYellow().light, q2->q3, ,
+epsilon, qinit0->q4
+=----------------------------------=
+Transition: epsilon, qinit0->q4
+[EpsilonTransition]epsilon, qinit0->q4 canTrigger is false
+[EpsilonTransition]epsilon, qinit0->q4 canTrigger is false
+[Monitor] available transition are:
+------------------------------------
+!(controller.displayYellow().light), q2->q2, ,
+controller.displayYellow().light, q2->q3, ,
+=----------------------------------=
+Transition: !(controller.displayYellow().light), q2->q2, ,
+[Monitor] available transition are:
+------------------------------------
+!(controller.displayYellow().light), q2->q2, ,
+controller.displayYellow().light, q2->q3, ,
+=----------------------------------=
+Transition: controller.displayYellow().light, q2->q3, ,
+transition triggered: controller.displayYellow().light, q2->q3, ,
+q3
+[GammaMonitorTest] Received status from monitor: System is in good state.
+transition triggered: epsilon, q3->qfinal1
+qfinal1
+[GammaMonitorTest] Received status from monitor: Requirement satisfied
+[GammaMonitorTest] Monitor reported that the requirement was satisfied
+[Automaton] Setting final transition
+[Automaton] Setting final transition
+[GammaMonitorTest] Resetting values
+Received Message: police.policeInterruptRaised(success).controller
+[Monitor] available transition are:
+------------------------------------
+police.policeInterruptRaised(success).controller, q0->q1, ,
+!(police.policeInterruptRaised(success).controller), q0->q0, ,
+=----------------------------------=
+Transition: police.policeInterruptRaised(success).controller, q0->q1, ,
+transition triggered: police.policeInterruptRaised(success).controller, q0->q1, ,
+q1
+[GammaMonitorTest] Received status from monitor: System is in good state.
+Received Message: controller.displayRed().light
+[Monitor] available transition are:
+------------------------------------
+epsilon, q1->qinit0
+=----------------------------------=
+Transition: epsilon, q1->qinit0
+[EpsilonTransition]epsilon, q1->qinit0 canTrigger is true
+PrevTransition: epsilon, q1->qinit0
+[Monitor] available transition are:
+------------------------------------
+epsilon, qinit0->q2
+epsilon, qinit0->q4
+=----------------------------------=
+Transition: epsilon, qinit0->q2
+[EpsilonTransition]epsilon, qinit0->q2 canTrigger is false
+[EpsilonTransition]epsilon, qinit0->q2 canTrigger is false
+[Monitor] available transition are:
+------------------------------------
+epsilon, qinit0->q4
+=----------------------------------=
+Transition: epsilon, qinit0->q4
+[EpsilonTransition]epsilon, qinit0->q4 canTrigger is true
+PrevTransition: epsilon, qinit0->q4
+[Monitor] available transition are:
+------------------------------------
+controller.displayRed().light, q4->q5, ,
+!(controller.displayRed().light), q4->q4, ,
+=----------------------------------=
+Transition: controller.displayRed().light, q4->q5, ,
+transition triggered: controller.displayRed().light, q4->q5, ,
+q5
+[GammaMonitorTest] Received status from monitor: System is in good state.
+Received Message: controller.displayRed().light
+[Monitor] available transition are:
+------------------------------------
+controller.displayGreen().light, q5->q6, ,
+!(controller.displayGreen().light), q5->q5, ,
+=----------------------------------=
+Transition: controller.displayGreen().light, q5->q6, ,
+[Monitor] available transition are:
+------------------------------------
+controller.displayGreen().light, q5->q6, ,
+!(controller.displayGreen().light), q5->q5, ,
+=----------------------------------=
+Transition: !(controller.displayGreen().light), q5->q5, ,
+transition triggered: !(controller.displayGreen().light), q5->q5, ,
+q5
+[GammaMonitorTest] Received status from monitor: System is in good state.
+Received Message: controller.displayGreen().light
+[Monitor] available transition are:
+------------------------------------
+controller.displayGreen().light, q5->q6, ,
+!(controller.displayGreen().light), q5->q5, ,
+=----------------------------------=
+Transition: controller.displayGreen().light, q5->q6, ,
+transition triggered: controller.displayGreen().light, q5->q6, ,
+q6
+[GammaMonitorTest] Received status from monitor: System is in good state.
+Received Message: controller.displayYellow().light
+[Monitor] available transition are:
+------------------------------------
+controller.displayYellow().light, q6->q7, ,
+!(controller.displayYellow().light), q6->q6, ,
+=----------------------------------=
+Transition: controller.displayYellow().light, q6->q7, ,
+transition triggered: controller.displayYellow().light, q6->q7, ,
+q7
+[GammaMonitorTest] Received status from monitor: System is in good state.
+transition triggered: epsilon, q7->qfinal1
+qfinal1
+[GammaMonitorTest] Received status from monitor: Requirement satisfied
+[GammaMonitorTest] Monitor reported that the requirement was satisfied
+\end{lstlisting}
