@@ -22,7 +22,7 @@ Ilyenkor minden lámpa sárgán villog.
 A keretrendszer a \textit{gamma.monitor} csomagba generálja a beépített monitor forráskódja.
 Ezt a \textit{Gamma} monitort cseréltem le a saját a monitor komponensemhez tartozó forráskóddal megvalósítva a szükséges interfészeket.
 
-\begin{lstlisting}[language=java, frame=single, float=ht!, caption={Monitor komponenshez tartozó kódrészlet.},captionpos=b]
+\begin{lstlisting}[language=java, frame=single, float=ht!, caption={Monitor komponenshez tartozó kódrészlet.},captionpos=b,label=gamma_integration_code]
 public void runComponent() {
     Queue<Event> eventQueue = getProcessQueue();
     while (!eventQueue.isEmpty()) {
@@ -48,10 +48,10 @@ public void runComponent() {
 }
 \end{lstlisting}
 
-A \textit{Gamma} rendszer és a monitor komponens közti kommunikáció megvalósítása a 7.1-es kódrészletben látható.
+A \textit{Gamma} rendszer és a monitor komponens közti kommunikáció megvalósítása a \ref{gamma_integration_code}-es kódrészletben látható.
 Ez a rendszer eseményeit továbbítja a generált monitornak a megfelelő alakra alakítva.
 
-\begin{lstlisting}[language=java, frame=single, float=ht!, caption={Szenárió szöveges leírása.},captionpos=b]
+\begin{lstlisting}[language=java, frame=single, float=ht!, caption={Szenárió szöveges leírása.},captionpos=b, label=gamma_red_scenario]
 specification Light{
 
     object TrafficLight light;
@@ -64,11 +64,11 @@ specification Light{
 }
 \end{lstlisting}
 
-A 7.2-es kódrészlet tartalmazza a követelmény szcenáriót.
+A \ref{gamma_red_scenario}-es kódrészlet tartalmazza a követelmény szcenáriót.
 Elvárjuk, hogy ha pirosan világított a lámpa akkor a következő állapotta a lámpának ne legyen megint piros.
 Ezt egy \textit{fail} üzenet segítségével tudjuk elérni.
 
-\begin{lstlisting}[language=java, frame=single, float=ht!, caption={Monitor kimenete.},captionpos=b]
+\begin{lstlisting}[language=java, frame=single, float=ht!, caption={Monitor kimenete.},captionpos=b,label=gamma_red_monitor]
 Received Message: controller.displayRed().light
 [Monitor] available transition are: 
 ------------------------------------
@@ -94,10 +94,10 @@ q3
 [GammaMonitorTest] Monitor reported that the requirement was satisfied
 \end{lstlisting}
 
-A 7.3-as kódrészlet a monitor kimenetét.
+A \ref{gamma_red_monitor}-as kódrészlet a monitor kimenetét.
 A monitor helyes működést érzékelt, a rendszer jó állapotban van és megfelelt a követelménynek.
 
-\begin{lstlisting}[language=java, frame=single, float=ht!, caption={Szenárió szöveges leírása.},captionpos=b]
+\begin{lstlisting}[language=java, frame=single, float=ht!, caption={Szenárió szöveges leírása.},captionpos=b,label=gamma_complex_scenario]
 specification Light{
 
     object TrafficLight light;
@@ -124,15 +124,15 @@ specification Light{
 }
 \end{lstlisting}
 
-A 7.4-es kódrészlet egy másik követelményt tartalmaz, amit a rendszeren szeretnénk vizsgálni.
+A \ref{gamma_complex_scenario}-es kódrészlet egy másik követelményt tartalmaz, amit a rendszeren szeretnénk vizsgálni.
 Azt várjuk, hogy ha történt rendőrség általi \textit{interrupt} kérés akkor a lámpa sárgán villogjon.
 Ha pedig nem volt ilyen interrupt akkor azt várjuk el, hogy a lámpa rendesen működjön.
-A 7.5-ös kódrészlet tartalmazza az illesztés kiegészítését.
+A \ref{gamma_police_improvement}-ös kódrészlet tartalmazza az illesztés kiegészítését.
 Itt a rendörségi \textit{interrupt} kérést továbbítjuk a monitornak.
 A rendszer mindkét esetben a követelménynek megfelelően működött.
 A szcenárióhoz tartozó monitor kimenetek a \textit{Függelékben} található meg.
 
-\begin{lstlisting}[language=java, frame=single, float=ht!, caption={Gamma illesztéshez tartozó kódrészlet.},captionpos=b]
+\begin{lstlisting}[language=java, frame=single, float=ht!, caption={Gamma illesztéshez tartozó kódrészlet.},captionpos=b,label=gamma_police_improvement]
 @Override
 public void raisePolice() {
     monitor.update("police", "controller", "policeInterruptRaised", Map.of("success", true));
