@@ -2,7 +2,7 @@
 \chapter{Szöveges PSC leíró nyelv kibővítése}
 %----------------------------------------------------------------------------
 
-A nyelvet az Xtext technológia segítségével definiáltam.
+A nyelvet az \textit{Xtext} technológia segítségével definiáltam.
 A nyelv két új elemmel bővült:
 
 \begin{itemize}
@@ -13,18 +13,20 @@ A nyelv két új elemmel bővült:
 \begin{figure}[!ht]
     \centering
     \includegraphics[width=150mm, keepaspectratio]{figures/11abra.png}
-    \caption{TPSC diagramból szöveges leírás az Xtext nyelv használatával.}
+    \caption{\textit{TPSC} diagramból szöveges leírás az \textit{Xtext} nyelv használatával.}
+    \label{xtext_language_example}
 \end{figure}
 
-A 6.1. ábrán látható, hogy egy TPSC diagramot hogyan tudunk leírni a nyelvünk segítségével.
+A \ref{xtext_language_example} ábrán látható, hogy egy \textit{TPSC} diagramot hogyan tudunk leírni a nyelvünk segítségével.
 Definiálhatjuk a diagramban szereplő objektumokat, a megkötéseket amiket használni fogunk és végül, hogy milyen üzenetek vannak a követelményünkben.
 
 \begin{figure}[!ht]
     \centering
     \includegraphics[width=150mm, keepaspectratio]{figures/12abra.png}
-    \caption{Egy TPSC üzenet felépítése a definiált Xtext nyelvben.}
+    \caption{Egy \textit{TPSC} üzenet felépítése a definiált \textit{Xtext} nyelvben.}
+    \label{xtext_message}
 \end{figure}
 
-A 6.2. ábrán látszik, hogy megjelenik a \textit{clockConstraint} kulcsszó ami egy időzítési feltétel megadására szolgál.
+A \ref{xtext_message} ábrán látszik, hogy megjelenik a \textit{clockConstraint} kulcsszó ami egy időzítési feltétel megadására szolgál.
 A kulcsszó után kapcsos zárójelek közt megadható a feltétel.
 A \textit{reset} kulcsszó az óraváltozó nullázására szolgál.

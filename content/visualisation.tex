@@ -2,17 +2,19 @@
 \chapter{TPSC specifikációk vizualizációja}
 %----------------------------------------------------------------------------
 
-A specifikációk vizualizációjához a \textit{Modell alapú rendszertervezés} tárgy során készített PSC vizualizációs Sirius alkalmazást használtam fel.
-Előszőr kiegészítettem az alkalmazást TPSC elemek vizualizációjával.
-Egy \textit{XML} generátor előállítja a specifikáció \textit{XMLs} leírását, amit a Sirius alkalmazás képes feldolgozni és előállítani a hozzá tartozó diagramot.
+A specifikációk vizualizációjához a \textit{Modell alapú rendszertervezés} tárgy során készített \textit{PSC} vizualizációs \textit{Sirius} alkalmazást használtam fel.
+Előszőr kiegészítettem az alkalmazást \textit{TPSC} elemek vizualizációjával.
+Egy \textit{XML} generátor előállítja a specifikáció \textit{XMLs} leírását, amit a \textit{Sirius} alkalmazás képes feldolgozni és előállítani a hozzá tartozó diagramot.
+Egy ilyen generált \textit{XMl} fájl megtekinthető a \ref{sirius_xml} kódrészleten.
 
 \begin{figure}[!ht]
     \centering
     \includegraphics[width=150mm, keepaspectratio]{figures/diagramExample.png}
-    \caption{Szenárió diagram.}
+    \caption{\textit{Sirius} által előálított szcenárió diagram.}
+    \label{sirius_diagram}
 \end{figure}
 
-\begin{lstlisting}[language=java, frame=single, float=ht!, caption={Szenárió diagram xml leírása.},captionpos=b]
+\begin{lstlisting}[language=java, frame=single, float=ht!, caption={Szenárió diagram xml leírása.},captionpos=b, label=sirius_xml]
 <?xml version="1.0" encoding="UTF-8"?>
 <minotor:SequenceDiagram xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:minotor="hu.bme.mit.mdsd.xboyz.erdiagram" Name="Email">
 
@@ -37,17 +39,22 @@ Minden üzenethez tartozik egy nyíl.
 A nyíl címkéjére írjuk az üzenet összes tulajdonságát.
 A nyíl eleje és vége \textit{lifeline}-okat kötnek össze, amik az üzenet feladóját és fogadóját jelzik.
 A megkötéseket egy sárga táblázat formájában reprezentáljuk, amelybe bele írjuk az összes megkötésben szereplő üzenetet.
+Egy ilyen diagramot mutatbe a \ref{sirius_diagram} ábra.
+Az alkalmazáshoz tartozó \textit{ER} diagram a \ref{er_diagram} ábrán található meg.
 
 \begin{figure}[!ht]
     \centering
     \includegraphics[width=150mm, keepaspectratio]{figures/sirius-minotor-erdiagram.png}
-    \caption{Sirius alkalmazáshoz tartozó model ER diagramja.}
+    \caption{\textit{Sirius} alkalmazáshoz tartozó model \textit{ER} diagramja.}
+    \label{er_diagram}
 \end{figure}
 
 \begin{figure}[!ht]
     \centering
     \includegraphics[width=150mm, keepaspectratio]{figures/diagramOperatorExample.png}
-    \caption{Operátorokat tartalmazó szenárió diagram.}
+    \caption{Operátorokat tartalmazó szcenárió diagram.}
+    \label{sirius_operators}
 \end{figure}
 
 A diagramon keretek formájában jelenek meg az operátorok.
+Ilyen operatárokat a \ref{sirius_operators} diagramon lehet megtekínteni.

@@ -7,8 +7,8 @@
 %----------------------------------------------------------------------------
 
 A monitorozás alatt lévő rendszer egy közös interfészen keresztül kommunikál a monitorral.
-Az interfész \textit{Java} implementációja a 5.5. kódrészleten tekinthető meg.
-A monitor azt vizsgálja, hogy a rendszer a scenario szerint működik-e.
+Az interfész \textit{Java} implementációja a \ref{IMonitor_interface} kódrészleten tekinthető meg.
+A monitor azt vizsgálja, hogy a rendszer a szcenárió szerint viselkedik-e.
 
 Monitor interfész:
 \begin{itemize}
@@ -20,7 +20,7 @@ Monitor interfész:
 \end{itemize}
 
 Az \textit{update()} függvényt a rendszer hívja, hogy továbbítsa az üzenetet a monitornak.
-Paraméterként az üzenet küldőjét (sender), fogadóját (receiver), üzenet nevét (messageType) és az üzenet paramétereit várja (parameters).
+Paraméterként az üzenet küldőjét (\textit{sender}), fogadóját (\textit{receiver}), üzenet nevét (\textit{messageType}) és az üzenet paramétereit és azok értékeit várja (\textit{parameters}).
 A \textit{goodStateReached()} függvény jelzi, hogy a rendszer jelenlegi működése megfelel-e a követelménynek.
 A \textit{requirementSatisfied()} függvény visszaadja, hogy a követelmény teljesült-e.
 Ha a követelménynek megfelelt a rendszer viselkedése akkor igazat ad vissza, amúgy hamisat.
@@ -28,7 +28,7 @@ Ha a követelménynek megfelelt a rendszer viselkedése akkor igazat ad vissza, 
 Az üzenetek megfigyeléséhez szükséges segédfüggvényeket a kommunikációs infrastruktúrához kézzel kell megírni.
 Ezek a monitort az \textit{update()} függvényen keresztül hívják.
 
-\begin{lstlisting}[language=java,frame=single, float=h!, caption={Monitor interfész Java implementációja.},captionpos=b]
+\begin{lstlisting}[language=java,frame=single, float=h!, caption={Monitor interfész Java implementációja.},captionpos=b,label=IMonitor_interface]
 public interface IMonitor {
 	public boolean goodStateReached();
 	public void update(String sender, String receiver, String messageType, Map<String, Object> parameters);
@@ -47,14 +47,14 @@ Két függvénye van:
     \item \textit{resetClock(String clock)}: óraváltozó nullázása név alapján.
 \end{itemize}
 
-\begin{lstlisting}[language=java,frame=single, float=h!, caption={Időzitő interfész Java implementációja.},captionpos=b]
+\begin{lstlisting}[language=java,frame=single, float=h!, caption={Időzitő interfész Java implementációja.},captionpos=b,label=IClock_interface]
 public interface IClock {
 	public long getClock(String clock);
 	public void resetClock(String clock);
 }
 \end{lstlisting}
 
-A 5.6. kódrészlet tartalmazza a \textit{IClock} java interfészt.
+A \ref{IClock_interface} kódrészlet tartalmazza a \textit{IClock} java interfészt.
 
 A monitor az \textit{ISystem} interfészen keresztül tud a rendszernek üzeneteket küldeni a megfigyelt viselkedésről.
 Három függvénye van:
@@ -65,7 +65,7 @@ Három függvénye van:
 	\item \textit{receiveMonitorSuccess()}: a monitor jelzi a rendszer felé ha teljesült a követelmény.
 \end{itemize}
 
-\begin{lstlisting}[language=java,frame=single, float=h!, caption={Rendszer interfész Java implementációja.},captionpos=b]
+\begin{lstlisting}[language=java,frame=single, float=h!, caption={Rendszer interfész Java implementációja.},captionpos=b, label=ISystem_interface]
 public interface ISystem {
 	public void receiveMonitorStatus(String message);
 	public void receiveMonitorError(String actualMessage, String lastAcceptedMessage);
@@ -73,7 +73,7 @@ public interface ISystem {
 }
 \end{lstlisting}
 
-Az 5.7-es kódrészlet tartalmazza az \textit{ISystem} java interfészt.
+Az \ref{ISystem_interface}-es kódrészlet tartalmazza az \textit{ISystem} java interfészt.
 
 %----------------------------------------------------------------------------
 \subsection{A monitor forráskód megvalósítása}
@@ -85,33 +85,34 @@ A statikus részbe az időzitett automata java osztályai kerülnek:
     \item Transition: egy élet reprezentáló osztály
     \item Automaton: egy automatát megvalósitó osztály
 \end{itemize}
-A statikus rész a \textit{hu.bme.mit.dipterv.text.util} csomagban található meg, amely a 5.3-as ábrán látható.
+A statikus rész a \textit{hu.bme.mit.dipterv.text.util} csomagban található meg, amely a \ref{util_csomag}-as ábrán látható.
 
 A monitor interfész, a monitor Java osztálya, az időzítő interfész és a hozzá tartozó java osztály is ebbe a részbe tartozik.
 
-A dinamikus részben található a \textit{Specification} Java osztály, ami a scenario alapján generált automata forráskódját tartalmazza.
+A dinamikus részben található a \textit{Specification} Java osztály, ami a szcenárió alapján generált automata forráskódját tartalmazza.
 
 \begin{figure}[!ht]
     \centering
     \includegraphics[width=150mm, height= 9cm, keepaspectratio]{figures/util_csomag.png}
     \caption{Az util csomag tartalma.}
+	\label{util_csomag}
 \end{figure}
 
-A szükséges forráskódok generálásához az Xtend technológiát használtam.
+A szükséges forráskódok generálásához az \textit{Xtend} technológiát használtam.
 
 %----------------------------------------------------------------------------
 \clearpage\subsection{Mintapélda}
 %----------------------------------------------------------------------------
 
-A 8.3. kódrészleten látható egy scenario követelmény, amit egy okos telefon működésére specifikáltunk.
+A \ref{mintapélda} kódrészleten látható egy szcenárió követelmény, amit egy okos telefon működésére specifikáltunk.
 Az okos telefonon van egy zene lejátszási lista generáló alkalmazás.
 A követelményben azt várjuk el, hogy ha a felhasználó megnyitja az alkalmazást akkor a belső kamera készít az arcáról egy képet.
 A kép alapján eldönti, hogy milyen a felhasználó kedve és az alapján előállít egy zene lejátszási listát.
 
-A 8.5. kódrészleten látható az okos telefon és a monitor közti kapcsolat megvalósítása Java kódban.
+A \ref{okos_kapcsolat} kódrészleten látható az okos telefon és a monitor közti kapcsolat megvalósítása \textit{Java} kódban.
 A monitor a rendszertől kapott üzenetek alapján jelzi, hogy a követelmény alapján mi a rendszer állapota.
 
-\begin{lstlisting}[frame=single, float=ht!, caption={Okos telefon működésére megadott scenario követelmény.},captionpos=b]
+\begin{lstlisting}[frame=single, float=ht!, caption={Okos telefon működésére megadott scenario követelmény.},captionpos=b, label=mintapélda]
 specification Photo{
 
 	object User user;
@@ -134,7 +135,7 @@ specification Photo{
 }
 \end{lstlisting}
 
-\begin{lstlisting}[frame=single, float=ht!, caption={Generált automata Never claim formátumba.},captionpos=b]
+\begin{lstlisting}[frame=single, float=ht!, caption={Generált automata Never claim formátumba.},captionpos=b,label=okos_nc]
 never{ /*playlist_generationMonitor*/
 T0_init:
  if
@@ -191,7 +192,7 @@ T0_q11:
 }
 \end{lstlisting}
 
-\begin{lstlisting}[language=java, frame=single, float=ht!, caption={Az okos telefon és hozzá tartozó monitor fel konfigurálásának Java implementációja.},captionpos=b]
+\begin{lstlisting}[language=java, frame=single, float=ht!, caption={Az okos telefon és hozzá tartozó monitor fel konfigurálásának Java implementációja.},captionpos=b,label=okos_kapcsolat]
 public class Main {
 	public static void monitorStatus(String status) {
 		System.out.println(status);
@@ -218,7 +219,7 @@ public class Main {
 }
 \end{lstlisting}
 
-\begin{lstlisting}[language=java, frame=single, float=ht!, caption={Az okos telefon Java osztálya.},captionpos=b]
+\begin{lstlisting}[language=java, frame=single, float=ht!, caption={Az okos telefon Java osztálya.},captionpos=b,label=okos_device]
 public class Device {
 	public IMonitor monitor;
 	public User user;
@@ -246,10 +247,10 @@ public class Device {
 }
 \end{lstlisting}
 
-A 8.6. kódrészlet az okos telefon Java osztálya.
+A \ref{okos_device} kódrészlet az okos telefon Java osztálya.
 Megtekinthető a monitor és az eszköz közti kommunikáció megvalósítása is.
 
-\begin{lstlisting}[language=java, frame=single, float=ht!, caption={Monitor kimenete a rendszer működésének egyes fázisaiban.},captionpos=b]
+\begin{lstlisting}[language=java, frame=single, float=ht!, caption={Monitor kimenete a rendszer működésének egyes fázisaiban.},captionpos=b,label=okos_monitor]
 transition: user.openApp().device
 q1
 System is in bad state.
@@ -273,34 +274,32 @@ q11
 System is in good state.
 \end{lstlisting}
 
-A 8.7. kódrészleten látszik, hogy a rendszer a működése elején nem felelt meg a monitor követelményének.
-Amikor a működése végére ért akkor a monitor jelezte, hogy a követelmény teljesült a „Good state” üzenettel.
-A mintához tartozó Specification osztály a függelékben található.
+A \ref{okos_monitor} kódrészleten látszik, hogy a rendszer a működése elején nem felelt meg a monitor követelményének.
+Amikor a működése végére ért akkor a monitor jelezte, hogy a rendszer jó állapotban van a „\textit{Good state}” üzenettel.
+A mintához tartozó \textit{Specification} osztály a függelékben található.
 A generált automatát a konstruktorában állítja elő.
 
 %----------------------------------------------------------------------------
-\subsection{Összetett szerkezetek}
+\clearpage\subsection{Összetett szerkezetek}
 %----------------------------------------------------------------------------
 
-A monitor forráskód generátor támogatja az alt, par vagy loop operátorokat tartalmazó scenariokat is.
-Erre példát a függelékben lehet találni.
+A monitor forráskód generátor támogatja az \textit{alt}, \textit{par} vagy \textit{loop} operátorokat tartalmazó szcenáriókat is.
 
 %----------------------------------------------------------------------------
-\clearpage\subsection{Időzítési feltételek}
+\subsection{Időzítési feltételek}
 %----------------------------------------------------------------------------
 
-A monitor forráskód generátor támogatja az időzítési feltételeket tartalmazó scenariokat is.
-A 8.8. kódrészletben található scenario első üzenetén a "reset x" címke jelzi a monitornak, hogy az "x" óraváltozó nullázni kell.
-Egy óraváltozó felvételét is a "reset" címkével lehet végrehajtani.
-A 8.9. kódrészlet a példához tartozó Main java osztály leírását tartalmaza, a 8.10. kódrészlet pedig a rendszerhez tartozó Computer java osztályt.
-A 8.11. kódrészleten megtekinthető a monitor kimenete.
-A kimenet végén lévő "System is in good state." üzenet jelzi, hogy a rendszer működése megfelelt a követeménynek.
-A kimenetben szereplő "bad state" üzenetek megtévesztőek lehetnek.
+A monitor forráskód generátor támogatja az időzítési feltételeket tartalmazó szcenáriókat is.
+A \ref{computer_scenario} kódrészletben található szcenárió első üzenetén a "\textit{reset x}" címke jelzi a monitornak, hogy az "x" óraváltozót nullázni kell.
+Egy óraváltozó felvételét is a "\textit{reset}" címkével lehet végrehajtani.
+A \ref{computer_main} kódrészlet a példához tartozó \textit{Main} \textit{Java} osztály leírását tartalmaza, a \ref{computer_java} kódrészlet pedig a rendszerhez tartozó \textit{Computer} \textit{Java} osztályt.
+A \ref{computer_monitor} kódrészleten megtekinthető a monitor kimenete.
+A kimenet végén lévő "\textit{System is in good state.}" üzenet jelzi, hogy a rendszer jó állapotban van.
+A kimenetben szereplő "\textit{bad state}" üzenetek megtévesztőek lehetnek.
 A dolgozat 4. fejezetében említettem, hogy milyen esetekben helyes vagy helytelen a monitor szempontjából a rendszer viselkedése.
-A "bad state" üzenet nem feltétlen jelenti azt, hogy a rendszer viselkedése helytelen csupán azt, hogy a feltétel még nem teljesült.
-A monitor tovább szeretném fejleszteni a diplomaterv során, úgy hogy pontosabban jelezze a rendszer működésének állapotát.
+A "\textit{bad state}" üzenet nem feltétlen jelenti azt, hogy a rendszer viselkedése helytelen csupán azt, hogy a feltétel még nem teljesült.
 
-\begin{lstlisting}[language=java, frame=single, float=ht!, caption={Időzítési feltételeket tartalmazó scenario.},captionpos=b]
+\begin{lstlisting}[language=java, frame=single, float=ht!, caption={Időzítési feltételeket tartalmazó szcenárió},captionpos=b,label=computer_scenario]
 specification Email {
 
 	object Computer computer;
@@ -325,7 +324,7 @@ specification Email {
 }
 \end{lstlisting}
 
-\begin{lstlisting}[language=java, frame=single, float=ht!, caption={Időzítéses példához tartozó Main osztály.},captionpos=b]
+\begin{lstlisting}[language=java, frame=single, float=ht!, caption={Időzítéses példához tartozó Main osztály.},captionpos=b,label=computer_main]
 public class Main {
 	public static void monitorStatus(String status) {
 		System.out.println(status);
@@ -343,7 +342,7 @@ public class Main {
 }
 \end{lstlisting}
 
-\begin{lstlisting}[language=java, frame=single, float=ht!, caption={A Computer java osztálya.},captionpos=b]
+\begin{lstlisting}[language=java, frame=single, float=ht!, caption={A Computer java osztálya.},captionpos=b,label=computer_java]
 public class Computer {
 	public Server server;
 	public IMonitor monitor;
@@ -368,7 +367,7 @@ public class Computer {
 }
 \end{lstlisting}
 
-\begin{lstlisting}[language=java, frame=single, float=ht!, caption={Időzítéses példa monitor kimenete.},captionpos=b]
+\begin{lstlisting}[language=java, frame=single, float=ht!, caption={Időzítéses példa monitor kimenete.},captionpos=b,label=computer_monitor]
 Received Message: computer.checkEmail().computer
 Transition: !(computer.checkEmail().computer)
 Transition: computer.checkEmail().computer
@@ -396,6 +395,6 @@ q5
 System is in good state.
 \end{lstlisting}
 
-Az óraváltozók és időzítések megvalósításához az "org.apache.commons.lang3" könyvtár "time" csomag \textit{StopWatch} osztályát használtam.
+Az óraváltozók és időzítések megvalósításához az "\textit{org.apache.commons.lang3}" könyvtár "\textit{time}" csomag \textit{StopWatch} osztályát használtam.
 Ha az automata élén van egy időzítési feltétel akkor a monitor komponens az időzítő komponenstől elkéri a feltételben szereplő óraváltozóban tárol időt és kiértekeli a feltételt.
 Ha a feltétel teljesül, akkor az időzítés szempontjából a tranzíció megtörténhet.

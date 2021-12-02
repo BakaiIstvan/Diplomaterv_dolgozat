@@ -9,102 +9,57 @@
 A generált monitor forráskód tesztelésére a következő célokat fogalmazuk meg:
 
 \begin{itemize}
-    \item Az összes üzenet típus megjelenése a különböző teszt szenáriókban
+    \item Az összes üzenet típus megjelenése a különböző teszt szcenáriókban
     \item Időzített feltételek helyes kiértékelése
     \item Üzenet megkötések tesztelése
-    \item Alt és Par operátorok esetén, az üzenet szekvencia ágak helyes kiértékelése
-    \item Loop operátor esetén a minimális és maximálás üzenet ismétlődések tesztelése
-    \item Összetett szenárió tesztelése, ami több operátort tartalmaz
-    \item Egymást követő elvárt üzeneteket tartalmazó szenárió tesztelése
-    \item Egymást követő fail üzeneteket tartalmazó szenárió tesztelése
-    \item Regular üzenet tesztelése (ha megjelenik a rendszer működésében akkor ki kell értékelni a szenárió többi részét, ha nem jelenik meg a monitor helyes működést kell jelezzen és, hogy a követelmény nem teljesült)
-    \item Több óraváltozót tartalmazó szenárió tesztelése
-    \item Egymást követő üzenetek kombinációinak tesztelése (pl. elvárt üzenetet követő fail, elvárt üzenetet követő reguláris, stb.)
+    \item \textit{Alt} és \textit{Par} operátorok esetén, az üzenet szekvencia ágak helyes kiértékelése
+    \item \textit{Loop} operátor esetén a minimális és maximálás üzenet ismétlődések tesztelése
+    \item Összetett szcenárió tesztelése, ami több operátort tartalmaz
+    \item Egymást követő elvárt üzeneteket tartalmazó szcenárió tesztelése
+    \item Egymást követő \textit{fail} üzeneteket tartalmazó szcenárió tesztelése
+    \item \textit{Regular} üzenet tesztelése (ha megjelenik a rendszer működésében akkor ki kell értékelni a szenárió többi részét, ha nem jelenik meg a monitor helyes működést kell jelezzen és, hogy a követelmény nem teljesült)
+    \item Több óraváltozót tartalmazó szcenárió tesztelése
+    \item Egymást követő üzenetek kombinációinak tesztelése (pl. elvárt üzenetet követő \textit{fail}, elvárt üzenetet követő reguláris, stb.)
 \end{itemize}
 
 %----------------------------------------------------------------------------
 \clearpage\section{Monitor forráskód generátor tesztelése}
 %----------------------------------------------------------------------------
 
-A generált monitor forráskodját integrációs tesztek segítségével szeretnénk tesztelni.
-A teszteinkben egy példa rendszer java implementációját integráljuk a generált monitor komponenssel.
-Az Xtext keretrendszer a specifikált DSL (Domain Specific Language) nyelvhez generál egy Maven plugin-t.
-Ezt a plugin-t betölthetjük egy egyszerű maven projektbe és használhatjuk is az elkészített DSL nyelvünket, azaz létrehozhatunk a projektben a saját DSL-ünkhöz tartozó fájlokat, melyekben megadhatjuk saját scenario-inkat.
+A generált monitor forráskodját integrációs tesztek segítségével szeretnénk ellenőrizni.
+Az \textit{Xtext} keretrendszer a specifikált \textit{DSL (Domain Specific Language)} nyelvhez generál egy \textit{Maven} \textit{plugin}-t.
+Ezt a \textit{plugin}-t betölthetjük egy egyszerű \textit{Maven} projektbe és használhatjuk is az elkészített \textit{DSL} nyelvünket, azaz létrehozhatunk a projektben a saját \textit{DSL}-ünkhöz tartozó fájlokat, melyekben megadhatjuk saját szcenárióinkat.
 
 \begin{figure}[!ht]
     \centering
     \includegraphics[width=150mm, height=9cm, keepaspectratio]{figures/integration_test_flow.png}
     \caption{Integrációs tesztelés folyamatábrája.}
+    \label{testing_figure}
 \end{figure}
 
-A 9.2. ábrán megtekinthető az integrációs tesztelés tervének folyamatábrája.
-A következők tesztelési kategoriáink:
-
-\begin{itemize}
-    \item Scenario operátorok tesztelése
-    \item Üzenet paraméterek tesztelése
-    \item Időzítések tesztelése
-\end{itemize}
-
-A scenario operátorok tesztelésénél az a célunk, hogy a monitor a követelmény különböző ágait figyelembe véve helyes kimenetet adjon.
-Például loop operátor esetén a minimum, köztes és maximum üzenet szekvencia ismétléseknél is helyes legyen a monitor kimenete.
-Ha a maximumnál többször szerepel az üzenet szekvencia akkor hibát kell, hogy jelezen.
-Üzenet paraméterek tesztelése esetén azt szeretnénk vizsgálni, hogy a monitor helyesen értelmezi e az üzenet paramétereket.
-Az időzítések tesztelésénél az a fontos, hogy a monitor képes-e az óraváltozók alapján az időzitési feltételeket kiértékelni.
-Például ha az üzenet a feltétel alapján időben érkezik meg akkor helyes kimenetet adjon vissza ha feltétel szerint később érkezik meg akkor a monitornak hibát kell jeleznie.
+A \ref{testing_figure} ábrán megtekinthető az integrációs tesztelés tervének folyamatábrája.
 
 Egy integrációs teszt akkor sikeres ha a monitor kimenete megegyezik az elvárt kimenettel.
-Az elvárt kimenetet a rendszer manuális tesztelése határoz meg.
-A tesztelő dönti el, hogy helyesen kell hogy működjön vagy sem amit a monitornak jeleznie kell.
 
 %----------------------------------------------------------------------------
 \clearpage
 %----------------------------------------------------------------------------
 
-Az Xtext keretrendszer a definiált DSL nyelvünkhöz generál egy Maven projekt architektúrát.
-A nyelvünk így elérhető maven plugin formájában is, amit felhasználhatunk az integrációs teszteinkhez.
-Elég csupán egy maven projektet felkonfigurálni a saját dsl plugin-ünkkel és elkészítethetjük a saját tesztelési keretrendszerünket.
-Ezek a maven projektek a szülő projektünkben helyezkedhetnek el, így a projekt struktúrában közvetlen a nyelvünk mellett vannak.
-A 9.3. ábrán és a 9.1. kódrészléten látható egy ilyen integrációs teszthez tartozó maven projekt felépítése és a hozzá tartozó teszteset.
+Az \textit{Xtext} keretrendszer által nyujtott \textit{Maven plugin}-t felhasználhatjuk az integrációs teszteinkhez.
+Elég csupán egy \textit{Maven} projektet felkonfigurálni a saját \textit{DSL plugin}-ünkkel és elkészítethetjük a saját tesztelési keretrendszerünket.
+Ezek a \textit{Maven} projektek a szülő projektünkben helyezkedhetnek el, így a projekt struktúrában közvetlen a nyelvünk mellett vannak.
+A \ref{integration_test_structure} ábrán  kódrészléten látható egy ilyen integrációs teszthez tartozó \textit{Maven} projekt felépítése
 
 \begin{figure}[!ht]
     \centering
     \includegraphics[width=150mm, height=9cm, keepaspectratio]{figures/integration_test_structure.png}
     \caption{Példa integrációs teszt projekt struktúrája.}
+    \label{integration_test_structure}
 \end{figure}
 
-A 9.3. ábrán lévő \textit{generated} csomag tartalmazza a scenariohoz tartozó generált automata forráskódját és a monitor forráskódját.
-A \textit{hu.bme.mit.dipterv.text.example} csomag a tesztelt rendszer \textit{Java} implementációját tartalmazza.
+A \ref{integration_test_structure} ábrán lévő \textit{generated} csomag tartalmazza a szcenárióhoz tartozó generált automata forráskódját és a monitor forráskódját.
 
-\begin{lstlisting}[language=java, frame=single, float=ht!, caption={Integrációs teszteset.},captionpos=b]
-package hu.bme.mit.dipterv.text.example;
-
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.Assertions;
-
-import generated.Specification;
-import generated.IClock;
-import generated.IMonitor;
-import generated.Monitor;
-import generated.Clock;
-
-public class MonitorPassingTest {
-
-	@Test
-	public void testMonitorPassing() {
-		Specification specification = new Specification();
-		specification.listAutomatas();
-		IClock clock = new Clock();
-		IMonitor monitor = new Monitor(specification.getAutomata().get(0), clock);
-
-		Server server = new Server(monitor);
-		Computer computer = new Computer(server, monitor);
-		Assertions.assertTrue(monitor.goodStateReached());
-	}
-}
-\end{lstlisting}
-
-\begin{lstlisting}[language=java, frame=single, float=ht!, caption={Integrációs teszteset eredménye.},captionpos=b]
+\begin{lstlisting}[language=java, frame=single, float=ht!, caption={Integrációs teszteset eredménye.},captionpos=b,label=maven_test_output]
 -------------------------------------------------------
 T E S T S
 -------------------------------------------------------
@@ -156,31 +111,28 @@ Results :
 Tests run: 1, Failures: 0, Errors: 0, Skipped: 0
 \end{lstlisting}
 
-A 9.2. kódrészlet a Maven teszt kimenetét tartalmazza.
+A \ref{maven_test_output} kódrészlet a \textit{Maven} teszt kimenetét tartalmazza.
 
-Ezt a projekt struktúrát felhasználva a teszteink köré tudunk egy Maven alapú Continuous Integration-t (CI) állítani.
-
-A függelékben található egy példa unit teszt eset az automata generátor tesztelésére.
+Ezt a projekt struktúrát felhasználva a teszteink köré tudunk egy \textit{Maven} alapú \textit{Continuous Integration}-t (\textit{CI}) állítani a generált monitor forráskód folyamatos ellenőrzése érdekében.
 
 %----------------------------------------------------------------------------
 \clearpage\section{Continuous Integration}\subsection{Github Actions CI}
 %----------------------------------------------------------------------------
 
-Az időzített automata és monitor forráskód generátorok automatikus tesztelése a Github Actions segítségével történik.
-A CI minden feltöltött új commit esetén lefut.
-A CI különböző fázisai a következők:
+Az időzített automata és monitor forráskód generátorok automatikus tesztelése a \textit{Github Actions} segítségével történik.
+A \textit{CI} minden feltöltött új commit esetén lefut.
+A \textit{CI} különböző fázisai a következők:
 
 \begin{itemize}
-    \item I. Teljes Xtext projekt fordítása (Maven)
+    \item I. Teljes \textit{Xtext} projekt fordítása (\textit{Maven})
     \item II. Intergrációs tesztek futtatása
 \end{itemize}
 
-A generátorokhoz tartozó Xtext projekten lefut egy Maven build, amely az új feltöltött verzió tartalmazza.
-Ez a build állítja elő a DSL nyelvhez tartozó Maven plugin-t is.
-A fordítással együtt lefutnak a unit tesztek is.
-Ezt követően hajtódnak végre az integrációs tesztek, amelyek a frissen fordított Maven plugint használják.
-Ha az összes fázis sikeresen lefutott, akkor az adott commit nem rontott el semmilyen korábbi funkciót.
-A CI-hoz tartozó script-et a 9.3. kódrészlet tartalmazza.
+A generátorokhoz tartozó \textit{Xtext} projekten lefut egy \textit{Maven build}, amely az új feltöltött verzió tartalmazza.
+Ez a \textit{build} állítja elő a \textit{DSL} nyelvhez tartozó \textit{Maven plugin}-t is.
+Ezt követően hajtódnak végre az integrációs tesztek, amelyek a frissen fordított \textit{Maven plugin}-t használják.
+Ha az összes fázis sikeresen lefutott, akkor az adott változtatás nem rontott el semmilyen korábbi funkciót.
+A \textit{CI}-hoz tartozó \textit{script}-et a \ref{ci_script} kódrészlet tartalmazza.
 
 \begin{figure}[!ht]
     \centering
@@ -194,7 +146,7 @@ A CI-hoz tartozó script-et a 9.3. kódrészlet tartalmazza.
     \caption{Github Actions CI build-ek eredményei.}
 \end{figure}
 
-\begin{lstlisting}[language=java, frame=single, float=ht!, caption={Github Actions CI-hoz tartozó .yml script.},captionpos=b]
+\begin{lstlisting}[language=java, frame=single, float=ht!, caption={Github Actions CI-hoz tartozó .yml script.},captionpos=b,label=ci_script]
 # This workflow will build a Java project with Maven, and cache/restore any dependencies to improve the workflow execution time
 # For more information see: https://help.github.com/actions/language-and-framework-guides/building-and-testing-java-with-maven
 
@@ -239,9 +191,10 @@ jobs:
 \clearpage\section{Tesztesetek}\subsection{Egyszerű időzítési megkötéseket tartalmazó tesztszenárió}
 %----------------------------------------------------------------------------
 
-A tesztesetekhez tartozó scenario követelmény megtalálható az x. ábrán.
+A tesztesetekhez tartozó scenario követelmény megtalálható az \ref{example_test_scenario} kódrészleten.
+A szcenárióhoz tartozó diagram a \ref{example_test_scenario_diagram} ábrán látható
 
-\begin{lstlisting}[language=java, frame=single, float=ht!, caption={Integrációs teszteset.},captionpos=b]
+\begin{lstlisting}[language=java, frame=single, float=ht!, caption={Integrációs tesztesethez tartozó szcenárió szöveges leírása.},captionpos=b,label=example_test_scenario]
 specification Email {
 
 	object Computer computer;
@@ -269,21 +222,22 @@ specification Email {
 \begin{figure}[!ht]
     \centering
     \includegraphics[width=150mm, keepaspectratio]{figures/diagramExample.png}
-    \caption{Szenárió diagram.}
+    \caption{Szcenárió diagram vizualízációja.}
+    \label{example_test_scenario_diagram}
 \end{figure}
 
-A rendszerben egy szervergépből és egy felhasználói számitogépből áll.
-A szerver egy e-mail szervert szimulál, aminek a számitogép különböző kéréseket küldhet.
-Például lekérdezheti tőle a kapott e-mail vagy új e-mail küldhet.
-A követelményben leírjuk, hogy a rendszernek mi a helyes viselkedése e-mail küldés esetén.
-Ha a computer a \textit{checkEmail} hívást használva talál elküldendő e-mail az továbbítja a szervernek.
+A rendszer egy szervergépből és egy felhasználói számitogépből áll.
+A szerver egy \textit{e-mail} szervert szimulál, aminek a számitogép különböző kéréseket küldhet.
+Például lekérdezheti tőle a kapott \textit{e-mail} vagy új \textit{e-mail} küldhet.
+A követelményben leírjuk, hogy a rendszernek mi a helyes viselkedése \textit{e-mail} küldés esetén.
+Ha a computer a \textit{checkEmail} hívást használva talál elküldendő \textit{e-mail} az továbbítja a szervernek.
 Ezt az \textit{elvárt} \textit{sendUnsentEmail} üzenet jelzi.
 Ezt követően meg kell jelenjen a rendszer működésében a \textit{newEmail} üzenet.
-A ehelyett \textit{logout} üzenet érkezik a hibás működést jelent.
+Ha ehelyett \textit{logout} üzenet érkezik a hibás működést jelent.
 A \textit{newEmail} üzenetet a \textit{downloadEmail} üzenet követi.
 Ezen az üzeneten van egy 10 másodperces időzítési feltétel, ami a letöltést szimulálja.
 
-A szenárióhoz tartozó tesztesetek a következők:
+A szcenárióhoz tartozó tesztesetek a következők:
 
 \begin{itemize}
     \item testNetworkRequirementSatisfied
@@ -305,7 +259,7 @@ A \textit{testNetworkWithNoDelay}-nél pedig túl gyorsan küldjük a működés
 \clearpage\subsection{Többféle üzenetet és megkötést tartalmazó egyszerű tesztszenárió}
 %----------------------------------------------------------------------------
 
-\begin{lstlisting}[language=java, frame=single, float=ht!, caption={Integrációs teszteset.},captionpos=b]
+\begin{lstlisting}[language=java, frame=single, float=ht!, caption={Második tesztesethez tartozó szcenárió.},captionpos=b,label=second_scenario_test]
     specification Photo{
 
         object User user;
@@ -333,15 +287,16 @@ A \textit{testNetworkWithNoDelay}-nél pedig túl gyorsan küldjük a működés
 \begin{figure}[!ht]
     \centering
     \includegraphics[width=150mm, keepaspectratio]{figures/diagramMobileExample.png}
-    \caption{Szenárió diagram.}
+    \caption{Második Szcenárióhoz tartozó diagram vizualizációja.}
+    \label{second_visualization}
 \end{figure}
 
 A tesztrendszerünk egy zene lista generáló alkalmazás, ami egy felhasználót, mobileszközt és adatbázist tartalmaz.
-A felhasználó "kedve" alapján generálja a listát, amit az arc kifejezése alapján határoz meg.
+A felhasználó "\textit{kedve}" alapján generálja a listát, amit az arc kifejezése alapján határoz meg.
 A követelményben a rendszer alap működése van leírva egészen az elejétől, amikor a felhasználó megnyítja az alkalmazást.
-A követelmény leírás megtekinthető az x. ábrán.
+A követelmény leírás megtekinthető az \ref{second_scenario_test} kódrészleten és a hozzá tartozó vizualizáció a \ref{second_visualization} ábrán.
 
-A szenárióhoz tartozó tesztesetek a következők:
+A szcenárióhoz tartozó tesztesetek a következők:
 
 \begin{itemize}
     \item testMobileRequirementSatisfied

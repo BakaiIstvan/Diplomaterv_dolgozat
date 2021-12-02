@@ -6,15 +6,15 @@
 \subsection{Az automata generátor célja}
 %----------------------------------------------------------------------------
 
-Az önálló laboratórium során elkészített automata generátort kibővítettem úgy, hogy támogassa a TPSC elemekhez tartozó automata minták generálását. Bemenetként egy TPSC scenario szöveges leírását kapja meg amiből a minta alapú módszerrel generál egy TA automatát.
+Az \textit{önálló laboratórium} során elkészített automata generátort kibővítettem úgy, hogy támogassa a \textit{TPSC} elemekhez tartozó automata minták generálását. Bemenetként egy \textit{TPSC} szcenárió szöveges leírását kapja meg amiből a minta alapú módszerrel generál egy \textit{TA} automatát.
 
-A 7.1. és 7.2. kódrészleteken látható, hogy a monitor generátor támogatja az alt, par és loop operátorokat tartalmazó TPSC-khez tartozó TA-k generálását is.
-A 7.2. kódrészlet a generált automata "never claim" leírását tartalmazza.
-A Never claim a Promela nyelv része, ezzel egy rendszer viselkedését lehet definiálni.
+A \ref{tpsc_alt} és \ref{tpsc_alt_nc} kódrészleteken látható, hogy a monitor generátor támogatja az összetett operátorokat tartalmazó \textit{TPSC}-khez tartozó \textit{TA}-k generálását is.
+A \ref{tpsc_alt_nc} kódrészlet a generált automata "\textit{never claim}" leírását tartalmazza.
+A \textit{Never claim} a \textit{Promela} nyelv része, ezzel egy rendszer viselkedését lehet definiálni.
 Továbbá a generátor képes az üzenet paraméterek kezelésére.
-Például az alt operátor feltételét képes feldolgozni és azt elhelyezni a generált automata megfelelő élén.
+Például az \textit{alt} operátor feltételét képes feldolgozni és azt elhelyezni a generált automata megfelelő élén.
 
-\begin{lstlisting}[language=java,frame=single, float=h!, caption={Alt operátort tartalmazó scenario.},captionpos=b]
+\begin{lstlisting}[language=java,frame=single, float=h!, caption={Alt operátort tartalmazó scenario.},captionpos=b,label=tpsc_alt]
 specification Bank {
 
 	object UserInterface ui;
@@ -41,7 +41,7 @@ specification Bank {
 }
 \end{lstlisting}
 
-\begin{lstlisting}[language=java,frame=single, float=h!, caption={Alt operátort tartalmazó scenario never claim leírása.},captionpos=b]
+\begin{lstlisting}[language=java,frame=single, float=h!, caption={Alt operátort tartalmazó scenario never claim leírása.},captionpos=b,label=tpsc_alt_nc]
 bool success = true;
 
 never{ /*transactionMonitor*/
@@ -100,10 +100,10 @@ T0_q8:
 %----------------------------------------------------------------------------
 \subsection{Az automata generátor megvalósítása}
 %----------------------------------------------------------------------------
-A generátorhoz az Xtend technológiát használtam.
-Minden egyes TPSC üzenethez legenerálja a hozzá tartozó minta automatát, majd elvégzi azok összecsatolását.
+A generátorhoz az \textit{Xtend} technológiát használtam.
+Minden egyes \textit{TPSC} üzenethez legenerálja a hozzá tartozó minta automatát, majd elvégzi azok összecsatolását.
 
-Az időzített automaták generálásához egy adatstruktúrát definiáltam, amely a következő Java osztályokból és interfészekből áll:
+Az időzített automaták generálásához egy adatstruktúrát definiáltam, amely a következő \textit{Java} osztályokból és interfészekből áll:
 \begin{itemize}
     \item AltExpressionInterface
     \item Automaton
@@ -120,31 +120,38 @@ Az időzített automaták generálásához egy adatstruktúrát definiáltam, am
     \item WantedConstraint
 \end{itemize}
 
-A 7.1. ábrán látható az adatstruktúra UML osztály diagramja.
+Az automatában lévő állapotok implementációja a \textit{State} osztályban található.
+Két attribútuma van:
+\begin{itemize}
+	\item id(\textit{String}): a címkéje tárolására
+	\item type(\textit{StateType}): az állapot típusa
+\end{itemize}
 
-\begin{figure}[h!]
-    \centering
-    \includegraphics[width=150mm, keepaspectratio]{figures/13abra.png}
-    \caption{Az adatstruktúra UML osztály diagramja.}
-\end{figure}
+Az állapot típusának a megadására a \textit{StateType} enum osztályt definiáltam.
+Az enum a következő értékeket veheti fel:
+\begin{itemize}
+	\item NORMAL
+	\item ACCEPT
+	\item FINAL
+\end{itemize}
 
-Az automatában lévő állapotok implementációja a State osztályban található.
-Két attribútuma van: id(String), a címkéje tárolására, és type(StateType), az állapot típusa.
+Az átmenetek implementációjáért felelős osztály a \textit{Transition}.
+Három tag változója van:
+\begin{itemize}
+	\item id(\textit{String}): az üzenet
+	\item sender(\textit{State}): a feladó állapot
+	\item receiver(\textit{State}): a fogadó állapot
+\end{itemize}
 
-Az állapot típusának a megadására a StateType enum osztályt definiáltam.
-NORMAL, ACCEPT, FINAL értékeket lehet benne eltárolni.
-Az átmenetek implementációjáért felelős osztály a Transition.
-Három tag változója van: id(String) az üzenet, sender(State), a feladó állapot, és receiver(State) a fogadó állapot.
-
-Az időzített automata implementációja az Automaton osztályban található.
+Az időzített automata implementációja az \textit{Automaton} osztályban található.
 Itt tároljuk az automatában lévő állapotokat és a köztük lévő átmeneteket egy-egy listában.
-Az Automaton osztály addState(State) és addTransition(Transition) függvényeivel lehet új állapotot és átmenetet hozzáadni az automatához, a collapse(Automaton) függvényével pedig két automatát egyesíteni.
+Az \textit{Automaton} osztály \textit{addState(State)} és \textit{addTransition(Transition)} függvényeivel lehet új állapotot és átmenetet hozzáadni az automatához, a \textit{collapse(Automaton)} függvényével pedig két automatát egyesíteni.
 Ezt a függvényt használtam az implementációban a minta automaták egyesítésére.
-Ezen kívül az osztálynak van egy merge(ArrayList<Automaton>) függvénye.
+Ezen kívül az osztálynak van egy \textit{merge(ArrayList<Automaton>)} függvénye.
 Ez a függvény a minta automata ágak egyesítésére szolgál.
 
-A Specification osztály feladata, hogy összeállítsa a szöveges leírásban specifikált TPSC scenariohoz tartozó időzített automatát.
-Ezt követően az automata Never Claim leírását egy .txt kiterjesztésű fájlba írja.
+A \textit{Specification} osztály feladata, hogy összeállítsa a szöveges leírásban specifikált \textit{TPSC} szcenárióhoz tartozó időzített automatát.
+Ezt követően az automata \textit{Never Claim} leírását egy \textit{.txt} kiterjesztésű fájlba írja.
 
 %----------------------------------------------------------------------------
 \subsection{Mintapélda}
@@ -154,9 +161,10 @@ Ezt követően az automata Never Claim leírását egy .txt kiterjesztésű fáj
     \centering
     \includegraphics[width=130mm, keepaspectratio]{figures/14abra.png}
     \caption{Példa TPSC diagram.}
+	\label{tpsc_example_diagram}
 \end{figure}
 
-\begin{lstlisting}[language=java,frame=single, float=h!, caption={TPSC scenario szöveges leírása.},captionpos=b]
+\begin{lstlisting}[language=java,frame=single, float=h!, caption={TPSC scenario szöveges leírása.},captionpos=b,label=tpsc_example_text]
 specification Bank {
 
 	object User_Interface ui;
@@ -177,7 +185,7 @@ specification Bank {
 }
 \end{lstlisting}
 
-\begin{lstlisting}[language=java,frame=single, float=h!, caption={Generált időzített automata never claim formátumban.},captionpos=b]
+\begin{lstlisting}[language=java,frame=single, float=h!, caption={Generált időzített automata never claim formátumban.},captionpos=b,label=tpsc_example_nc]
 never{ /*transactionMonitor*/
 T0_init:
  if
@@ -204,4 +212,4 @@ T0_q4:
 }
 \end{lstlisting}
 
-A 7.3, 7.4. kódrészleteken és 7.2. ábrán látható, hogy a generátor milyen időzített automatát generál a megadott TPSC scenario-ból.
+A \ref{tpsc_example_text}, \ref{tpsc_example_nc} kódrészleteken és \ref{tpsc_example_diagram} ábrán látható, hogy a generátor milyen időzített automatát generál a megadott \textit{TPSC} szcenárió-ból.
