@@ -319,10 +319,10 @@ Az első esetben a monitornak helyes működést kell érzékelnie a következő
 \clearpage\subsection{Alt operátort tartalmazó tesztszenárió}
 %----------------------------------------------------------------------------
 
-A tesztszenárióhoz tartozó rendszerünk egy banki rendszer.
-A szenárió megtalálható az x. ábrán.
+A tesztszcenárióhoz tartozó rendszerünk egy banki rendszer.
+A szcenárió megtalálható az \ref{thrid_test_scenario} kódrészleten és a hozzá tartozó vizualizáició a \ref{third_visualisation} ábrán látható.
 
-\begin{lstlisting}[language=java, frame=single, float=ht!, caption={Integrációs teszteset.},captionpos=b]
+\begin{lstlisting}[language=java, frame=single, float=ht!, caption={Alt operátort tartalmazó tesztszcenárió.},captionpos=b,,label=thrid_test_scenario]
 specification Bank {
 
     object UserInterface ui;
@@ -352,13 +352,14 @@ specification Bank {
 \begin{figure}[!ht]
     \centering
     \includegraphics[width=150mm, keepaspectratio]{figures/diagramAltExample.png}
-    \caption{Szenárió diagram.}
+    \caption{Alt operátort tartalmazó szcenárió diagram}
+    \label{third_visualisation}
 \end{figure}
 
-A rendszer egy felhasználói felületből, ATM-ből és banki adatbázisból áll.
+A rendszer egy felhasználói felületből, \textit{ATM}-ből és banki adatbázisból áll.
 A követelményünkben két lehetséges működést írunk le.
 A \textit{success} paraméter jelzi, hogy melyik működés a helyes.
-A szenárióhoz tartozó tesztesetek a következők:
+A szcenárióhoz tartozó tesztesetek a következők:
 
 \begin{itemize}
     \item testBankMonitorPassing
