@@ -124,8 +124,18 @@ specification Light{
 }
 \end{lstlisting}
 
-A 7.4-es kódrészlet egy másik követelmény tartalmaz, amit a rendszeren szeretnénk vizsgálni.
+A 7.4-es kódrészlet egy másik követelményt tartalmaz, amit a rendszeren szeretnénk vizsgálni.
 Azt várjuk, hogy ha történt rendőrség általi \textit{interrupt} kérés akkor a lámpa sárgán villogjon.
 Ha pedig nem volt ilyen interrupt akkor azt várjuk el, hogy a lámpa rendesen működjön.
+A 7.5-ös kódrészlet tartalmazza az illesztés kiegészítését.
+Itt a rendörségi \textit{interrupt} kérést továbbítjuk a monitornak.
 A rendszer mindkét esetben a követelménynek megfelelően működött.
 A szcenárióhoz tartozó monitor kimenetek a \textit{Függelékben} található meg.
+
+\begin{lstlisting}[language=java, frame=single, float=ht!, caption={Gamma illesztéshez tartozó kódrészlet.},captionpos=b]
+@Override
+public void raisePolice() {
+    monitor.update("police", "controller", "policeInterruptRaised", Map.of("success", true));
+    crossroad.getPolice().raisePolice();
+}
+\end{lstlisting}
