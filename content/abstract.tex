@@ -9,24 +9,22 @@
 \chapter*{Kivonat}\addcontentsline{toc}{chapter}{Kivonat}
 
 A monitorozással történő hibadetektálás kiemelt fontosságú egy kritikus rendszer működtetésében és karbantartásában.
-A monitorozás sok hibát fel tud deríteni, amiket a tesztek nem feltétlenül tudnak kideríteni.
+A monitorozás sok hibát fel tud deríteni, amiket a tesztek nem feltétlenül tudnak.
 
-A diplomaterv feladat célja az volt, hogy a korábban elkészített monitor komponens generátort kiegészítsem úgy, hogy időzített üzenet szekvencia specifikáció alapján is képes legyen monitor komponenseket generálni.
-Ilyen követelményeket egyszerűen specifikálhatunk TPSC (Timed Property Sequence Chart) diagramokkal. A korrábban elkészített Xtext alapú PSC nyelvet kiegészítettem a TPSC tulajdonságaival.
+A diplomaterv célja az volt, hogy a korábban elkészített monitor komponens generátort kiegészítsem úgy, hogy időzített üzenet szekvencia specifikáció alapján is képes legyen monitor komponenseket generálni.
+Ilyen követelményeket egyszerűen specifikálhatunk \textit{TPSC} (Timed Property Sequence Chart) diagramokkal.
+A szakdolgozatom során elkészített \textit{Xtext} alapú \textit{PSC} nyelvet kiegészítettem a \textit{TPSC} tulajdonságaival.
 
-A monitor generálás következő lépése, hogy a TPSC diagramokból időzített automatákat generálunk (Timed Automaton).
-A TA fogja megadni, hogy a megfigyelt kommunikáció helyes viselkedést jelent-e.
-A szakdolgozatomban készített automata generátort kibővítettem és most már képes a minta alapú módszert használva TA automatákat generálni a TPSC diagramjainkból.
-A generátor előállítja az automatát.
+A monitor generálás következő lépése, hogy a \textit{TPSC} diagramokból időzített automatákat generálunk (Timed Automaton).
+A \textit{TA} fogja megadni, hogy a megfigyelt kommunikáció helyes viselkedést jelent-e.
+A szakdolgozatomban készített automata generátort kibővítettem úgy, hogy képes legyen a minta alapú módszert használva \textit{TA} automatákat generálni a \textit{TPSC} diagramokból.
 
 A szöveges scenario leírásból generált automata alapján legenerálható a monitor forráskódja.
 A monitor forráskód generátor előállítja a monitor \textit{Java} implementációját, ami képes egy rendszer monitorozására adott követelmény alapján.
 
-A diplomaterv további feladatai közzé tartozik a TPSC scenario-k vizualizációja, a generált forráskódok tesztelése és a generált monitor komponens illesztése a Gamma keretrendszerrel.
-A cél az, hogy elosztott komponens alapú rendszerek szimulációja közben monitorozható legyen a TPSC üzenet szekvencia specifikáció teljesülése illetve az ebben rögzített tulajdonságok megsértése.
+A diplomaterv további feladatai közzé tartozik a \textit{TPSC} scenario-k vizualizációja, a generált forráskódok folyamatos tesztelése és a generált monitor komponens illesztése a \textit{Gamma} keretrendszerrel.
+A cél az, hogy elosztott komponens alapú rendszerek szimulációja közben monitorozható legyen a \textit{TPSC} üzenet szekvencia specifikáció teljesülése illetve az ebben rögzített tulajdonságok megsértése.
 Továbbá a monitorozás működését is demonstrálni kell.
-
-Az időzítési feltételeket tartalmazó üzeneteket tudja értelmezni és feldolgozni a monitor, valamint a teszt keretrendszer első verziója is elkészült.
 
 \vfill
 \selectenglish
@@ -37,8 +35,6 @@ Az időzítési feltételeket tartalmazó üzeneteket tudja értelmezni és feld
 %----------------------------------------------------------------------------
 \chapter*{Abstract}\addcontentsline{toc}{chapter}{Abstract}
 
-% TODO: összefoglaló angol verziójának megírása
-This document is a \LaTeX-based skeleton for BSc/MSc~theses of students at the Electrical Engineering and Informatics Faculty, Budapest University of Technology and Economics. The usage of this skeleton is optional. It has been tested with the \emph{TeXLive} \TeX~implementation, and it requires the PDF-\LaTeX~compiler.
 
 
 \vfill
