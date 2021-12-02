@@ -4,12 +4,12 @@
 Az \textit{Eclipse} egy nyílt forráskódú, platformfüggetlen keretrendszer.
 Első sorban fejlesztői környezetként használják a fejlesztők.
 A keretrendszert tovább lehet bővíteni mindenféle plugin telepítésével, így például modellezésre is alkalmas lehet.
-A diplomaterv során használt Eclipse plugin-ek:
+A diplomaterv során használt \textit{Eclipse} plugin-ek:
 
 \begin{itemize}
-    \item Xtext
-    \item Xtend
-    \item Sirius
+    \item \textit{Xtext}
+    \item \textit{Xtend}
+    \item \textit{Sirius}
 \end{itemize}
 
 A munkafolyamat egy \textit{workspace}-en belül történik, ahol a fejlesztő létrehozhatja a saját projekteit.
@@ -21,13 +21,13 @@ A nézetek az eszközön megjelenített szövegszerkesztő, fájlkezelő vagy eg
 
 \subsection{Xtext}
 
-Az \textit{Xtext} \textit{Eclipse} plugin-el programozási és domain specifikus nyelveket lehet fejleszteni.
+Az \textit{Xtext} \textit{Eclipse} plugin-el programozási és \textit{domain} specifikus nyelveket lehet fejleszteni.
 A nyelvünk elemeit és szabályait egy nyelvtan segítségével definiálhatjuk.
 Az \textit{Xtext} keretrendszer több eszközt nyújt a nyelvünkhöz.
-Például egy parser-t, egy fordítót és egy szerkesztőt.
+Például egy \textit{parser}-t, egy fordítót és egy szerkesztőt.
 A plugin még egy \textit{Xtend} alapú kódgenerátort is generál a nyelvünkhöz, amivel a nyelvünkhöz tetszőleges kódot tudunk generálni.
 
-\begin{lstlisting}[language=java, frame=single, float=ht!, caption={Xtext nyelvtan elemei.},captionpos=b]
+\begin{lstlisting}[language=java, frame=single, float=ht!, caption={Xtext nyelvtan elemei.},captionpos=b, label=XtextGrammar]
 Scenario:
 	'scenario' name=ID '{'
 	scenariocontents+=ScenarioContent*
@@ -53,12 +53,12 @@ LooseMessage:
 ;
 \end{lstlisting}
 
-A 2.1-es kódrészlet az Xtext nyelvtan elemeit mutatja be.
+A \ref{XtextGrammar}-es kódrészlet az \textit{Xtext} nyelvtan elemeit mutatja be.
 Egy nyelvtani szabályt egy tetszőleges név megadásával hozhatunk létre.
 A szabályunkat pedig a név után lévő ":" és ";" közzé írhatjuk.
 Idézőjelek közé írhatjuk a nyelvünkhöz tartozó kulcsszavakat, például \textit{'scenario'} vagy idezőjelek között kapcsos zárójel.
 Ilyen kulcsszavak megadásával jól tudjuk formázni a nyelvtani szabályunkat.
-Attributumok megadásával tudjuk tárolni a nyelvi elemünk értékeit, változóit.
+Attribútumok megadásával tudjuk tárolni a nyelvi elemünk értékeit, változóit.
 Például a \textit{name} attribútum egy \textit{ID} elemet tárol, ami egy azonosítónak felel meg.
 Egy attribútumba több elemet is rakhatunk lista szerüen.
 Ezt a \textit{*} karakterrel adhatjuk meg, például \textit{scenariocontents+=ScenarioContent*}, ahol a \textit{scenariocontents} több \textit{ScenarioContent}-beli elemet tárol.
@@ -76,7 +76,7 @@ Fordítás után a nyelvi elemeinkből \textit{Xtend} és \textit{Java} osztály
 
 Az \textit{Xtend} egy magasszintű programozási nyelv.
 A \textit{Java Virtual Machine} plaformot használja.
-Szintaktikailag és szemantikailag nagyon hasonlít a \textit{Java} nyelvhez, mondhatni a Java kibővítése.
+Szintaktikailag és szemantikailag nagyon hasonlít a \textit{Java} nyelvhez, mondhatni a \textit{Java} kibővítése.
 Az \textit{Xtend} osztályokból \textit{Java} osztályok készülnek.
 
 Egy nagyon hasznos funkciója az \textit{Xtend}-nek a \textit{template}.

@@ -5,54 +5,54 @@ Egy monitor feladata az, hogy futási időben egy rendszert megfigyeljen, elemez
 Ezt a helytelen viselkedést jelzi a rendszernek, de néhány esetben a rendszer működését is befolyásolhatja.
 Ez egy kritikus rendszernél különösen fontos lehet hiszen, egy ilyen rendszernél elvárt, hogy folyamatosan biztonságosan tudjon működni.
 Ezen kívül, a monitornak időmérésre is szüksége van, mert a követelmény tartalmazhat időziteseket is.
-Az 1.1. ábra bemutatja a monitorozás koncepcióját.
+Az \ref{introductory_figure} ábra bemutatja a monitorozás koncepcióját.
 
 \begin{figure}[!ht]
-    \centering
-    \includegraphics[width=150mm, keepaspectratio]{figures/1abra.png}
+    \includegraphics[width=150mm, keepaspectratio]{figures/introductory_figure.png}
     \caption{Kontextusfüggő rendszerek monitorozása időzítési feltételekkel.}
+    \label{introductory_figure}
 \end{figure}
 
-A scenario alapú monitorozás során a kommunikáció megfigyelésével szeretnénk felismerni a problémákat a rendszerünkben.
+A szcenárió alapú monitorozás során a kommunikáció megfigyelésével szeretnénk felismerni a problémákat a rendszerünkben.
 A rendszerben lévő objektumok közti interakciókat, üzeneteket fogja megfigyelni a monitor.
-A követelményt scenario formájában adjuk meg az üzenet szekvenciák specifikálásához.
+A követelményt szcenárió formájában adjuk meg az üzenet szekvenciák specifikálásához.
 Szekvencia diagramok segítségével egyszerűen megadhatunk ilyeneket.
 A diagramokat a későbbiekben olyan alakra kell majd hoznunk, hogy abból a monitor létrehozható legyen.
 
 \clearpage\section{Időfüggő viselkedés specifikálására alkalmas formalizmusok áttekintése}
 \subsection{MSC - Message Sequence Chart}
 
-Az egyik legelterjedtebb scenario alapú modellezésre használt vizuális formalizmus a Message Sequence Charts (MSC).
+Az egyik legelterjedtebb szcenárió alapú modellezésre használt vizuális formalizmus a \textit{Message Sequence Charts (MSC)}.
 A nyelv célja két, vagy több üzeneteket cserélő objektum között az interakciónak a leírása.
-A Unified Modelling Language (UML) 2.0 szekvencia diagram leíró részét nagyban inspirálta ez a nyelv.
-Az MSC főbb elemei:
+A \textit{Unified Modelling Language (UML)} 2.0 szekvencia diagram leíró részét nagyban inspirálta ez a nyelv.
+Az \textit{MSC} főbb elemei:
 
 \begin{itemize}
-\item MSC head, lifeline és end
+\item \textit{MSC head}, \textit{lifeline} és \textit{end}
 \item Objektum létrehozása
 \item Üzenet csere
 \item Függvényhívás és válasz
-\item Timer-ek
+\item \textit{Timer}-ek
 \item Idő intervallumok
-\item Összetett szerkezetek: alt, opt, parallel, loop (high-MSC)
+\item Összetett szerkezetek: \textit{alt}, \textit{opt}, \textit{parallel}, \textit{loop} (\textit{high-MSC})
 \end{itemize}
 
-Az összetett szerkezetek a high-MSC (h-MSC) nevű MSC kiterjesztésben találhatók.
+Az összetett szerkezetek a \textit{high-MSC (h-MSC)} nevű \textit{MSC} kiterjesztésben találhatók.
 
-Ezzel a nyelvvel már könnyedén lehet a scenarioban lévő üzeneteket specifikálni, és azokat a rendszer komponenseket, amelyek ezeket az üzeneteket egymásnak küldik.
+Ezzel a nyelvvel már könnyedén lehet a sczenárióban lévő üzeneteket specifikálni, és azokat a rendszer komponenseket, amelyek ezeket az üzeneteket egymásnak küldik.
 
-Az UML és az MSC sokban hasonlítanak, de az alapelveik különbözőek.
+Az \textit{UML} és az \textit{MSC} sokban hasonlítanak, de az alapelveik különbözőek.
 
-MSC-ben a függőleges vonalak („life line”-ok) autonóm entitásokat képviselnek, míg a szekvencia diagramok esetén ezek egy objektumot reprezentálnak.
-MSC esetén az entitásoknak nem szükséges ugyanazon a számítógépen lenniük.
+\textit{MSC}-ben a függőleges vonalak („\textit{lifeline}”-ok) autonóm entitásokat képviselnek, míg a szekvencia diagramok esetén ezek egy objektumot reprezentálnak.
+\textit{MSC} esetén az entitásoknak nem szükséges ugyanazon a számítógépen lenniük.
 
-MSC-ben egy átmenet egy aszinkron üzenetet reprezentál, amely két entitás között jött létre, míg az UML szekvencia diagram leíró nyelvében, egy átmenet egy függvényhívást jelent.
+\textit{MSC}-ben egy átmenet egy aszinkron üzenetet reprezentál, amely két entitás között jött létre, míg az \textit{UML} szekvencia diagram leíró nyelvében, egy átmenet egy függvényhívást jelent.
 
-Az MSC-nek sajnos sok hiányossága is tapasztalható.
+Az \textit{MSC}-nek sajnos sok hiányossága is tapasztalható.
 Hiányzik belőle az üzenetek típusossága.
 Egy követelmény megfogalmazásakor fontos, hogy meg tudjuk mondani, melyek az elvárt üzenetek vagy, hogy melyek jelentenek hibát.
-Az is nagy hiányosságnak számít,hogy az üzenetekre nem lehetséges megkötéseket megadni.
-Ez egyben megnehezíti egy követelmény leírását is.
+Az is nagy hiányosságnak számít, hogy az üzenetekre nem lehetséges megkötéseket megadni.
+Ez megnehezíti egy követelmény leírását is.
 
 \subsection{MTL - Metric Temporal Logic}
 
@@ -108,9 +108,9 @@ A halmazok határait természetes számok vagy végtelen határolják be.
 
 \subsection{PSC – Property Sequence Chart}
 %----------------------------------------------------------------------------
-A Message Sequence Chart-nak nagyon sok hiányossága van.
+A \textit{Message Sequence Chart}-nak nagyon sok hiányossága van.
 Nem lehet vele megkötéseket definiálni vagy egy üzenetről eldönteni, hogy az egy elvárt vagy nem kívánt üzenet.
-Ebből kifolyólag az MSC nem egy alkalmas nyelv arra, hogy az üzenet szekvenciáinkat részletesebben specifikálni tudjuk vele.
+Ebből kifolyólag az \textit{MSC} nem egy alkalmas nyelv arra, hogy az üzenet szekvenciáinkat részletesebben specifikálni tudjuk vele.
 
 \begin{table}[ht]
     \centering % used for centering table
@@ -120,43 +120,43 @@ Ebből kifolyólag az MSC nem egy alkalmas nyelv arra, hogy az üzenet szekvenci
     %heading
     \hline % inserts single horizontal line
     \hline
-    Nem kivánt üzenet & - & Fail message \\ % inserting body of the table
+    Nem kivánt üzenet & - & \textit{Fail message} \\ % inserting body of the table
     \hline
-    Elvárt üzenet & - & Required message \\
+    Elvárt üzenet & - & \textit{Required message} \\
     \hline
-    Sima üzenet & Default message & Regular message \\
+    Sima üzenet & \textit{Default message} & \textit{Regular message} \\
     \hline
-    Megkötött sorrendezés & - & Strict sequencing \\
+    Megkötött sorrendezés & - & \textit{Strict sequencing} \\
     \hline
-    Gyenge sorrendezés & Seq & Loose sequencing \\
+    Gyenge sorrendezés & \textit{Seq} & \textit{Loose sequencing} \\
     \hline
-    Üzenet megkötések & - & Constraint \\
+    Üzenet megkötések & - & \textit{Constraint} \\
     \hline
-    Alternatív lehetőségek & h-MSC & Alternative operator \\
+    Alternatív lehetőségek & \textit{h-MSC} & \textit{Alternative operator} \\
     \hline
-    Párhuzamos művelet & h-MSC & Parallel operator \\
+    Párhuzamos művelet & \textit{h-MSC} & \textit{Parallel operator} \\
     \hline
-    Ciklus & h-MSC & Loop operator \\
+    Ciklus & \textit{h-MSC} & \textit{Loop operator} \\
     \hline %inserts single line
     \end{tabular}
-    \label{table:nonlin} % is used to refer this table in the text
-    \caption{Az MSC összehasonlítása a PSC-vel} % title of Table
+    \label{psc_táblázat} % is used to refer this table in the text
+    \caption{Az \textit{MSC} összehasonlítása a \textit{PSC}-vel} % title of Table
 \end{table}
 
-A Property Sequence Chart[1] az MSC egy kiterjesztése.
-Sok új elemet vezet be ami nincs az MSC-ben, melyek megtekinthetők a 2.1. táblázaton, mint az üzenet típusokat: sima üzenet (e), elvárt üzenet (r) és nem kívánt üzenet (f).
+A \textit{Property Sequence Chart}[1] az \textit{MSC} egy kiterjesztése.
+Sok új elemet vezet be ami nincs az \textit{MSC}-ben, melyek megtekinthetők a 2.1. táblázaton, mint az üzenet típusokat: sima üzenet (e), elvárt üzenet (r) és nem kívánt üzenet (f).
 Így specifikálhatjuk, hogy mely üzenetek azok amik helyes viselkedésre utalnak és azok amelyek nem.
 Az elvárt üzenetek azok az üzenetek amelyeknek feltétetlen meg kell történiük a rendszer működése során.
-Egy sima üzenet nem jelent hibát a monitor szempontjából ha nem történik meg, viszont ha megjelenik, akkor a scenario-ban utána következő üzenetek ellenőrzésére kell áttérni.
-Szigorú sorrendezésre is ad megoldást a PSC, ami azt jelenti, hogy megadhatjuk explicit az üzenetek sorrendjét a követelményünkben.
-A PSC-ben egy üzenetre megkötést is rakhatunk.
-Megadhatjuk, hogy melyek azok az üzenetek amik nem kívántak az üzenetünk előtt vagy után.
-A különböző PSC tulajdonságok megtalálhatok a 2.1. ábrán.
+Egy sima üzenet nem jelent hibát a monitor szempontjából ha nem történik meg, viszont ha megjelenik, akkor a szcenárióban utána következő üzenetek ellenőrzésére kell áttérni.
+Szigorú sorrendezésre is ad megoldást a \textit{PSC}, ami azt jelenti, hogy megadhatjuk explicit az üzenetek sorrendjét a követelményünkben.
+A \textit{PSC}-ben egy üzenetre megkötést is rakhatunk.
+Megadhatjuk, hogy melyek azok az üzenetek amik nem kívántak az üzenetünk észlelése előtt vagy után.
+A különböző \textit{PSC} tulajdonságok megtalálhatok a \ref{psc_elemek} ábrán.
 A nyelv a következő tulajdonságokat támogatja:
 
 \begin{itemize}
-    \item \textit{Sima üzenet (e)}: egy üzenet a scenario-ban, amely ha nem történik meg az a monitor szempontjából nem jelent hibát.
-    Viszont ha megjelenik, akkor a scenario-ban utána következő üzenetek ellenőrzésére kell áttérni.
+    \item \textit{Sima üzenet (e)}: egy üzenet a szcenárióban, amely ha nem történik meg az a monitor szempontjából nem jelent hibát.
+    Viszont ha megjelenik, akkor a szcenárióban utána következő üzenetek ellenőrzésére kell áttérni.
     Egy előfeltételt reprezentál.
     \item \textit{Elvárt üzenet (r)}: egy üzenet amelynek elmaradása hibajelzéshez kell vezessen.
     \item \textit{Nem kívánt üzenet (f)}: amennyiben a monitor egy ilyen üzenetet detektál, akkor hibát jelez.
@@ -165,7 +165,7 @@ A nyelv a következő tulajdonságokat támogatja:
     Két fajta megkötést definiál a nyelv: múlt- és jövőbéli.
     A múltbéli üzenet megkötés esetén, az üzenetünk megtörténte előtt, a megkötésben szereplő üzenetek egyike se történhet meg.
     Jövőbéli megkötés esetén, pedig az üzenetünk megtörténte után nem történhetnek meg a megkötésben szereplő üzenetek.
-    \item \textit{Megkötött sorrendezés (strict ordering)}: A PSC az üzenet lefutási sorrendjének a specifikálására is lehetőséget ad.
+    \item \textit{Megkötött sorrendezés (strict ordering)}: A \textit{PSC} az üzenet lefutási sorrendjének a specifikálására is lehetőséget ad.
     Egy „a” üzenet megtörténte után, egy adott „b” üzenetnek kell bekövetkeznie.
     Ha „b” üzenet helyet egy másik üzenet követi az „a” üzenetet, akkor a monitor hibát jelez.
 \end{itemize}
@@ -173,9 +173,9 @@ A nyelv a következő tulajdonságokat támogatja:
 A nyelv támogat összetett szerkezeteket is:
 
 \begin{itemize}
-    \item \textit{Alt operátor}: az alt operátorral alternatív üzenet szekvenciákat lehet definiálni.
-    \item \textit{Par operátor}: a par operátorral meghatározható az üzenet szekvenciák párhuzamos futása.
-    \item \textit{Loop operátor}: a loop operátorral megadhatjuk, hogy egy üzenet szekvencia többször is lefuthat egymás után.
+    \item \textit{Alt operátor}: az \textit{alt} operátorral alternatív üzenet szekvenciákat lehet definiálni.
+    \item \textit{Par operátor}: a \textit{par} operátorral meghatározható az üzenet szekvenciák párhuzamos futása.
+    \item \textit{Loop operátor}: a \textit{loop} operátorral megadhatjuk, hogy egy üzenet szekvencia többször is lefuthat egymás után.
 \end{itemize}
 
 Egy üzeneten egyszerre megkötés és sorrendezés is lehet.
@@ -187,15 +187,16 @@ Ezen kívül, ha egy üzeneten megkötött sorrendezést alkalmazunk, akkor nem 
 A megkötéseket egy ponttal jelöljük, amit az átmeneten helyezünk el.
 Ha a pont az átmenet elején van (a feladóhoz közel), akkor az múltbéli megkötést jelöl.
 Ha pedig a végén helyezkedik el, akkor a jövőbéli megkötést jelöli.
-A megkötésben lévő üzeneteket egy lista formájába lehet megadni ’{’ ’}’ jelek közt, a következő módon: <megkötés neve> = {C1.I1.Cj, ..., Ck.In.Ct}, ahol az üzenetek vesszővel elválasztva, „Feladó.Üzenet.Címzett” formában szerepelnek.
+A megkötésben lévő üzeneteket egy lista formájába lehet megadni ’{’ ’}’ jelek közt, a következő módon: <megkötés neve> = {C1.I1.Cj, ..., Ck.In.Ct}, ahol az üzenetek vesszővel elválasztva, „\textit{Feladó.Üzenet.Címzett}” formában szerepelnek.
 A specifikált megkötés nevét pedig az átmeneten lévő pont alá írjuk.
 
-Az üzenetek megkötött sorrendezésének jelölésénél az objektum „life line” vonalát az érintett átmenetek közt folytonossá változtatjuk
+Az üzenetek megkötött sorrendezésének jelölésénél az objektum „\textit{lifeline}” vonalát az érintett átmenetek közt folytonossá változtatjuk
 
 \begin{figure}[!ht]
     \centering
     \includegraphics[width=150mm, keepaspectratio]{figures/2abra.png}
-    \caption{A PSC különböző elemei[1].}
+    \caption{A \textit{PSC} különböző elemei[1].}
+    \label{psc_elemek}
 \end{figure}
 
 Az üzeneteket a következő formában adjuk meg: \textit{Feladó.Üzenet.Címzett}.
@@ -203,35 +204,36 @@ Az üzeneteket a következő formában adjuk meg: \textit{Feladó.Üzenet.Címze
 \begin{figure}[!ht]
     \centering
     \includegraphics[width=130mm, keepaspectratio]{figures/3abra.png}
-    \caption{PSC diagram egy ATM rendszer működésének ellenőrzésére[1].}
+    \caption{\textit{PSC} diagram egy \textit{ATM} rendszer működésének ellenőrzésére[1].}
+    \label{psc_példa}
 \end{figure}
-A 2.2. ábrán láthatunk egy példát arra, hogy egy követelményt hogyan lehet definiálni.
-Ez a PSC diagram egy ATM rendszer működését figyeli.
-Először a felhasználó egy \textit{login} üzenettel bejelentkezik az ATM-be majd egy \textit{wReq} üzenettel egy lekérdezést hajt végre.
+A \ref{psc_példa} ábrán láthatunk egy példát arra, hogy egy követelményt hogyan lehet definiálni.
+Ez a \textit{PSC} diagram egy \textit{ATM} rendszer működését figyeli.
+Először a felhasználó egy \textit{login} üzenettel bejelentkezik az \textit{ATM}-be majd egy \textit{wReq} üzenettel egy lekérdezést hajt végre.
 Ezen az üzeneten van egy megkötés, az üzenet előtt nem történthet kijelentkezés, \textit{logout}.
-Az ATM ezután, ha nem történt \textit{logout} egy elvárt üzenetet küld a Bank adatbázisába.
+Az \textit{ATM} ezután, ha nem történt \textit{logout} egy elvárt üzenetet küld a \textit{Bank} adatbázisába.
 
-A scenario-ink specifikálására most már rendelkezésünkre áll egy grafikus nyelv.
-A következőkben az lesz a feladatunk, hogy ezeket a diagramokat úgy transzformáljunk, hogy monitor kódot lehessen belőlük készíteni.
-
+A szcenárióink specifikálására most már rendelkezésünkre áll egy grafikus nyelv.
+A következőkben az lesz a feladatunk, hogy ezeket a diagramokat úgy transzformáljuk, hogy monitor kódot lehessen belőlük készíteni.
 
 %----------------------------------------------------------------------------
 \clearpage\section{A TPSC bemutatása}
 %----------------------------------------------------------------------------
-A TPSC[2] a PSC-nek egy kiterjesztése.
-A PSC üzenetekre időzítési feltételeket specifikálhatunk.
+A \textit{TPSC}[2] a \textit{PSC}-nek egy kiterjesztése.
+A \textit{PSC} üzenetekre időzítési feltételeket specifikálhatunk.
 
 \begin{figure}[!ht]
     \centering
     \includegraphics[width=150mm, keepaspectratio]{figures/4abra.png}
-    \caption{PSC kiterjesztése időzítési feltételekkel[2].}
+    \caption{\textit{PSC} kiterjesztése időzítési feltételekkel[2].}
+    \label{psc_clock_improvement}
 \end{figure}
 
-A TPSC óraváltozókat (x, y) használ az időzítéshez.
+A \textit{TPSC} óraváltozókat (x, y) használ az időzítéshez.
 Ezekre meg lehet adni feltételeket, valamint az óraváltozót lehet nullázni.
 A nullázással adott eseménytől (pl. üzenet vételétől) kezdve indul az időzítés, majd rákövetkező események időbeliségét ez alapján lehet ellenőrizni.
 
-A 3.1. ábrán látható, hogy például az \textit{e: a} sima üzenet \textit{e: a; x < t, y := 0} üzenetre bővül.
+A \ref{psc_clock_improvement} ábrán látható, hogy például az \textit{e: a} sima üzenet \textit{e: a; x < t, y := 0} üzenetre bővül.
 Elvárjuk, hogy az \textit{a} üzenet \textit{t} idő előtt történjen meg és egy \textit{y} óraváltozót nullázunk.
 Az \textit{e: a} üzenet egy sima üzenet, szóval ha nem történik meg a specifikált idő intervallumban az nem jelent hibát.
 Viszont \textit{r: a} üzenetnél már elvárt, hogy \textit{t} időn belül megtörténjen. \textit{f: a} üzenet esetében viszont akkor jelez hibát a monitor, ha üzenet megtörtént \textit{t} időn belül.
@@ -247,52 +249,57 @@ Ha a feltételben megadott idő után történik akkor az nem jelent hibát a mo
 \clearpage\section{TPSC szcenário alapú automata konstrukció}
 %----------------------------------------------------------------------------
 
-A monitorozás alapja, hogy TPSC scenario-kból időzített automatákat (Timed Automata) tudjunk készíteni.
-Egy TA állapotokból, elfogadó állapotokból, feltételekből, akciókból és bemenetekkel címkézett állapotátmenetekből áll.
+A monitorozás alapja, hogy \textit{TPSC} szcenáriókból időzített automatákat (\textit{Timed Automata}) tudjunk készíteni.
+Egy \textit{TA} állapotokból, elfogadó állapotokból, feltételekből, akciókból és bemenetekkel címkézett állapotátmenetekből áll.
 Akkor fogad el egy bemenet sorozatot, ha ennek során elérünk az automata végállapotába.
 Ha elfogadó állapotot érünk el, akkor az a monitor szempontjából hibát jelent.
-Az alapelv az az, hogy minden TPSC elemhez tartozik egy minta automata (pattern) ami leírja a szemantikáját.
-Például a 4.1. és 4.2. ábrákon láthatóak a különböző PSC üzenetekhez tartozó minták.
+Az alapelv az, hogy minden \textit{TPSC} elemhez tartozik egy minta automata (\textit{pattern}) ami leírja a szemantikáját.
+Például a \ref{tpsc_sima} és \ref{tpsc_elvárt} ábrákon láthatóak a különböző \textit{PSC} üzenetekhez tartozó minták.
 
 \begin{figure}[!ht]
     \centering
     \includegraphics[width=150mm, keepaspectratio]{figures/5abra.png}
     \caption{Sima üzenetekhez tartozó minták[2].}
+    \label{tpsc_sima}
 \end{figure}
 
 \begin{figure}[!ht]
     \centering
     \includegraphics[width=150mm, keepaspectratio]{figures/6abra.png}
     \caption{Elvárt üzenetekhez tartozó minták[2].}
+    \label{tpsc_elvárt}
 \end{figure}
 
 A minta automatánkban található szürke állapotok reprezentálják a végállapotokat.
-A megkötéseket az automatáknál egy átmenettel definiáljuk ami a nem kívánt üzenetek negáltjainak az ÉS kapcsolata.
-Például az 4.1. ábrán lévő 3. automata mintán látható „b, $\delta ’\&!a, \delta$” címkéjű hurokélen, a „b” címke minden olyan üzenetnek felel meg, amelyek nincsenek a nem kivánt üzenetek halmazában.
-A címke teljes jelentése az, hogy ha $\delta$’ időn belül nem jött nem kivánt üzenet és $\delta$ időn belül nem az „a” üzenet jött akkor maradjunk az s0 állapotban.
-Ezekből az automata részekből lesznek meghatározott illesztési szabályokkal a scenario-hoz tartozó teljes időzített automaták.
-Ennek az az alapelve, hogy a scenario-n végig menve az előző minta végállapotát a következő minta kezdőállapotával kell egyesíteni.
-Ezt a folyamatot mutatják be a 4.3., 4.4. és 4.5. ábrák.
+A megkötéseket az automatáknál egy átmenettel definiáljuk ami a nem kívánt üzenetek negáltjainak az \textit{ÉS} kapcsolata.
+Például az \ref{tpsc_sima} ábrán lévő 3. automata mintán látható „b, $\delta ’\&!a, \delta$” címkéjű hurokélen, a „b” címke minden olyan üzenetnek felel meg, amelyek nincsenek a nem kivánt üzenetek halmazában.
+A címke teljes jelentése az, hogy ha $\delta$’ időn belül nem jött nem kivánt üzenet és $\delta$ időn belül nem az „a” üzenet jött akkor maradjunk az \textit{s0} állapotban.
+Ezekből az automata részekből lesznek meghatározott illesztési szabályokkal a szcenárióhoz tartozó teljes időzített automaták.
+Ennek az az alapelve, hogy a szcenárión végig menve az előző minta végállapotát a következő minta kezdőállapotával kell egyesíteni.
+Ezt a folyamatot mutatják be a \ref{tpsc_subset}, \ref{tpsc_used_patterns} és \ref{created_automaton} ábrák.
 
 \begin{figure}[!ht]
     \centering
     \includegraphics[width=60mm, keepaspectratio]{figures/7abra.png}
     \caption{TPSC részlet.}
+    \label{tpsc_subset}
 \end{figure}
 
 \begin{figure}[!ht]
     \centering
     \includegraphics[width=150mm, keepaspectratio]{figures/8abra.png}
     \caption{Alkalmazott automata minták.}
+    \label{tpsc_used_patterns}
 \end{figure}
 
 \begin{figure}[!ht]
     \centering
     \includegraphics[width=130mm, keepaspectratio]{figures/9abra.png}
     \caption{Az összeállított automata.}
+    \label{created_automaton}
 \end{figure}
 
 A monitor szempontjából az automata akkor jelez hibás működést ha elfogadó állapotba kerül.
 Ilyenkor a követelmény már nem teljesíthető.
 Ha az automata egy sima állapotban van, akkor az helyes működést jelent viszont a követelmény még ekkor sem teljesült.
-A követelmény akkor teljesül amikor az automata a végső (FINAL) állapotba kerül és nem érkezik további amely elmozditaná őt onnan.
+A követelmény akkor teljesül amikor az automata a végső (\textit{FINAL}) állapotba kerül és nem érkezik további üzenet amely elmozditaná őt onnan.
