@@ -1,7 +1,7 @@
 %----------------------------------------------------------------------------
 \chapter{Háttérismeretek}\section{A monitorozás alapjai}
 
-Egy monitor feladata az, hogy futási időben egy rendszert megfigyeljen, elemezzen és egy adott követelmény alapján felismerje a rendszer helytelen viselkedését.
+Egy monitor feladata az, hogy futási időben egy rendszert megfigyeljen, elemezzen és adott követelmények alapján felismerje a rendszer helytelen viselkedését.
 Ezt a helytelen viselkedést jelzi a rendszernek, de néhány esetben a rendszer működését is befolyásolhatja.
 Ez egy kritikus rendszernél különösen fontos lehet hiszen, egy ilyen rendszernél elvárt, hogy folyamatosan biztonságosan tudjon működni.
 Ezen kívül, a monitornak időmérésre is szüksége van, mert a követelmény tartalmazhat időziteseket is.
@@ -13,14 +13,24 @@ Az \ref{introductory_figure} ábra bemutatja a monitorozás koncepcióját.
     \label{introductory_figure}
 \end{figure}
 
+Több monitorozási módszert ismerünk.
+Ilyen például az „\textit{online}” [11] monitorozás.
+Ebben az esetben a rendszernek olyan érzékelői vannak, amelyek képesek a rendszer viselkedését detektálni, és továbbítani azt egy feldolgozó egységnek.
+Ez utóbbi, a kapott adatok alapján, el tudja dönteni, hogy a rendszer helyesen működik-e, illetve amennyiben hibát érzékel, azt képes jelezni.
+Az olyan monitort, amely a hiba érzékelését követően megpróbálja a hibát helyreállítani, „beavatkozó” monitornak hívjuk.
+A „nem beavatkozó” monitor pedig csak a hibát képes jelezni.
+
+A fentiekben leírt monitorozási módszernek a párja az „\textit{offline}” [11] monitorozás.
+Ennél a módszernél a regisztrált viselkedés elemzése nem futásidőben, hanem azon kívül (futás után) történik.
+
 A szcenárió alapú monitorozás során a kommunikáció megfigyelésével szeretnénk felismerni a problémákat a rendszerünkben.
 A rendszerben lévő objektumok közti interakciókat, üzeneteket fogja megfigyelni a monitor.
-A követelményt szcenárió formájában adjuk meg az üzenet szekvenciák specifikálásához.
+A követelményt szcenárió formájában adjuk meg az üzenet szekvenciák specifikálásával.
 Szekvencia diagramok segítségével egyszerűen megadhatunk ilyeneket.
 A diagramokat a későbbiekben olyan alakra kell majd hoznunk, hogy abból a monitor létrehozható legyen.
 
-\clearpage\section{Időfüggő viselkedés specifikálására alkalmas formalizmusok áttekintése}
-\subsection{MSC - Message Sequence Chart}
+\section{Időfüggő viselkedés specifikálására alkalmas formalizmusok áttekintése [1] [2] [5] [6] [8]}
+\subsection{MSC - Message Sequence Chart [6] és UML - Unified Modelling Language [8]}
 
 Az egyik legelterjedtebb szcenárió alapú modellezésre használt vizuális formalizmus a \textit{Message Sequence Charts (MSC)}.
 A nyelv célja két, vagy több üzeneteket cserélő objektum között az interakciónak a leírása.
@@ -43,7 +53,7 @@ Ezzel a nyelvvel már könnyedén lehet a sczenárióban lévő üzeneteket spec
 
 Az \textit{UML} és az \textit{MSC} sokban hasonlítanak, de az alapelveik különbözőek.
 
-\textit{MSC}-ben a függőleges vonalak („\textit{lifeline}”-ok) autonóm entitásokat képviselnek, míg a szekvencia diagramok esetén ezek egy objektumot reprezentálnak.
+\textit{MSC}-ben a függőleges vonalak („\textit{lifeline}”-ok) autonóm entitásokat képviselnek, míg a szekvencia diagramok esetén ezek egy-egy objektumot reprezentálnak.
 \textit{MSC} esetén az entitásoknak nem szükséges ugyanazon a számítógépen lenniük.
 
 \textit{MSC}-ben egy átmenet egy aszinkron üzenetet reprezentál, amely két entitás között jött létre, míg az \textit{UML} szekvencia diagram leíró nyelvében, egy átmenet egy függvényhívást jelent.
@@ -54,24 +64,26 @@ Egy követelmény megfogalmazásakor fontos, hogy meg tudjuk mondani, melyek az 
 Az is nagy hiányosságnak számít, hogy az üzenetekre nem lehetséges megkötéseket megadni.
 Ez megnehezíti egy követelmény leírását is.
 
-\subsection{MTL - Metric Temporal Logic}
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=80mm, keepaspectratio]{figures/msc_example.png}
+    \caption{Példa MSC diagram.}
+    \label{msc_example}
+\end{figure}
+
+A \ref{msc_example} ábrán megtekinthető egy példa MSC diagram.
+
+\clearpage\subsection{MTL - Metric Temporal Logic}
 
 A temporális logikák olyan formális rendszerek amelyekkel kijelentések igazságának logikai időbeli változását vizsgálhatjuk.
-A kijelentések időbeli vizsgálásához temporális operátorokat használunk:
-\begin{itemize}
-    \item \textit{mindig}
-    \item \textit{valamikor}
-    \item \textit{mielőtt}
-    \item \textit{addig, amíg}
-    \item \textit{azelőtt, hogy}
-    \item \textit{stb...}
-\end{itemize}
+A kijelentések időbeli vizsgálásához temporális operátorokat használunk: \textit{mindig}, \textit{valamikor}, \textit{mielőtt}, \textit{addig, amíg}, \textit{azelőtt, hogy}, \textit{stb...}
+
 A temporális logikákat két osztályba sorolhatjuk:
 \begin{itemize}
     \item \textit{lineáris}
     \item \textit{elágazó}
 \end{itemize}
-A lineáris temporális logikáknál a model egy lefutását vizsgáljuk.
+A lineáris temporális logikáknál a modell egy lefutását vizsgáljuk.
 A logikai idő egy állapotsorozatnak tekintjük, ahol minden állapotnak egy rákövetkezője van.
 Az elágazó temporális logikáknál viszont az összes lehetséges végrehajtást tekintjük.
 A lineárissal ellentétben itt egy állapotnak több rákövetkezője is lehet és a logikai idő egy fa alakjában jelenik meg.
@@ -80,15 +92,15 @@ A \textit{Metric Temporal Logic} temporális operátorai a következők:
 \begin{itemize}
     \item \textit{addig} (until)
     \item \textit{következő} (next)
-    \item \textit{ettől} (since)
+    \item \textit{amióta} (since)
     \item \textit{előtt} (previous)
 \end{itemize}
-Az \textit{MTL} egy lineáris temporális logika, amely mind az átlapolt és kitalált idő absztrakciókat tekínti.
+Az \textit{MTL} egy lineáris temporális logika, amellyel logikai jelek időzítésbeli tulajdonságait specifikálhatjuk.
 Logikai jelek tulajdonságait specifikálhatjuk vele az időben.
 
 A szintaxisa a \textit{Linear Temporal Logic}-hoz hasonlít:
 \begin{itemize}
-    \item véges atomi kijelentések halmaza \textit{AP}
+    \item atomi kijelentések véges halmaza \textit{AP}
     \item $\neg$ és $\lor$ logikai operátorokat
     \item $U_I$ (\textit{Until}) temporális modális operátor, ahol egy \textit{I} egy nem negatív számokból álló intervallum
     \item $S_I$ (\textit{Since}) temporális modális operátor
