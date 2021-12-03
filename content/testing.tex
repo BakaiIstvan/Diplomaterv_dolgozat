@@ -403,21 +403,21 @@ specification Email {
     \caption{Szenárió diagram.}
 \end{figure}
 
-Ehhez a tesztszenárióhoz az első szenárióban lévő teszt rendszert használtuk fel.
-A szenárióhoz tartozó tesztesetek a következők:
+Ehhez a tesztszcenárióhoz az első szenárióban lévő teszt rendszert használtuk fel.
+A szcenárióhoz tartozó tesztesetek a következők:
 
 \begin{itemize}
     \item testNetworkRequirementSatisfied
     \item testNetworkOtherRequirementSatisfied
 \end{itemize}
 
-Azt vizsgáljuk, hogy a monitor képes mindkét permutáció esetén érzékelni a követelmény teljesítését.
+Azt vizsgáljuk, hogy a monitor képes mindkét permutáció esetén érzékelni a követelmény teljesülését.
 
 %----------------------------------------------------------------------------
 \clearpage\subsection{Komplex tesztszenárió loop és alt operátorokkal}
 %----------------------------------------------------------------------------
 
-\begin{lstlisting}[language=java, frame=single, float=ht!, caption={Integrációs teszteset.},captionpos=b]
+\begin{lstlisting}[language=java, frame=single, float=ht!, caption={Komplex teszteset szcenáriója.},captionpos=b,label=test_complex_scenario]
 specification Connection {
 
     object Computer computer;
@@ -440,7 +440,7 @@ specification Connection {
 
     scenario authentication {
         loop (1, 3) {
-            message login() computer -> computer reset x;
+            message login(success) computer -> computer reset x;
             pastConstraint {logout} message attemptLogin() computer -> server reset y;
         }
 
@@ -458,9 +458,18 @@ specification Connection {
 \begin{figure}[!ht]
     \centering
     \includegraphics[width=150mm, keepaspectratio]{figures/diagramOperatorExample.png}
-    \caption{Szenárió diagram.}
+    \caption{Komplex szcenárió diagram vizualizációja.}
+    \label{test_complex_diagram}
 \end{figure}
 
+Ebben a tesztszcenárióban olyan szcenáriók támogatását teszteljük, amelyekben több operátor is megjelenik.
+A tesztesethez tartozó szcenárió a \ref{test_complex_scenario} kódrészletben található meg és a diagram vizualizációja a \ref{test_complex_diagram} ábrán látható.
+Ezen kívűl azt is vizsgáljuk, hogy a generált monitor képes e több óraváltozó kezelésére is.
+
+A szcenárióban a \textit{loop} operátort használva egy rendszerbe való többszörös bejelentkezési próbálkozását írjuk le.
+Utána egy \textit{alt} operátorral mondjuk meg, hogy minek kell történie sikeres vagy sikertelen bejelentkezés esetén.
+
+A tesztszcenárióhoz tartozó tesztesetek:
 \begin{itemize}
     \item testNetworkRequirementSatisfied
     \item testNetworkRequirementSatisfiedTwice
@@ -471,6 +480,8 @@ specification Connection {
     \item testNetworkLogoutTooFast
     \item testNetworkLogoutConstrait
 \end{itemize}
+
+A teszteseteket úgy állítottam össze, hogy ellenőrizem mind a monitor hiba detektáló képességét, mind a helyes működés detektálását.
 
 \clearpage\section{Tesztelés összefoglaló}
 
@@ -515,3 +526,6 @@ Fail után elvárt üzenet & - & X & - & - & -\\
 \caption{Összefoglaló táblázat}
 \label{tab:table1}
 \end{longtable}
+
+A \ref{tab:table1} táblázat mutatja be a tesztelés eredményét.
+Sikerült az összes tesztelési célnak megfelelni, emelett biztosítáni a szisztematikus ellenőrzést.
