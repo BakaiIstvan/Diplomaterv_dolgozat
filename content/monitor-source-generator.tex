@@ -251,31 +251,33 @@ A \ref{okos_device} kódrészlet az okos telefon Java osztálya.
 Megtekinthető a monitor és az eszköz közti kommunikáció megvalósítása is.
 
 \begin{lstlisting}[language=java, frame=single, float=ht!, caption={Monitor kimenete a rendszer működésének egyes fázisaiban.},captionpos=b,label=okos_monitor]
-transition: user.openApp().device
+Received Message: user.openApp().device
 q1
-System is in bad state.
-transition: device.accessWebcam().device
+[System] Received status from monitor: System is in good state.
+[Clock] reset x
+Received Message: device.accessWebcam().device
 q2
-System is in bad state.
-transition: device.getPhoto().user
-q4
-System is in bad state.
-transition: !(user.cameraOffline().device)
-q6
-System is in bad state.
-transition: device.retrieveMood().db
-q8
-System is in bad state.
-transition: device.retrieveMusic().db
-q10
-System is in bad state.
-transition: db.generatePlaylist().device
+[System] Received status from monitor: System is in good state.
+Received Message: device.getPhoto().user
+q5
+[System] Received status from monitor: System is in good state.
+Received Message: someone.message().else
+q7
+[System] Received status from monitor: System is in good state.
+Received Message: device.retrieveMood().db
+q9
+[System] Received status from monitor: System is in good state.
+Received Message: device.retrieveMusic().db
 q11
-System is in good state.
+[System] Received status from monitor: System is in good state.
+Received Message: db.generatePlaylist().device
+q12
+[System] Received status from monitor: System is in good state.
+[System] Received status from monitor: Requirement satisfied
 \end{lstlisting}
 
 A \ref{okos_monitor} kódrészleten látszik, hogy a rendszer a működése elején nem felelt meg a monitor követelményének.
-Amikor a működése végére ért akkor a monitor jelezte, hogy a rendszer jó állapotban van a „\textit{Good state}” üzenettel.
+Amikor a működése végére ért akkor a monitor jelezte, hogy a rendszer jó állapotban van a „\textit{Good state}” üzenettel és, hogy a követelmény teljesült a "\textit{Requirement Satisfied üzenettel}".
 A mintához tartozó \textit{Specification} osztály a \textit{Függelékben} található (\ref{specification_class}).
 A generált automatát a konstruktorában állítja elő.
 
@@ -284,6 +286,7 @@ A generált automatát a konstruktorában állítja elő.
 %----------------------------------------------------------------------------
 
 A monitor forráskód generátor támogatja az \textit{alt}, \textit{par} vagy \textit{loop} operátorokat tartalmazó szcenáriókat is.
+Ezt funkcionálitást a tesztelés során mutatom be részletesebben.
 
 %----------------------------------------------------------------------------
 \subsection{Időzítési feltételek}
@@ -369,30 +372,18 @@ public class Computer {
 
 \begin{lstlisting}[language=java, frame=single, float=ht!, caption={Időzítéses példa monitor kimenete.},captionpos=b,label=computer_monitor]
 Received Message: computer.checkEmail().computer
-Transition: !(computer.checkEmail().computer)
-Transition: computer.checkEmail().computer
-transition triggered: computer.checkEmail().computer
 q1
-System is in bad state.
+[System]Received status from monitor: System is in good state.
 Received Message: computer.sendUnsentEmail().server
-Transition: !(computer.sendUnsentEmail().server)
-Transition: !(computer.sendUnsentEmail().server)
-Transition: computer.sendUnsentEmail().server
-transition triggered: computer.sendUnsentEmail().server
 q3
-System is in bad state.
-Received Message: computer.newEmail().server
-Transition: !(computer.logout().server) & !(computer.newEmail().server)
-Transition: computer.newEmail().server
-transition triggered: computer.newEmail().server
+[System]Received status from monitor: System is in good state.
+Received Message: computer.newEmail(receiver, subject).server
 q4
-System is in bad state.
-Received Message: computer.downloadEmail().server
-Transition: !(computer.downloadEmail().server)
-Transition: computer.downloadEmail().server
-transition triggered: computer.downloadEmail().server
+[System]Received status from monitor: System is in good state.
+Received Message: computer.downloadEmail(timeout).server
 q5
-System is in good state.
+[System]Received status from monitor: System is in good state.
+[System]Received status from monitor: Requirement satisfied
 \end{lstlisting}
 
 Az óraváltozók és időzítések megvalósításához az "\textit{org.apache.commons.lang3}" könyvtár "\textit{time}" csomag \textit{StopWatch} osztályát használtam.
