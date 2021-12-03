@@ -14,7 +14,7 @@ A \textit{Never claim} a \textit{Promela} nyelv része, ezzel egy rendszer visel
 Továbbá a generátor képes az üzenet paraméterek kezelésére.
 Például az \textit{alt} operátor feltételét képes feldolgozni és azt elhelyezni a generált automata megfelelő élén.
 
-\begin{lstlisting}[language=java,frame=single, float=h!, caption={Alt operátort tartalmazó scenario.},captionpos=b,label=tpsc_alt]
+\begin{lstlisting}[language=java,frame=single, float=h!, caption={Alt operátort tartalmazó szcenárió.},captionpos=b,label=tpsc_alt]
 specification Bank {
 
 	object UserInterface ui;
@@ -41,7 +41,7 @@ specification Bank {
 }
 \end{lstlisting}
 
-\begin{lstlisting}[language=java,frame=single, float=h!, caption={Alt operátort tartalmazó scenario never claim leírása.},captionpos=b,label=tpsc_alt_nc]
+\begin{lstlisting}[language=java,frame=single, float=h!, caption={Alt operátort tartalmazó szcenárió never claim leírása.},captionpos=b,label=tpsc_alt_nc]
 bool success = true;
 
 never{ /*transactionMonitor*/

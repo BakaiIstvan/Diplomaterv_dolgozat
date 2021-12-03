@@ -10,9 +10,9 @@
 %\numberwithin{tabular}{section}
 
 %----------------------------------------------------------------------------
-\section{A 8.3. fejezet minta példájához tartozó Specification osztály}
+\section{A 5.2.3. fejezet minta példájához tartozó Specification osztály}
 %----------------------------------------------------------------------------
-\begin{lstlisting}[language=java, caption={Specification osztály.},captionpos=b]
+\begin{lstlisting}[language=java, caption={\textit{Specification} osztály.},captionpos=b,label=specification_class]
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
@@ -376,7 +376,7 @@ public class Specification{
 \clearpage\section{Monitor forráskód generátor - operátorok támogatása}
 %----------------------------------------------------------------------------
 
-\begin{lstlisting}[language=java, frame=single, float=ht!, caption={7.1. scenariohoz tartozó Main osztály.},captionpos=b]
+\begin{lstlisting}[language=java, frame=single, float=ht!, caption={7.1. szcenárióhoz tartozó Main osztály.},captionpos=b]
 public class Main {
 	public static void monitorStatus(String status) {
 		System.out.println(status);
@@ -402,7 +402,7 @@ public class Main {
 }
 \end{lstlisting}
 
-\begin{lstlisting}[language=java, frame=single, float=ht!, caption={7.1. scenariohoz tartozó rendszer ATM Java osztálya.},captionpos=b]
+\begin{lstlisting}[language=java, frame=single, float=ht!, caption={7.1. szcenárióhoz tartozó rendszer \textit{ATM} \textit{Java} osztálya.},captionpos=b]
 public class ATM {
 	public IMonitor monitor;
 	public BankDB db;
@@ -429,7 +429,7 @@ public class ATM {
 }
 \end{lstlisting}
 
-\begin{lstlisting}[language=java, frame=single, float=ht!, caption={7.1. scenario monitor kimenete.},captionpos=b]
+\begin{lstlisting}[language=java, frame=single, float=ht!, caption={7.1. szcenárió monitor kimenete.},captionpos=b]
 Received Message: ui.login(success).atm
 Transition: !(ui.login(success).atm)
 Transition: ui.login(success).atm
@@ -535,7 +535,7 @@ public class Main {
 }
 \end{lstlisting}
 
-\begin{lstlisting}[language=java, frame=single, float=ht!, caption={Szenárió szöveges leírása.},captionpos=b]
+\begin{lstlisting}[language=java, frame=single, float=ht!, caption={Gamma monitor kimenet.},captionpos=b,label=gamma_monitor_output1]
 [Automaton] Setting final transition
 [Automaton] Setting final transition
 [GammaMonitorTest] Resetting values
@@ -657,7 +657,7 @@ qfinal1
 [GammaMonitorTest] Monitor reported that the requirement was satisfied
 \end{lstlisting}
 
-\begin{lstlisting}[language=java, caption={Szenárió szöveges leírása.},captionpos=b]
+\begin{lstlisting}[language=java, caption={\textit{Gamma} monitor kimenet rendőrségi példa.},captionpos=b,label=gamma_monitor_output2]
 [Automaton] Setting final transition
 [Automaton] Setting final transition
 [GammaMonitorTest] Resetting values
