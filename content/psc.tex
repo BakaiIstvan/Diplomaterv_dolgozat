@@ -88,13 +88,6 @@ A logikai idő egy állapotsorozatnak tekintjük, ahol minden állapotnak egy r�
 Az elágazó temporális logikáknál viszont az összes lehetséges végrehajtást tekintjük.
 A lineárissal ellentétben itt egy állapotnak több rákövetkezője is lehet és a logikai idő egy fa alakjában jelenik meg.
 
-A \textit{Metric Temporal Logic} temporális operátorai a következők:
-\begin{itemize}
-    \item \textit{addig} (until)
-    \item \textit{következő} (next)
-    \item \textit{amióta} (since)
-    \item \textit{előtt} (previous)
-\end{itemize}
 Az \textit{MTL} egy lineáris temporális logika, amellyel logikai jelek időzítésbeli tulajdonságait specifikálhatjuk.
 Logikai jelek tulajdonságait specifikálhatjuk vele az időben.
 
@@ -102,21 +95,42 @@ A szintaxisa a \textit{Linear Temporal Logic}-hoz hasonlít:
 \begin{itemize}
     \item atomi kijelentések véges halmaza \textit{AP}
     \item $\neg$ és $\lor$ logikai operátorokat
-    \item $U_I$ (\textit{Until}) temporális modális operátor, ahol egy \textit{I} egy nem negatív számokból álló intervallum
+    \item $U_I$ (\textit{Until}) temporális modális operátor, ahol \textit{I} egy nem negatív számokból álló intervallum
     \item $S_I$ (\textit{Since}) temporális modális operátor
 \end{itemize}
+
+A $p U_I q$ („\textit{p Until q}”) kifejezés akkor lesz igaz $t$ időben, ha létezik olyan $t' \in I + t$ idő amire a következők teljesülnek:
+\begin{itemize}
+    \item $t'$ időben $q$ igaz
+    \item minden egyes $t'' \in T$ ahol $t < t'' < t'$ és $T 	\subseteq {R} _{+}$ időben $p$ igaz
+\end{itemize}
+
+A $p S_I q$ („\textit{p Since q}”) kifejezés akkor lesz igaz $t$ időben, ha létezik olyan $t' \in I - t$ idő amire a következők teljesülnek:
+\begin{itemize}
+    \item $t'$ időben $q$ igaz
+    \item minden egyes $t'' \in T$ ahol $t' < t'' < t$ időben $p$ igaz
+\end{itemize}
+
+Például a $p U_{1} q$ \textit{MTL} formula azt követeli meg, hogy minden egy időegységgel előtti állapotban ahol $q$ teljesül, $p$-nek teljesülnie.
 
 A \textit{past-MTL} megfelel a teljes \textit{MTL}-nek az \textit{Until} operátor kivételével.
 Hasonlóan, a \textit{future-MTL} a teljes \textit{MTL} a \textit{Since} operátor nélkül.
 
-A cíkkekben változó, hogy az \textit{MTL}-t hogyan definiálják.
+Az egyes cikkekben változó, hogy az \textit{MTL}-t hogyan definiálják.
 Az \textit{MTL} megegyezik az előbbi \textit{future-MTL}-el vagy a teljes szintaxissal van definiálva.
 
 \subsection{MITL - Metric Interval Temporal Logic}
 
 Az \textit{MITL} egy részhalmaza az \textit{MTL}-nek.
-A definiciója megegyezik a \textit{MTL}-el azzal a megkötéssel, hogy az \textit{I} halmazok \textit{U}-ban és \textit{S}-ben nem egyedülállóak.
-A halmazok határait természetes számok vagy végtelen határolják be.
+Az \textit{MITL} temporális logika nem képes a következő követelmény megadására: „\textit{A} esemény pontosan öt időegység óta történt”.
+Ezt gond nélkül megfogalmazhatjuk \textit{MTL}-ben.
+\textit{MITL}-ben csak a következőt tudjuk leírni: „\textit{A} esemény négy és öt időegység között történt”.
+
+Például a $p U_{0,1} q$ \textit{MITL} formula azt fejezi ki, hogy minden állapotot amiben $q$ teljesül és egy időegységnyi távolságra van előtt, $p$-nek kell teljesülnie.
+
+Azt észre vehetjük, hogy a temporális logikák nagy hátránya a szcenárió alapú formalizmusokkal szemben, hogy csak a rendszer változóira vagy kimenetére tudunk megfogalmazni követelményeket az idő függvényében.
+A rendszer belső működésére, komponensei közti kommunikációra nagyon nehezen tudunk követelményeket megadni temporális logikákat használva.
+Ugyanígy a szcenárió alapú formalizmusok nagy hátránya a temporális logikákkal szemben, hogy nehezen tudunk vele olyan szekvenciát megadni, ami a rendszer egy állapotára fogalmaz meg követelményt.
 
 \subsection{PSC – Property Sequence Chart}
 %----------------------------------------------------------------------------
@@ -156,16 +170,16 @@ Ebből kifolyólag az \textit{MSC} nem egy alkalmas nyelv arra, hogy az üzenet 
 \end{table}
 
 A \textit{Property Sequence Chart}[1] az \textit{MSC} egy kiterjesztése.
-Sok új elemet vezet be ami nincs az \textit{MSC}-ben, melyek megtekinthetők a 2.1. táblázaton, mint az üzenet típusokat: sima üzenet (e), elvárt üzenet (r) és nem kívánt üzenet (f).
+Sok új elemet vezet be ami nincs az \textit{MSC}-ben, melyek megtekinthetők a \ref{psc_táblázat} táblázatban, mint az üzenet típusokat: sima üzenet (e), elvárt üzenet (r) és nem kívánt üzenet (f).
 Így specifikálhatjuk, hogy mely üzenetek azok amik helyes viselkedésre utalnak és azok amelyek nem.
-Az elvárt üzenetek azok az üzenetek amelyeknek feltétetlen meg kell történiük a rendszer működése során.
-Egy sima üzenet nem jelent hibát a monitor szempontjából ha nem történik meg, viszont ha megjelenik, akkor a szcenárióban utána következő üzenetek ellenőrzésére kell áttérni.
 Szigorú sorrendezésre is ad megoldást a \textit{PSC}, ami azt jelenti, hogy megadhatjuk explicit az üzenetek sorrendjét a követelményünkben.
+A gyenge sorrendezés és a szigorú sorrendezés között az a különbség, hogy szigorú sorrendezés a szekvenciában lévő üzenetek között nem jelenhet meg más üzenet.
+Gyenge sorrendezésnél megengedjük, hogy az üzenetek között más üzenetek is megjelenjenek, amelyeket nem vettünk be a követelménybe.
 A \textit{PSC}-ben egy üzenetre megkötést is rakhatunk.
 Megadhatjuk, hogy melyek azok az üzenetek amik nem kívántak az üzenetünk észlelése előtt vagy után.
 A különböző \textit{PSC} tulajdonságok megtalálhatok a \ref{psc_elemek} ábrán.
-A nyelv a következő tulajdonságokat támogatja:
 
+A nyelv a következő tulajdonságokat támogatja:
 \begin{itemize}
     \item \textit{Sima üzenet (e)}: egy üzenet a szcenárióban, amely ha nem történik meg az a monitor szempontjából nem jelent hibát.
     Viszont ha megjelenik, akkor a szcenárióban utána következő üzenetek ellenőrzésére kell áttérni.
@@ -180,18 +194,19 @@ A nyelv a következő tulajdonságokat támogatja:
     \item \textit{Megkötött sorrendezés (strict ordering)}: A \textit{PSC} az üzenet lefutási sorrendjének a specifikálására is lehetőséget ad.
     Egy „a” üzenet megtörténte után, egy adott „b” üzenetnek kell bekövetkeznie.
     Ha „b” üzenet helyet egy másik üzenet követi az „a” üzenetet, akkor a monitor hibát jelez.
+    Nem megkötött sorrendezés esetén nem jelent hibát ha „a” és „b” üzenet között más üzenetek is megjelennek.
 \end{itemize}
 
 A nyelv támogat összetett szerkezeteket is:
 
 \begin{itemize}
     \item \textit{Alt operátor}: az \textit{alt} operátorral alternatív üzenet szekvenciákat lehet definiálni.
-    \item \textit{Par operátor}: a \textit{par} operátorral meghatározható az üzenet szekvenciák párhuzamos futása.
+    \item \textit{Par operátor}: a \textit{par} operátorral megadható üzenet szekvenciák párhuzamos futása.
     \item \textit{Loop operátor}: a \textit{loop} operátorral megadhatjuk, hogy egy üzenet szekvencia többször is lefuthat egymás után.
 \end{itemize}
 
 Egy üzeneten egyszerre megkötés és sorrendezés is lehet.
-Az üzenetek típusát az átmenetén lévő karakterrel jelöljük.
+Az üzenetek típusát a címkéjén lévő karakterrel jelöljük.
 Az „e” karakter jelzi, hogy az üzenet sima, az „r” karakter az elvárt üzenetet jelenti, az „f” pedig a nem kívánt üzenetet.
 Azt meg kell jegyezni, hogy nem kívánt üzenetekre nem lehet jövőbéli megkötéseket rakni.
 Ezen kívül, ha egy üzeneten megkötött sorrendezést alkalmazunk, akkor nem lehet rajta múltbéli megkötés.
@@ -207,7 +222,7 @@ Az üzenetek megkötött sorrendezésének jelölésénél az objektum „\texti
 \begin{figure}[!ht]
     \centering
     \includegraphics[width=150mm, keepaspectratio]{figures/2abra.png}
-    \caption{A \textit{PSC} különböző elemei[1].}
+    \caption{A \textit{PSC} különböző elemei [1].}
     \label{psc_elemek}
 \end{figure}
 
@@ -220,16 +235,16 @@ Az üzeneteket a következő formában adjuk meg: \textit{Feladó.Üzenet.Címze
     \label{psc_példa}
 \end{figure}
 A \ref{psc_példa} ábrán láthatunk egy példát arra, hogy egy követelményt hogyan lehet definiálni.
-Ez a \textit{PSC} diagram egy \textit{ATM} rendszer működését figyeli.
+Ez a \textit{PSC} diagram egy \textit{ATM} rendszer működését specifikálja.
 Először a felhasználó egy \textit{login} üzenettel bejelentkezik az \textit{ATM}-be majd egy \textit{wReq} üzenettel egy lekérdezést hajt végre.
 Ezen az üzeneten van egy megkötés, az üzenet előtt nem történthet kijelentkezés, \textit{logout}.
 Az \textit{ATM} ezután, ha nem történt \textit{logout} egy elvárt üzenetet küld a \textit{Bank} adatbázisába.
 
-A szcenárióink specifikálására most már rendelkezésünkre áll egy grafikus nyelv.
-A következőkben az lesz a feladatunk, hogy ezeket a diagramokat úgy transzformáljuk, hogy monitor kódot lehessen belőlük készíteni.
+A szcenárióink specifikálására így rendelkezésünkre áll egy grafikus nyelv.
+A következőkben az lesz a feladatunk, hogy ezekből a diagramokból valósítsuk meg a monitor kódjának generálását.
 
 %----------------------------------------------------------------------------
-\clearpage\section{A TPSC bemutatása}
+\section{A TPSC bemutatása}
 %----------------------------------------------------------------------------
 A \textit{TPSC}[2] a \textit{PSC}-nek egy kiterjesztése.
 A \textit{PSC} üzenetekre időzítési feltételeket specifikálhatunk.
@@ -241,7 +256,7 @@ A \textit{PSC} üzenetekre időzítési feltételeket specifikálhatunk.
     \label{psc_clock_improvement}
 \end{figure}
 
-A \textit{TPSC} óraváltozókat (x, y) használ az időzítéshez.
+A \textit{TPSC} óraváltozókat (pl. x, y) használ az időzítéshez.
 Ezekre meg lehet adni feltételeket, valamint az óraváltozót lehet nullázni.
 A nullázással adott eseménytől (pl. üzenet vételétől) kezdve indul az időzítés, majd rákövetkező események időbeliségét ez alapján lehet ellenőrizni.
 
