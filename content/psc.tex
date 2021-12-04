@@ -263,9 +263,9 @@ A nullázással adott eseménytől (pl. üzenet vételétől) kezdve indul az id
 A \ref{psc_clock_improvement} ábrán látható, hogy például az \textit{e: a} sima üzenet \textit{e: a; x < t, y := 0} üzenetre bővül.
 Elvárjuk, hogy az \textit{a} üzenet \textit{t} idő előtt történjen meg és egy \textit{y} óraváltozót nullázunk.
 Az \textit{e: a} üzenet egy sima üzenet, szóval ha nem történik meg a specifikált idő intervallumban az nem jelent hibát.
-Viszont \textit{r: a} üzenetnél már elvárt, hogy \textit{t} időn belül megtörténjen. \textit{f: a} üzenet esetében viszont akkor jelez hibát a monitor, ha üzenet megtörtént \textit{t} időn belül.
+Viszont \textit{r: a} üzenetnél ugyanilyen feltétel mellett már elvárt, hogy \textit{t} időn belül megtörténjen. \textit{f: a} üzenet esetében viszont akkor jelez hibát a monitor, ha üzenet megtörtént \textit{t} időn belül.
 
-Egy megkötésre is meg lehet adni időzítési feltételt.
+Egy múltbeli vagy jövőbeli megkötésre is meg lehet adni időzítési feltételt.
 Így megadhatjuk, hogy mennyi ideig nem szabad jönnie a megkötésben szereplő nem kivánt üzenetek egyikének.
 Ha a feltételben megadott idő után történik akkor az nem jelent hibát a monitor szempontjából.
 
@@ -278,32 +278,52 @@ Ha a feltételben megadott idő után történik akkor az nem jelent hibát a mo
 
 A monitorozás alapja, hogy \textit{TPSC} szcenáriókból időzített automatákat (\textit{Timed Automata}) tudjunk készíteni.
 Egy \textit{TA} állapotokból, elfogadó állapotokból, feltételekből, akciókból és bemenetekkel címkézett állapotátmenetekből áll.
-Akkor fogad el egy bemenet sorozatot, ha ennek során elérünk az automata végállapotába.
-Ha elfogadó állapotot érünk el, akkor az a monitor szempontjából hibát jelent.
+Ezek a következő sorrendbe jelennek meg az állapotátmeneteken: bemenet, feltétel és akció.
+A bemenet lehet egy konkrét esemény, ilyen például az „\textit{a}” üzenet, vagy több eseményre utaló kifejezés.
+Például a „\textit{!a}” kifejezés minden olyan üzenet amelyik nem az „\textit{a}” üzenet.
+Egy feltétel a mi esetünkben egy időzítési feltétel, ezekhez óraváltozókat használunk.
+Egy akció lehet például egy ilyen óraváltozónak a nullázása.
+Ha a feltétel teljesül és az adott üzenet illeszkedik az állapotátmeneten lévő bemenetre, akkor az megvalósulhat és a rajta lévő akció megtörténik.
+Az automata akkor fogad el egy bemenet sorozatot, ha ennek során elérünk az automata végállapotába.
+Ha hibaállapotot érünk el, akkor az a monitor szempontjából hibát jelent.
 Az alapelv az, hogy minden \textit{TPSC} elemhez tartozik egy minta automata (\textit{pattern}) ami leírja a szemantikáját.
 Például a \ref{tpsc_sima} és \ref{tpsc_elvárt} ábrákon láthatóak a különböző \textit{PSC} üzenetekhez tartozó minták.
 
 \begin{figure}[!ht]
     \centering
-    \includegraphics[width=150mm, keepaspectratio]{figures/5abra.png}
-    \caption{Sima üzenetekhez tartozó minták[2].}
+    \includegraphics[width=150mm, keepaspectratio]{figures/sima_tpsc.png}
+    \caption{Sima üzenetekhez tartozó minták [2].}
     \label{tpsc_sima}
 \end{figure}
 
 \begin{figure}[!ht]
     \centering
-    \includegraphics[width=150mm, keepaspectratio]{figures/6abra.png}
-    \caption{Elvárt üzenetekhez tartozó minták[2].}
+    \includegraphics[width=150mm, keepaspectratio]{figures/elvárt_tpsc.png}
+    \caption{Elvárt üzenetekhez tartozó minták [2].}
     \label{tpsc_elvárt}
 \end{figure}
 
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=150mm, keepaspectratio]{figures/példa_tpsc.png}
+    \caption{Elvárt múltbéli megkötést tartalmazó üzenethez tartozó minta [2].}
+    \label{tpsc_példa}
+\end{figure}
+
 A minta automatánkban található szürke állapotok reprezentálják a végállapotokat.
-A megkötéseket az automatáknál egy átmenettel definiáljuk ami a nem kívánt üzenetek negáltjainak az \textit{ÉS} kapcsolata.
-Például az \ref{tpsc_sima} ábrán lévő 3. automata mintán látható „b, $\delta ’\&!a, \delta$” címkéjű hurokélen, a „b” címke minden olyan üzenetnek felel meg, amelyek nincsenek a nem kivánt üzenetek halmazában.
+A megkötéseket a nem kívánt üzenetek negáltjainak az \textit{ÉS} kapcsolata.
+Az időzített automatán egy átmenet formájában jelennek meg.
+Például az \ref{tpsc_példa} ábrán lévő automata mintán látható „b, $\delta ’\&!a, \delta$” címkéjű hurokélen, a „b” címke minden olyan üzenetnek felel meg, amelyek nincsenek a megkötésben lévő nem kivánt üzenetek halmazában.
 A címke teljes jelentése az, hogy ha $\delta$’ időn belül nem jött nem kivánt üzenet és $\delta$ időn belül nem az „a” üzenet jött akkor maradjunk az \textit{s0} állapotban.
+A „a, $\delta$” címkéjű átmenet az „s0” állapotból az „s1” végállapotba mutat.
+Az átmenet akkor valósul meg ha „a” üzenet érkezik és „$\delta$” időzítési feltétel igaz.
+Ebben az esetben teljesül a feltétel.
+Ha viszont a megkötésben szereplő nem kívánt üzenet érkezik és „$\delta$’” igaz vagy „a” üzenet érkezik „$\delta$” előtt vagy bármilyen üzenet érkezik „$\delta$” után, akkor a hibaállapotba lépünk át.
+
 Ezekből az automata részekből lesznek meghatározott illesztési szabályokkal a szcenárióhoz tartozó teljes időzített automaták.
 Ennek az az alapelve, hogy a szcenárión végig menve az előző minta végállapotát a következő minta kezdőállapotával kell egyesíteni.
 Ezt a folyamatot mutatják be a \ref{tpsc_subset}, \ref{tpsc_used_patterns} és \ref{created_automaton} ábrák.
+Ebben a példában a \ref{tpsc_used_patterns} ábrán lévő baloldali automata „s1” állapotát kellett egyesíteni a jobb oldali automata „s0” állapotával.
 
 \begin{figure}[!ht]
     \centering
@@ -326,7 +346,7 @@ Ezt a folyamatot mutatják be a \ref{tpsc_subset}, \ref{tpsc_used_patterns} és 
     \label{created_automaton}
 \end{figure}
 
-A monitor szempontjából az automata akkor jelez hibás működést ha elfogadó állapotba kerül.
+A monitor szempontjából az automata akkor jelez hibás működést ha olyan bemenetet kap, amely egyik élre sem illeszkedik.
 Ilyenkor a követelmény már nem teljesíthető.
 Ha az automata egy sima állapotban van, akkor az helyes működést jelent viszont a követelmény még ekkor sem teljesült.
 A követelmény akkor teljesül amikor az automata a végső (\textit{FINAL}) állapotba kerül és nem érkezik további üzenet amely elmozditaná őt onnan.
