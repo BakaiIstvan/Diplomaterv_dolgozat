@@ -16,7 +16,7 @@ A munkafolyamat egy \textit{workspace}-en belül történik, ahol a fejlesztő l
 Több \textit{workspace}-t is létre lehet hozni és azok között váltani.
 
 Különböző fajta projekteknek különböző nézetei lehetnek.
-Például egy modellező projektnek van külön model nézete az eszközön belül vagy egy \textit{Java} projektnek \textit{Java} nézete.
+Például egy modellező projektnek van külön modell nézete az eszközön belül vagy egy \textit{Java} projektnek \textit{Java} nézete.
 A nézetek az eszközön megjelenített szövegszerkesztő, fájlkezelő vagy egyéb funkció elhelyezésért, megjelenitéséért felelnek.
 
 \subsection{Xtext}
@@ -62,6 +62,7 @@ Attribútumok megadásával tudjuk tárolni a nyelvi elemünk értékeit, válto
 Például a \textit{name} attribútum egy \textit{ID} elemet tárol, ami egy azonosítónak felel meg.
 Egy attribútumba több elemet is rakhatunk lista szerüen.
 Ezt a \textit{*} karakterrel adhatjuk meg, például \textit{scenariocontents+=ScenarioContent*}, ahol a \textit{scenariocontents} több \textit{ScenarioContent}-beli elemet tárol.
+A \textit{+=} karakterrel pakolhatjuk az új \textit{ScenarioContent}-jeinket a \textit{scenariocontents} tömbbe.
 
 A nyelvtanukban megadhatunk elágazó szabályokat is a "|" karakterrel.
 Ilyen szabály például a \textit{Message}.
@@ -77,12 +78,27 @@ Fordítás után a nyelvi elemeinkből \textit{Xtend} és \textit{Java} osztály
 Az \textit{Xtend} egy magasszintű programozási nyelv.
 A \textit{Java Virtual Machine} plaformot használja.
 Szintaktikailag és szemantikailag nagyon hasonlít a \textit{Java} nyelvhez, mondhatni a \textit{Java} kibővítése.
-Az \textit{Xtend} osztályokból \textit{Java} osztályok készülnek.
+Az \textit{Xtend} fordító a létrehozott osztályokból \textit{Java} osztályok generál.
+Így könnyedén ki tudjuk szervezni a projektünket \textit{.jar} fájlba.
 
 Egy nagyon hasznos funkciója az \textit{Xtend}-nek a \textit{template}.
 Sablonokat tudunk létrezhozni vele függvényeken belül, amely megkönnyíti a kódgenerálást.
 Így könnyedén tudunk hivatkozni az \textit{Xtext} nyelvi elemeinkre függvény paramétereken keresztül és egyedi kódgenerátort fejleszteni a nyelvünkhöz.
 A sablon függvényen belül a "«»" karaktereket használva tudunk hivatkozni az \textit{Xtext} nyelvi elemeinkre.
+
+\begin{lstlisting}[language=java, frame=single, float=ht!, caption={Xtend template.},captionpos=b, label=XtendTemplate]
+def compile(Scenario scenario)'''
+	«FOR sc : scenario.scenariocontents»
+		«FOR m : sc.message»
+			«generateMessage(m)»
+			a.collapse(b);
+		«ENDFOR»
+	«ENDFOR»
+'''
+\end{lstlisting}
+
+A \ref{XtendTemplate} ábra egy \textit{Xtend} sablon függvényt mutat be.
+Láthatjuk, hogy egy cikluson belül
 
 \subsection{Sirius}
 
