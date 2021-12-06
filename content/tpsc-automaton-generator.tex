@@ -6,13 +6,20 @@
 \subsection{Az automata generátor célja}
 %----------------------------------------------------------------------------
 
-Az \textit{önálló laboratórium} során elkészített automata generátort kibővítettem úgy, hogy támogassa a \textit{TPSC} elemekhez tartozó automata minták generálását. Bemenetként egy \textit{TPSC} szcenárió szöveges leírását kapja meg amiből a minta alapú módszerrel generál egy \textit{TA} automatát.
+Az \textit{önálló laboratórium} során elkészített automata generátort kibővítettem úgy, hogy támogassa a \textit{TPSC} elemekhez tartozó automata minták generálását.
+Az eredeti automata generátor \textit{PSC} szöveges leírásokhoz tartozó \textit{Büchi} automatákat tudta összeállítani.
+Az volt a feladatom, hogy a meglévő \textit{Büchi} automata mintákat lecseréljem a korábban ismertetett időzített automata mintákra és felvegyem a hiányzó mintákat, amik az időzítési feltételeket tartalmazó üzenetekhez tartoznak.
+A kibővített automata generátor bemenetként egy \textit{TPSC} szcenárió szöveges leírását kapja meg amiből a minta alapú módszerrel generál egy \textit{TA} automatát.
 
 A \ref{tpsc_alt} és \ref{tpsc_alt_nc} kódrészleteken látható, hogy a monitor generátor támogatja az összetett operátorokat tartalmazó \textit{TPSC}-khez tartozó \textit{TA}-k generálását is.
-A \ref{tpsc_alt_nc} kódrészlet a generált automata "\textit{never claim}" leírását tartalmazza.
+A generátor készít egy szöveges leírást a generált automatához, ehhez a \textit{Never claim} nyelvet használja.
 A \textit{Never claim} a \textit{Promela} nyelv része, ezzel egy rendszer viselkedését lehet definiálni.
+Egy \textit{Never claim} leírás a \textit{never} kulcsszóval kezdődik és '\{' '\}' jelek között vannak az automata állapotai lista szerűen felsorolva egymás alatt.
+Minden állapothoz tartozó kimenő átmenet az \textit{if} és \textit{fi} kulcssavak között található.
+Egy átmenet leírása a címkéjét tartalmazza és egy \textit{->} jelzi, hogy melyik állapotba visz át.
+A \ref{tpsc_alt} kódrészleten lévő szöveges \textit{TPSC} leíráshoz tartozó generált automata \textit{Never claim} leírását a \ref{tpsc_alt_nc} kódrészlet tartalmazza.
 Továbbá a generátor képes az üzenet paraméterek kezelésére.
-Például az \textit{alt} operátor feltételét képes feldolgozni és azt elhelyezni a generált automata megfelelő élén.
+%Például az \textit{alt} operátor feltételét képes feldolgozni és azt elhelyezni a generált automata megfelelő élén.
 
 \begin{lstlisting}[language=java,frame=single, float=h!, caption={Alt operátort tartalmazó szcenárió.},captionpos=b,label=tpsc_alt]
 specification Bank {
@@ -105,19 +112,19 @@ Minden egyes \textit{TPSC} üzenethez legenerálja a hozzá tartozó minta autom
 
 Az időzített automaták generálásához egy adatstruktúrát definiáltam, amely a következő \textit{Java} osztályokból és interfészekből áll:
 \begin{itemize}
-    \item AltExpressionInterface
-    \item Automaton
-    \item BasicTransition
-    \item ClockConstraint
-    \item ClockExpressionInterface
-    \item Constraint
-    \item EpsilonTransition
-    \item OperatorFunctions
-    \item State
-    \item StateType
+    %\item AltExpressionInterface
+    \item \textit{Automaton}, az automata implementációját tartalmazza, eltárolja az állapotokat és az átmeneteket
+    %\item BasicTransition
+    \item \textit{ClockConstraint}, időzítési feltételek \textit{Java} implementációját tartalmazza
+    %\item ClockExpressionInterface
+    \item \textit{Constraint}, megkötések implementációját tartalmazza
+    %\item EpsilonTransition
+    %\item OperatorFunctions
+    \item \textit{State}
+    \item \textit{StateType}
     \item Transition
-    \item UnwantedConstraint
-    \item WantedConstraint
+    %\item UnwantedConstraint
+    %\item WantedConstraint
 \end{itemize}
 
 Az automatában lévő állapotok implementációja a \textit{State} osztályban található.
@@ -139,8 +146,11 @@ Az átmenetek implementációjáért felelős osztály a \textit{Transition}.
 Három tag változója van:
 \begin{itemize}
 	\item id(\textit{String}): az üzenet
-	\item sender(\textit{State}): a feladó állapot
-	\item receiver(\textit{State}): a fogadó állapot
+	\item reset(\textit{String}): visszaállítandó óraváltozó neve
+	\item sender(\textit{State}): a forrás állapot
+	\item receiver(\textit{State}): a cél állapot
+	\item constraint(\textit{Constraint}): az átmeneten lévő megkötés
+	\item clockConstraint(\textit{ClockConstraint}): az átmeneten lévő időzítési feltétel
 \end{itemize}
 
 Az időzített automata implementációja az \textit{Automaton} osztályban található.
@@ -148,7 +158,7 @@ Itt tároljuk az automatában lévő állapotokat és a köztük lévő átmenet
 Az \textit{Automaton} osztály \textit{addState(State)} és \textit{addTransition(Transition)} függvényeivel lehet új állapotot és átmenetet hozzáadni az automatához, a \textit{collapse(Automaton)} függvényével pedig két automatát egyesíteni.
 Ezt a függvényt használtam az implementációban a minta automaták egyesítésére.
 Ezen kívül az osztálynak van egy \textit{merge(ArrayList<Automaton>)} függvénye.
-Ez a függvény a minta automata ágak egyesítésére szolgál.
+Ez a függvény az \textit{alt} operátor ágaiban lévő minta automaták összefésülésére szolgál.
 
 A \textit{Specification} osztály feladata, hogy összeállítsa a szöveges leírásban specifikált \textit{TPSC} szcenárióhoz tartozó időzített automatát.
 Ezt követően az automata \textit{Never Claim} leírását egy \textit{.txt} kiterjesztésű fájlba írja.
@@ -156,13 +166,6 @@ Ezt követően az automata \textit{Never Claim} leírását egy \textit{.txt} ki
 %----------------------------------------------------------------------------
 \subsection{Mintapélda}
 %----------------------------------------------------------------------------
-
-\begin{figure}[h!]
-    \centering
-    \includegraphics[width=130mm, keepaspectratio]{figures/14abra.png}
-    \caption{Példa TPSC diagram.}
-	\label{tpsc_example_diagram}
-\end{figure}
 
 \begin{lstlisting}[language=java,frame=single, float=h!, caption={TPSC scenario szöveges leírása.},captionpos=b,label=tpsc_example_text]
 specification Bank {
@@ -184,6 +187,13 @@ specification Bank {
 	}
 }
 \end{lstlisting}
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=130mm, keepaspectratio]{figures/tpsc_automaton_generator_sirius.png}
+    \caption{Példa TPSC diagram.}
+	\label{tpsc_example_diagram}
+\end{figure}
 
 \begin{lstlisting}[language=java,frame=single, float=h!, caption={Generált időzített automata never claim formátumban.},captionpos=b,label=tpsc_example_nc]
 never{ /*transactionMonitor*/
