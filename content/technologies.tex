@@ -78,12 +78,12 @@ Fordítás után a nyelvi elemeinkből \textit{Xtend} és \textit{Java} osztály
 Az \textit{Xtend} egy magasszintű programozási nyelv.
 A \textit{Java Virtual Machine} plaformot használja.
 Szintaktikailag és szemantikailag nagyon hasonlít a \textit{Java} nyelvhez, mondhatni a \textit{Java} kibővítése.
-Az \textit{Xtend} fordító a létrehozott osztályokból \textit{Java} osztályok generál.
-Így könnyedén ki tudjuk szervezni a projektünket \textit{.jar} fájlba.
+Az \textit{Xtend} fordító a létrehozott osztályokból \textit{Java} osztályokat generál.
+Így akár könnyedén ki tudjuk szervezni a projektünket egy \textit{.jar} fájlba.
 
 Egy nagyon hasznos funkciója az \textit{Xtend}-nek a \textit{template}.
 Sablonokat tudunk létrezhozni vele függvényeken belül, amely megkönnyíti a kódgenerálást.
-Így könnyedén tudunk hivatkozni az \textit{Xtext} nyelvi elemeinkre függvény paramétereken keresztül és egyedi kódgenerátort fejleszteni a nyelvünkhöz.
+Így tudunk hivatkozni az \textit{Xtext} nyelvi elemeinkre függvény paramétereken keresztül és egyedi kódgenerátort fejleszteni a nyelvünkhöz.
 A sablon függvényen belül a "«»" karaktereket használva tudunk hivatkozni az \textit{Xtext} nyelvi elemeinkre.
 
 \begin{lstlisting}[language=java, frame=single, float=ht!, caption={Xtend template.},captionpos=b, label=XtendTemplate]
@@ -98,10 +98,23 @@ def compile(Scenario scenario)'''
 \end{lstlisting}
 
 A \ref{XtendTemplate} ábra egy \textit{Xtend} sablon függvényt mutat be.
-Láthatjuk, hogy egy cikluson belül
+Láthatjuk, hogy a "«»" karaktereket használva hivatkozhatunk a paraméterben átadott \textit{Xtext} nyelvbeli objektum attribútumaira.
+Itt például a \textit{Scenario} \textit{scenariocontents} tömbjén megyünk végig.
 
 \subsection{Sirius}
 
 A \textit{Sirius} eszköz segítségével létrehozhatunk saját grafikus modellező alkalmazásainkat.
 Egy szerkesztő környezetet alkothatunk, amivel a modellünk elemeit hozhatjuk létre vagy szerkeszthetjük grafikusan.
 A plugin az \textit{Entity Modelling Framework} keretrendszer használja a modellek feldolgozásához és ilyen \textit{EMF} modelleket jelenít meg.
+Ehhez az \textit{EMF} modellünk összes eleméhez meg kell adnunk egy megjelenítést.
+
+Elkészíthetjük saját egyedi szerkesztőnket, de választhatunk a \textit{Sirius} által nyújtott szerkesztőkből is:
+\begin{itemize}
+	\item Fa
+	\item Mátrix
+	\item Diagram
+	\item Szekvencia diagram
+	\item Táblázat
+\end{itemize}
+
+Emelett alkalmazhatunk feltételes megjelenítést is adott típusú modellelemünkre, ha az adott tulajdonságban eltér a többi elemtől.
