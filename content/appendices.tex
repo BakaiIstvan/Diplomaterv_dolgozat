@@ -10,23 +10,994 @@
 %\numberwithin{tabular}{section}
 
 %----------------------------------------------------------------------------
-\section{A TeXstudio felülete}
+\section{A 5.2.3. fejezet minta példájához tartozó Specification osztály}
 %----------------------------------------------------------------------------
-\begin{figure}[!ht]
-\centering
-\includegraphics[width=150mm, keepaspectratio]{figures/TeXstudio.png}
-\caption{A TeXstudio \LaTeX-szerkesztő.} 
-\end{figure}
+\begin{lstlisting}[language=java, caption={\textit{Specification} osztály.},captionpos=b,label=specification_class]
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.TreeSet;
+
+public class Specification{
+	private String id = "spec1";
+	private ArrayList<Automaton> automatas;
+	
+	public Specification(){
+		automatas = new ArrayList<Automaton>();
+		String str;
+		String str1;
+		String pre;
+		String succ;
+		State actualState;
+		State acceptState;
+		State finalState;
+		State newState;
+		State acceptState_new;
+		Automaton a = new Automaton("playlist_generation");
+		Automaton b;
+		Map<String, Automaton> altauto;
+		ArrayList<Automaton> parauto;
+		Automaton loopauto;
+		Automaton expression;
+		int counter = 0;
+		
+		b = new Automaton("auto7");
+		actualState = new State("q" + counter, StateType.NORMAL);
+		counter++;
+		b.addState(actualState);
+		b.setInitial(actualState);
+											
+		b.addTransition(new Transition("!(" + "user" + "." +	
+			"openApp" + "("
+			+ ")"
+			
+			+ "." + "device)", actualState, actualState));
+		
+		newState = new State("q" + counter, StateType.FINAL);
+		counter++;
+		b.addTransition(new Transition("user" + "." +
+		
+		"openApp" + "("
+		+ ")"
+		
+		+ "." + "device" , actualState, newState));
+		b.addState(newState);
+		b.setFinale(newState);
+		a.collapse(b);
+		
+		b = new Automaton("auto7");
+		actualState = new State("q" + counter, StateType.NORMAL);
+		counter++;
+		b.addState(actualState);
+		b.setInitial(actualState);
+											
+		b.addTransition(new Transition("!(" + "device" + "." +	
+			"accessWebcam" + "("
+			+ ")"
+			
+			+ "." + "device)", actualState, actualState));
+		
+		newState = new State("q" + counter, StateType.FINAL);
+		counter++;
+		b.addTransition(new Transition("device" + "." +
+		
+		"accessWebcam" + "("
+		+ ")"
+		
+		+ "." + "device" , actualState, newState));
+		b.addState(newState);
+		b.setFinale(newState);
+		a.collapse(b);
+		
+		b = new Automaton("auto3");
+		actualState = new State("q" + counter, StateType.NORMAL);
+		counter++;
+		b.addState(actualState);
+		b.setInitial(actualState);
+		
+		b.addTransition(new Transition("!(" + "device" + "." +
+		"getPhoto" + "("
+		+ ")"
+		
+		+ "." + "user" + ")", actualState, actualState));
+		
+		acceptState = new State("q" + counter, StateType.ACCEPT);
+		counter++;
+		
+		b.addTransition(new Transition("!(" + "device" + "." +
+			"getPhoto" + "("
+			+ ")"
+			
+			+ "." + "user" + ")", actualState, acceptState));
+		
+		b.addState(acceptState);
+		
+		newState = new State("q" + counter, StateType.FINAL);
+		counter++;
+		b.addTransition(new Transition("device" + "." +
+		"getPhoto" + "("
+		+ ")"
+		+ "." + "user", actualState, newState));
+		b.addState(newState);
+		b.setFinale(newState);
+		a.collapse(b);
+		
+		b = new Automaton("auto5");
+		actualState = new State("q" + counter, StateType.NORMAL);
+		counter++;
+		b.addState(actualState);
+		b.setInitial(actualState);
+											
+		
+		finalState = new State("q" + counter, StateType.FINAL);
+		counter++;
+		b.addState(finalState);
+		b.setFinale(finalState);
+		
+		b.addTransition(new Transition("!(" + "user" + "." +
+					"cameraOffline" + "("
+					+ ")"
+					+ "." + "device)", actualState, finalState));
+		
+		b.addTransition(new Transition("!(" + "user" + "." +
+			"cameraOffline" + "("
+			+ ")"
+			+ "." + "device)", actualState, actualState));
+			
+		newState = new State("q" + counter, StateType.ACCEPT);
+		counter++;
+		b.addTransition(new Transition("user" + "." +
+		"cameraOffline" + "("
+		+ ")"
+		+ "." + "device" , actualState, newState));
+		b.addState(newState);
+		a.collapse(b);
+		
+		
+		b = new Automaton("auto9");
+		actualState = new State("q" + counter, StateType.NORMAL);
+		counter++;
+		b.addState(actualState);
+		b.setInitial(actualState);
+											
+		finalState = new State("q" + counter, StateType.FINAL);
+		counter++;
+		acceptState = new State("q" + counter, StateType.ACCEPT);
+		counter++;
+		b.addTransition(new Transition("device" + "." +
+		"retrieveMood" + "("
+		+ ")"
+		+ "." + "db" , actualState, finalState));
+		b.addTransition(new Transition("!(" + "device" + "." +
+		"retrieveMood" + "("
+		+ ")"
+		+ "." + "db" + ")", actualState, acceptState));
+		b.addState(acceptState);
+		b.addState(finalState);
+		b.setFinale(finalState);
+		a.collapse(b);
+		b = new Automaton("auto3");
+		actualState = new State("q" + counter, StateType.NORMAL);
+		counter++;
+		b.addState(actualState);
+		b.setInitial(actualState);
+		
+		b.addTransition(new Transition("!(" + "device" + "." +
+		"retrieveMusic" + "("
+		+ ")"
+		
+		+ "." + "db" + ")", actualState, actualState));
+		
+		acceptState = new State("q" + counter, StateType.ACCEPT);
+		counter++;
+		
+		b.addTransition(new Transition("!(" + "device" + "." +
+			"retrieveMusic" + "("
+			+ ")"
+			
+			+ "." + "db" + ")", actualState, acceptState));
+		
+		b.addState(acceptState);
+		
+		newState = new State("q" + counter, StateType.FINAL);
+		counter++;
+		b.addTransition(new Transition("device" + "." +
+		"retrieveMusic" + "("
+		+ ")"
+		+ "." + "db", actualState, newState));
+		b.addState(newState);
+		b.setFinale(newState);
+		a.collapse(b);
+		
+		
+		b = new Automaton("auto12");
+		actualState = new State("q" + counter, StateType.NORMAL);
+		counter++;
+		b.addState(actualState);
+		b.setInitial(actualState);
+												
+		newState = new State("q" + counter, StateType.FINAL);
+		counter++;
+		b.addTransition(new Transition("db" + "." +
+		"generatePlaylist" + "("
+		+ ")"
+		+ "." + "device", actualState, newState));
+		b.addState(newState);
+		b.setFinale(newState);
+		a.collapse(b);
+		a.rename();
+		automatas.add(a);
+	}
+	
+	public void listAutomatas(){
+		for(Automaton a : this.automatas){
+			for(State s : a.getStates()){
+				s.writeState();	
+			}
+			
+			for(Transition t : a.getTransitions()){
+				t.writeTransition();
+			}
+		}
+	}
+	
+	public List<Automaton> getAutomata() {
+		return automatas;
+	}
+	
+	public ArrayList<Automaton> par(ArrayList<Automaton> automatas) {
+	        ArrayList<ArrayList<Automaton>> automataList = new ArrayList<>();
+	        permute(automataList, new ArrayList<>(), automatas);
+	        return listConverter((automataList));
+	}
+
+    private void permute(ArrayList<ArrayList<Automaton>> list, ArrayList<Automaton> resultList, ArrayList<Automaton> automatas) {
+        if (resultList.size() == automatas.size()) {
+            list.add(new ArrayList<>(resultList));
+        } else {
+            for (int i = 0; i < automatas.size(); i++) {
+                if (resultList.contains((automatas.get(i)))) {
+                    continue;
+                }
+
+                resultList.add(automatas.get(i));
+                permute(list, resultList, automatas);
+                resultList.remove(resultList.size() - 1);
+            }
+        }
+    }
+
+    private ArrayList<Automaton> listConverter(ArrayList<ArrayList<Automaton>> list) {
+        ArrayList<Automaton> result = new ArrayList<>();
+        for (ArrayList<Automaton> alist : list) {
+            Automaton newauto = new Automaton("listConverter");
+            for (Automaton auto : alist) {
+                newauto.collapse(copyAutomaton(auto));
+            }
+            result.add(newauto);
+        }
+        return result;
+    }
+    
+    public Map<String, Automaton> loopSetup(Automaton loopauto, int min, int max) {
+	        	Map<String, Automaton> result = new HashMap<>();
+	    	    
+	            for (int i = min; i <= max; i++) {
+	                Automaton newauto = new Automaton("loopauto" + i);
+	                for (int j = 0; j < i; j++) {
+	                    newauto.collapse(copyAutomaton(loopauto));
+	                }
+	                result.put("loop" + i, newauto);
+	            }
+	            return result;
+	        }
+    
+    public Automaton copyAutomaton(Automaton referenceAuto) {
+            Automaton result = new Automaton("copy automaton");
+            int count = 0;
+            State previousSender = new State();
+            State referencePreviousSender = new State();
+    
+            for (Transition t : referenceAuto.getTransitions()) {
+                State sender = new State();
+                State receiver = new State();
+                Transition transition = new Transition();
+                Automaton temp = new Automaton("temp");
+    
+                transition.setId(t.getId());
+    
+                if (t.getSender() == referencePreviousSender) {
+                    receiver.setId("c" + count);
+                    count++;
+                    receiver.setType(t.getReceiver().getType());
+    
+                    transition.setSender(previousSender);
+                    transition.setReceiver(receiver);
+                    temp.addState(previousSender);
+                    temp.addState(receiver);
+                    temp.setInitial(previousSender);
+                    temp.setFinale(receiver);
+                } else {
+                    if (t.getSender() == t.getReceiver()) {
+                        sender.setId("c" + count);
+                        count++;
+                        sender.setType(t.getSender().getType());
+    
+                        transition.setSender(sender);
+                        transition.setReceiver(sender);
+    
+                        temp.addState(sender);
+                        temp.setInitial(sender);
+                        temp.setFinale(sender);
+                    } else {
+                        sender.setId("c" + count);
+                        count++;
+                        sender.setType(t.getSender().getType());
+    
+                        receiver.setId("c" + count);
+                        count++;
+                        receiver.setType(t.getReceiver().getType());
+    
+                        transition.setSender(sender);
+                        transition.setReceiver(receiver);
+    
+                        temp.addState(sender);
+                        temp.addState(receiver);
+                        temp.setInitial(sender);
+                        temp.setFinale(receiver);
+                    }
+                    previousSender = sender;
+                    referencePreviousSender = t.getSender();
+                }
+    
+                temp.addTransition(transition);
+                result.collapse(temp);
+            }
+    
+            return result;
+        }
+	
+	public static void main(String[] args) throws FileNotFoundException, UnsupportedEncodingException{
+		Specification specification = new Specification();
+		specification.listAutomatas();
+		boolean acceptState = false;
+}
+\end{lstlisting}
 
 %----------------------------------------------------------------------------
-\clearpage\section{Válasz az ,,Élet, a világmindenség, meg minden'' kérdésére}
+\clearpage\section{Monitor forráskód generátor - operátorok támogatása}
 %----------------------------------------------------------------------------
-A Pitagorasz-tételből levezetve
-\begin{align}
-c^2=a^2+b^2=42.
-\end{align}
-A Faraday-indukciós törvényből levezetve
-\begin{align}
-\rot E=-\frac{dB}{dt}\hspace{1cm}\longrightarrow \hspace{1cm}
-U_i=\oint\limits_\mathbf{L}{\mathbf{E}\mathbf{dl}}=-\frac{d}{dt}\int\limits_A{\mathbf{B}\mathbf{da}}=42.
-\end{align}
+
+\begin{lstlisting}[language=java, frame=single, float=ht!, caption={7.1. szcenárióhoz tartozó Main osztály.},captionpos=b]
+public class Main {
+	public static void monitorStatus(String status) {
+		System.out.println(status);
+	}
+
+	public static void main(String[] args) {
+		Specification specification = new Specification();
+		specification.listAutomatas();
+		IMonitor monitor = new Monitor(specification.getAutomata().get(0));
+
+		UserInterface ui = new UserInterface();
+		ATM atm = new ATM();
+		BankDB db = new BankDB();
+		ui.atm = atm;
+		atm.ui = ui;
+		atm.db = db;
+		ui.monitor = monitor;
+		atm.monitor = monitor;
+		db.monitor = monitor;
+
+		ui.start();
+	}
+}
+\end{lstlisting}
+
+\begin{lstlisting}[language=java, frame=single, float=ht!, caption={7.1. szcenárióhoz tartozó rendszer \textit{ATM} \textit{Java} osztálya.},captionpos=b]
+public class ATM {
+	public IMonitor monitor;
+	public BankDB db;
+	public UserInterface ui;
+
+	public void logout() {
+		monitor.update("ui", "atm", "logout", new String[] {});
+	}
+
+	public void login(boolean success) {
+		monitor.update("ui", "atm", "login", new String[] {"success"});
+		success = true;
+	}
+
+	public void wReq() {
+		monitor.update("ui", "atm", "wReq", new String[] {});
+		db.uDB();
+	}
+
+	public void loginUnsuccessful() {
+		monitor.update("ui", "atm", "loginUnsuccesful", new String[] {});
+		ui.lockMachine();
+	}
+}
+\end{lstlisting}
+
+\begin{lstlisting}[language=java, frame=single, float=ht!, caption={7.1. szcenárió monitor kimenete.},captionpos=b]
+Received Message: ui.login(success).atm
+Transition: !(ui.login(success).atm)
+Transition: ui.login(success).atm
+transition: ui.login(success).atm
+q1
+System is in bad state.
+Received Message: ui.wReq().atm
+Transition: epsilon
+PrevTransition: epsilon
+transition: epsilon
+qinit0
+System is in bad state.
+Transition: epsilon; success == false
+PrevTransition: epsilon; success == false
+transition: epsilon; success == false
+q5
+System is in bad state.
+Transition: ui.loginUnsuccessful().atm
+Transition: !(ui.loginUnsuccessful().atm)
+Transition: epsilon; success == true
+PrevTransition: epsilon; success == true
+transition: epsilon; success == true
+q2
+System is in bad state.
+Transition: ui.wReq().atm
+transition: ui.wReq().atm
+q3
+System is in bad state.
+Received Message: atm.uDB().db
+Transition: !(atm.uDB().db)
+Transition: atm.uDB().db
+transition: epsilon
+qfinal1
+System is in good state.
+\end{lstlisting}
+
+\begin{lstlisting}[language=java, frame=single, float=ht!, caption={Loop operátort tartalmazó scenario.},captionpos=b]
+specification spec1{
+
+	object Computer computer;
+	object Server server;
+
+	constraint constraints{
+		message logout() computer -> server;
+	}
+
+	scenario email{
+		loop (1, 3) {
+			message checkEmail() computer -> computer;
+			message newEmail() computer -> server pastConstraint {constraints};
+		}
+	}
+}
+\end{lstlisting}
+
+\begin{lstlisting}[language=java, frame=single, float=ht!, caption={F.2.4. scenariohoz tartozó monitor kimenet.},captionpos=b]
+Received Message: computer.checkEmail().computer
+Transition: epsilon; loop2
+PrevTransition: epsilon; loop2
+transition: epsilon; loop2
+q0
+System is in bad state.
+Transition: computer.checkEmail().computer
+Transition: !(computer.checkEmail().computer)
+Transition: epsilon; loop3
+PrevTransition: epsilon; loop3
+transition: epsilon; loop3
+q5
+System is in bad state.
+Transition: computer.checkEmail().computer
+Transition: !(computer.checkEmail().computer)
+Transition: epsilon; loop1
+PrevTransition: epsilon; loop1
+transition: epsilon; loop1
+q12
+System is in bad state.
+Transition: computer.checkEmail().computer
+transition: computer.checkEmail().computer
+q13
+System is in bad state.
+Received Message: computer.newEmail().server
+Transition: !(computer.logout().server) & !(computer.newEmail().server)
+Transition: computer.newEmail().server
+transition: epsilon
+qfinal1
+System is in good state.
+\end{lstlisting}
+
+\begin{lstlisting}[language=java, frame=single, float=ht!, caption={F.2.4. scenariohoz tartozó Main osztály.},captionpos=b]
+public class Main {
+	public static void monitorStatus(String status) {
+		System.out.println(status);
+	}
+
+	public static void main(String[] args) {
+		Specification specification = new Specification();
+		specification.listAutomatas();
+		IMonitor monitor = new Monitor(specification.getAutomata().get(0));
+
+		Server server = new Server();
+		Computer computer = new Computer(server, monitor);
+	}
+}
+\end{lstlisting}
+
+\begin{lstlisting}[language=java, caption={\textit{Gamma} monitor kimenet.},captionpos=b,label=gamma_monitor_output1]
+[Automaton] Setting final transition
+[Automaton] Setting final transition
+[GammaMonitorTest] Resetting values
+Received Message: controller.displayRed().light
+[Monitor] available transition are:
+------------------------------------
+police.policeInterruptRaised(success).controller, q0->q1, ,
+!(police.policeInterruptRaised(success).controller), q0->q0, ,
+=----------------------------------=
+Transition: police.policeInterruptRaised(success).controller, q0->q1, ,
+[Monitor] available transition are:
+------------------------------------
+police.policeInterruptRaised(success).controller, q0->q1, ,
+!(police.policeInterruptRaised(success).controller), q0->q0, ,
+=----------------------------------=
+Transition: !(police.policeInterruptRaised(success).controller), q0->q0, ,
+transition triggered: !(police.policeInterruptRaised(success).controller), q0->q0, ,
+q0
+[GammaMonitorTest] Received status from monitor: System is in good state.
+Received Message: controller.displayRed().light
+[Monitor] available transition are:
+------------------------------------
+police.policeInterruptRaised(success).controller, q0->q1, ,
+!(police.policeInterruptRaised(success).controller), q0->q0, ,
+=----------------------------------=
+Transition: police.policeInterruptRaised(success).controller, q0->q1, ,
+[Monitor] available transition are:
+------------------------------------
+police.policeInterruptRaised(success).controller, q0->q1, ,
+!(police.policeInterruptRaised(success).controller), q0->q0, ,
+=----------------------------------=
+Transition: !(police.policeInterruptRaised(success).controller), q0->q0, ,
+transition triggered: !(police.policeInterruptRaised(success).controller), q0->q0, ,
+q0
+[GammaMonitorTest] Received status from monitor: System is in good state.
+Received Message: controller.displayGreen().light
+[Monitor] available transition are:
+------------------------------------
+police.policeInterruptRaised(success).controller, q0->q1, ,
+!(police.policeInterruptRaised(success).controller), q0->q0, ,
+=----------------------------------=
+Transition: police.policeInterruptRaised(success).controller, q0->q1, ,
+[Monitor] available transition are:
+------------------------------------
+police.policeInterruptRaised(success).controller, q0->q1, ,
+!(police.policeInterruptRaised(success).controller), q0->q0, ,
+=----------------------------------=
+Transition: !(police.policeInterruptRaised(success).controller), q0->q0, ,
+transition triggered: !(police.policeInterruptRaised(success).controller), q0->q0, ,
+q0
+[GammaMonitorTest] Received status from monitor: System is in good state.
+Received Message: police.policeInterruptRaised(success).controller
+[Monitor] available transition are:
+------------------------------------
+police.policeInterruptRaised(success).controller, q0->q1, ,
+!(police.policeInterruptRaised(success).controller), q0->q0, ,
+=----------------------------------=
+Transition: police.policeInterruptRaised(success).controller, q0->q1, ,
+transition triggered: police.policeInterruptRaised(success).controller, q0->q1, ,
+q1
+[GammaMonitorTest] Received status from monitor: System is in good state.
+Received Message: controller.displayYellow().light
+[Monitor] available transition are:
+------------------------------------
+epsilon, q1->qinit0
+=----------------------------------=
+Transition: epsilon, q1->qinit0
+[EpsilonTransition]epsilon, q1->qinit0 canTrigger is true
+PrevTransition: epsilon, q1->qinit0
+[Monitor] available transition are:
+------------------------------------
+epsilon, qinit0->q2
+epsilon, qinit0->q4
+=----------------------------------=
+Transition: epsilon, qinit0->q2
+[EpsilonTransition]epsilon, qinit0->q2 canTrigger is true
+PrevTransition: epsilon, qinit0->q2
+[Monitor] available transition are:
+------------------------------------
+!(controller.displayYellow().light), q2->q2, ,
+controller.displayYellow().light, q2->q3, ,
+epsilon, qinit0->q4
+=----------------------------------=
+Transition: !(controller.displayYellow().light), q2->q2, ,
+[Monitor] available transition are:
+------------------------------------
+!(controller.displayYellow().light), q2->q2, ,
+controller.displayYellow().light, q2->q3, ,
+epsilon, qinit0->q4
+=----------------------------------=
+Transition: controller.displayYellow().light, q2->q3, ,
+[Monitor] available transition are:
+------------------------------------
+!(controller.displayYellow().light), q2->q2, ,
+controller.displayYellow().light, q2->q3, ,
+epsilon, qinit0->q4
+=----------------------------------=
+Transition: epsilon, qinit0->q4
+[EpsilonTransition]epsilon, qinit0->q4 canTrigger is false
+[EpsilonTransition]epsilon, qinit0->q4 canTrigger is false
+[Monitor] available transition are:
+------------------------------------
+!(controller.displayYellow().light), q2->q2, ,
+controller.displayYellow().light, q2->q3, ,
+=----------------------------------=
+Transition: !(controller.displayYellow().light), q2->q2, ,
+[Monitor] available transition are:
+------------------------------------
+!(controller.displayYellow().light), q2->q2, ,
+controller.displayYellow().light, q2->q3, ,
+=----------------------------------=
+Transition: controller.displayYellow().light, q2->q3, ,
+transition triggered: controller.displayYellow().light, q2->q3, ,
+q3
+[GammaMonitorTest] Received status from monitor: System is in good state.
+transition triggered: epsilon, q3->qfinal1
+qfinal1
+[GammaMonitorTest] Received status from monitor: Requirement satisfied
+[GammaMonitorTest] Monitor reported that the requirement was satisfied
+\end{lstlisting}
+
+\begin{lstlisting}[language=java, caption={\textit{Gamma} monitor kimenet rendőrségi példa.},captionpos=b,label=gamma_monitor_output2]
+[Automaton] Setting final transition
+[Automaton] Setting final transition
+[GammaMonitorTest] Resetting values
+Received Message: police.policeInterruptRaised(success).controller
+[Monitor] available transition are:
+------------------------------------
+police.policeInterruptRaised(success).controller, q0->q1, ,
+!(police.policeInterruptRaised(success).controller), q0->q0, ,
+=----------------------------------=
+Transition: police.policeInterruptRaised(success).controller, q0->q1, ,
+transition triggered: police.policeInterruptRaised(success).controller, q0->q1, ,
+q1
+[GammaMonitorTest] Received status from monitor: System is in good state.
+Received Message: controller.displayRed().light
+[Monitor] available transition are:
+------------------------------------
+epsilon, q1->qinit0
+=----------------------------------=
+Transition: epsilon, q1->qinit0
+[EpsilonTransition]epsilon, q1->qinit0 canTrigger is true
+PrevTransition: epsilon, q1->qinit0
+[Monitor] available transition are:
+------------------------------------
+epsilon, qinit0->q2
+epsilon, qinit0->q4
+=----------------------------------=
+Transition: epsilon, qinit0->q2
+[EpsilonTransition]epsilon, qinit0->q2 canTrigger is false
+[EpsilonTransition]epsilon, qinit0->q2 canTrigger is false
+[Monitor] available transition are:
+------------------------------------
+epsilon, qinit0->q4
+=----------------------------------=
+Transition: epsilon, qinit0->q4
+[EpsilonTransition]epsilon, qinit0->q4 canTrigger is true
+PrevTransition: epsilon, qinit0->q4
+[Monitor] available transition are:
+------------------------------------
+controller.displayRed().light, q4->q5, ,
+!(controller.displayRed().light), q4->q4, ,
+=----------------------------------=
+Transition: controller.displayRed().light, q4->q5, ,
+transition triggered: controller.displayRed().light, q4->q5, ,
+q5
+[GammaMonitorTest] Received status from monitor: System is in good state.
+Received Message: controller.displayRed().light
+[Monitor] available transition are:
+------------------------------------
+controller.displayGreen().light, q5->q6, ,
+!(controller.displayGreen().light), q5->q5, ,
+=----------------------------------=
+Transition: controller.displayGreen().light, q5->q6, ,
+[Monitor] available transition are:
+------------------------------------
+controller.displayGreen().light, q5->q6, ,
+!(controller.displayGreen().light), q5->q5, ,
+=----------------------------------=
+Transition: !(controller.displayGreen().light), q5->q5, ,
+transition triggered: !(controller.displayGreen().light), q5->q5, ,
+q5
+[GammaMonitorTest] Received status from monitor: System is in good state.
+Received Message: controller.displayGreen().light
+[Monitor] available transition are:
+------------------------------------
+controller.displayGreen().light, q5->q6, ,
+!(controller.displayGreen().light), q5->q5, ,
+=----------------------------------=
+Transition: controller.displayGreen().light, q5->q6, ,
+transition triggered: controller.displayGreen().light, q5->q6, ,
+q6
+[GammaMonitorTest] Received status from monitor: System is in good state.
+Received Message: controller.displayYellow().light
+[Monitor] available transition are:
+------------------------------------
+controller.displayYellow().light, q6->q7, ,
+!(controller.displayYellow().light), q6->q6, ,
+=----------------------------------=
+Transition: controller.displayYellow().light, q6->q7, ,
+transition triggered: controller.displayYellow().light, q6->q7, ,
+q7
+[GammaMonitorTest] Received status from monitor: System is in good state.
+transition triggered: epsilon, q7->qfinal1
+qfinal1
+[GammaMonitorTest] Received status from monitor: Requirement satisfied
+[GammaMonitorTest] Monitor reported that the requirement was satisfied    
+\end{lstlisting}
+
+\begin{lstlisting}[language=java, caption={\textit{Xtext} nyelvtan specifikációja.},captionpos=b,label=xtext_tpsc_grammar]
+grammar hu.bme.mit.dipterv.text.MinotorDsl with org.eclipse.xtext.common.Terminals
+
+generate minotorDsl "http://www.bme.hu/mit/dipterv/text/MinotorDsl"
+import "http://www.eclipse.org/emf/2002/Ecore" as ecore
+
+Domain:
+	(specification='specification')? (name=ID)? ('{')?
+	objects+=Object*
+	parameters+=Parameter*
+	clocks+=Clock*
+	constraints+=Constraint*
+	scenarios+=Scenario* ('}')?
+;
+
+AttributeValue:
+	value=STRING | value=REAL | value=NUMBER | value='true' | value='false'
+;
+
+Scenario:
+	'scenario' name=ID '{'
+	scenariocontents+=ScenarioContent*
+	'}'
+;
+
+ScenarioContent:
+	alt+=Alt | message+=Message | par+=Par | loop+=Loop | paramConstraint+=ParameterConstraint
+
+;
+
+Message:
+	LooseMessage | StrictMessage | PastMessage | FutureMessage | StrictFutureMessage
+	| RequiredLooseMessage | RequiredStrictMessage | RequiredPastMessage | RequiredFutureMessage | RequiredStrictFutureMessage
+	| FailMessage | FailStrictMessage | FailPastMessage
+;
+
+LooseMessage:
+	'message' name=ID '(' (params+=Params | constantparams+=ConstantParams) ')'
+	sender=[Object] '->' receiver=[Object]
+	('clockConstraint' '{' cConstraint=ClockConstraintExpression '}')? 
+	(resetclock=ResetClock)? ';'
+;
+
+StrictMessage:
+	'strict'
+	message+=LooseMessage
+;
+
+PastMessage:
+	'pastConstraint'
+	'{' c=[Constraint] (',' constraintexp=ClockConstraintExpression)? (',' resetinconstraint=ResetClock)? '}'
+	message+=LooseMessage
+;
+
+FutureMessage:
+	'futureConstraint'
+	'{' c=[Constraint] (',' constraintexp=ClockConstraintExpression)? (',' resetinconstraint=ResetClock)? '}'
+		message+=LooseMessage
+;
+
+StrictFutureMessage:
+	'strict'
+	futureMessage+=FutureMessage
+;
+
+RequiredLooseMessage:
+	'required'
+	message+=LooseMessage
+;
+
+RequiredStrictMessage:
+	'required'
+	strictMessage+=StrictMessage
+;
+
+RequiredPastMessage:
+	'required'
+	pastMessage+=PastMessage
+;
+
+RequiredFutureMessage:
+	'required'
+	futureMessage+=FutureMessage
+;
+
+RequiredStrictFutureMessage:
+	'required'
+	strictFutureMessage+=StrictFutureMessage
+;
+
+FailMessage:
+	'fail'
+	message+=LooseMessage
+;
+
+FailStrictMessage:
+	'fail'
+	strictMessage+=StrictMessage
+;
+
+FailPastMessage:
+	'fail'
+	pastMessage+=PastMessage
+;
+
+ResetClock:
+	'reset' clock=[Clock]
+;
+
+ClockConstraint:
+	GreaterClockConstraint | SmallerClockConstraint | GreaterEqualClockConstraint | SmallerEqualClockConstraint
+;
+
+GreaterClockConstraint:
+	'>' '(' clock=[Clock] ',' constant=NUMBER ')'
+;
+
+SmallerClockConstraint:
+	'<' '(' clock=[Clock] ',' constant=NUMBER ')'
+;
+
+GreaterEqualClockConstraint:
+	'>=' '(' clock=[Clock] ',' constant=NUMBER ')'
+;
+
+SmallerEqualClockConstraint:
+	'<=' '(' clock=[Clock] ',' constant=NUMBER ')'
+;
+
+ClockConstraintExpression:
+		ClockConstraint | NotClockConstraintExpression | AndClockConstraintExpression
+;
+
+NotClockConstraintExpression:
+	'not' '(' notClockConstraint=ClockConstraint ')'
+;
+
+AndClockConstraintExpression:
+	lclockconstraint=ClockConstraint 'and' rclockconstraint=ClockConstraint
+;
+
+Params:
+		(params+=[Parameter])? (',' params+=[Parameter])* 
+;
+
+ConstantParams:
+	(values+=AttributeValue)? (',' values+=AttributeValue)* 
+;
+
+Parameter:
+	type=Type name=ID ('=')? (value=AttributeValue)? ';'
+;
+
+ParameterConstraint:
+	'assertParameter' '[' param=[Parameter] operator+=Operator value+=AttributeValue ']' 'in' object=[Object] ';'
+;
+
+Operator:
+	greater?='>' | smaller?='<' | greaterequals?='>=' | smallerequals?='<=' | equals?='==' | notequals?='!='
+;
+
+Clock:
+	'clock' name=ID ';'
+;
+
+enum Type:
+	integer | float | bool | string
+;
+
+terminal NUMBER:
+	('0'..'9')*
+;
+
+terminal REAL:
+	('0'..'9')* '.' ('0'..'9')*
+;
+
+ObjectType:
+	'object' name=ID
+;
+
+Object:
+	object+=ObjectType name=ID ';'
+;
+
+Constraint:
+	'constraint' name=ID '{'
+		messages+=Message* 
+	'}'
+;
+
+Alt:
+	'alt' expressions+=Expression*
+;
+
+Expression:
+	'(' altCondition=LogicalExpression ')' '{'
+		messages+=Message*
+	'}'
+;
+
+LogicalExpression:
+	UnaryLogicalExpression | BinaryLogicalExpression
+;
+
+BinaryLogicalExpression:
+	EqualsExpression | EqualsBooleanExpression | GreaterThanExpression | LesserThanExpression |
+	AndExpression | OrExpression
+;
+
+AndExpression:
+	'and' '(' lhs=LogicalExpression ',' rhs=LogicalExpression ')'
+;
+
+OrExpression:
+	'or' '(' lhs=LogicalExpression ',' rhs=LogicalExpression ')'
+;
+
+EqualsExpression:
+	'equals' '(' lhs=[Parameter] ',' rhs=NUMBER ')'
+;
+
+EqualsBooleanExpression:
+	'equals' '(' lhs=[Parameter] ',' rhs='true' ')' | 'equals' '(' lhs=[Parameter] ',' rhs='false' ')'
+;
+
+GreaterThanExpression:
+	'greater' '(' lhs=[Parameter] ',' rhs=NUMBER ')'
+;
+
+LesserThanExpression:
+	'lesser' '(' lhs=[Parameter] ',' rhs=NUMBER ')'
+;
+
+UnaryLogicalExpression:
+	NotLogicalExpression
+;
+
+NotLogicalExpression:
+	'not' '(' operand=LogicalExpression ')'
+;
+
+Par:
+	'par' '{' parexpression+=ParExpression* '}'
+;
+
+ParExpression:
+	'case' name=ID '{' messages+=Message* '}'
+;
+
+Loop:
+	'loop' '(' min=NUMBER ',' max=NUMBER ')' '{' 
+		messages+=Message*
+	'}'
+;
+\end{lstlisting}

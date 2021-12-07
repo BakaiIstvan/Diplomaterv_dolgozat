@@ -7,7 +7,6 @@
 
 \input{include/packages}
 
-%TODO Set the main variables
 \newcommand{\vikszerzoVezeteknev}{Bakai}
 \newcommand{\vikszerzoKeresztnev}{István Bálint}
 
@@ -32,7 +31,6 @@
 \newcommand{\szerzoMeta}{\vikszerzoVezeteknev{} \vikszerzoKeresztnev} % egy szerző esetén
 %\newcommand{\szerzoMeta}{\vikszerzoVezeteknev{} \vikszerzoKeresztnev, \tdkszerzoB} % két szerző esetén
 
-%TODO Language configuration -- choose one
 % Beállítások magyar nyelvű dolgozathoz
 \input{include/thesis-hu}
 % Settings for English documents
@@ -49,12 +47,11 @@
 
 %TODO These includes define guidelines -- remove these
 %~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-\include{include/guideline}
-\include{include/project}
+%\include{include/guideline}
+%\include{include/project}
 
 \selectthesislanguage
 
-%TODO Titlepage -- choose one from below
 %~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 \include{include/titlepage}		   % Szakdolgozat/Diplomaterv címlap
 %\include{include/titlepage-tdk}	% TDK címlap
@@ -79,19 +76,20 @@
 %TODO import your own content
 \include{content/introduction}
 \include{content/psc}
-\include{content/tpsc}
-\include{content/tpsc-automaton}
-\include{content/monitor-generation-plan}
+\include{content/technologies}
 \include{content/minotorDsl}
+\include{content/visualisation}
 \include{content/tpsc-automaton-generator}
 \include{content/monitor-source-generator}
+\include{content/testing}
+\include{content/gamma}
 \include{content/summary}
-\include{content/sources}
+%\include{content/sources}
 
 
 % Acknowledgements
 %~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-\include{content/acknowledgement}
+%\include{content/acknowledgement}
 
 
 % List of Figures, Tables

@@ -2,10 +2,28 @@
 \chapter{Összefoglalás}
 %----------------------------------------------------------------------------
 
-A célként kitűzött scenario alapú monitor generátor kibővítése részlegesen sikerült.
+A célként kitűzött szcenárió alapú monitor generátor kibővítése sikerült.
 
-A szöveges scenario leíró nyelv támogatja TPSC diagramok specifikálását. Az automata generátort támogatja a TPSC tulajdonságokhoz tartozó minta automaták generálását és képes az üzenet paramétereket is értelmezni. A generátor támogatja az alt, loop és par operátorokat tartalmazó TPSC-khez tartozó időzített automaták generálását.
+A szöveges szcenárió leíró nyelv támogatja \textit{TPSC} diagramok specifikálását.
+Az automata generátor támogatja a \textit{TPSC} tulajdonságokhoz tartozó minta automaták generálását és képes az üzenet paramétereket is értelmezni.
+A generátor támogatja az \textit{alt}, \textit{loop} és \textit{par} operátorokat tartalmazó \textit{TPSC}-khez tartozó időzített automaták generálását.
 
-A generátor a scenario-hoz tartozó automata alapján képes egy monitor forráskódjának generálására. Legenerálja a megfelelő interfészeket amik a monitor és rendszer közti kommunikációhoz szükségesek. Ha az üzenetek megfigyeléséhez szükséges segédfüggvényeket a kommunikációs infrastruktúrához megvalósítják, akkor a monitor képes a rendszer viselkedésének ellenőrzésére.
+A szcenáriókat a szöveges leírásuk alapján diagramok formájában vizualizálom.
+Egy \textit{XML} generátor teszi ezt lehetővé, amely a szöveges leírás alapján elkészíti a hozzá tartozó diagram \textit{XML} leírását.
 
-A monitor forráskód generátor a par, loop és alt operátorok támogatásával kibővíthető. Továbbá tovább lehetne fejleszteni az időzítések kezelésével.
+A monitor forráskód generátor a szcenárióhoz tartozó automata alapján képes egy monitor forráskódjának generálására.
+Legenerálja a megfelelő interfészeket amik a monitor és rendszer közti kommunikációhoz szükségesek.
+Ha az üzenetek megfigyeléséhez szükséges segédfüggvényeket a kommunikációs infrastruktúrához megvalósítják, akkor a monitor képes a rendszer viselkedésének ellenőrzésére.
+A monitor forráskód generátor a \textit{par}, \textit{loop} és \textit{alt} operátorokat támogatja.
+Továbbá az időzítési feltételeket tartalmazó üzeneteket is tudja értelmezni.
+
+A generált monitor forráskód helyességét alapos tesztelés segítségével ellenőriztem.
+A monitor forráskód szisztematikus helyességét egy \textit{CI} rendszerrel ellenőrzöm, amely minden változtatás esetén ellenőrzi, hogy a projekt tesztjei helyesek e.
+
+Végezetül a monitor komponenst illesztettem a \textit{Gamma} keretrendszerhez, így demonstrálva a monitorozás működését egy elosztott komponensű rendszer viselkedésének ellenőrzésével.
+
+A monitor forráskód generátor tovább bővíthető úgy hogy, láncolt megkötéseket is támogasson.
+A szcenárió követelményünkben hasznos lehet olyan megkötéseket definiálni amelyek nem egy üzenet halmazra vonatkoznak hanem egy kisebb üzenet szekvenciára.
+Elképzelhető olyan eset ahol adott üzenetek külön-külön nem jelentenek hibát a rendszer működésére nézve, viszont ha adott sorrendben érkeznek az már hibás lehet.
+Ehhez bevezethető egy új nyelvi elem a meglévő \textit{TPSC} leíró nyelvbe, amely ilyen láncolt megkötések megadására szolgál.
+Az automata generátorhoz is hozzáadhatok az új nyelvi elemhez tartozó automata minták.
