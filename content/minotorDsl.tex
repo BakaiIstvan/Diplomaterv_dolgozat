@@ -60,7 +60,7 @@ Message:
 LooseMessage:
 	'message' name=ID '(' (params+=Params | constantparams+=ConstantParams) ')'
 	sender=[Object] '->' receiver=[Object]
-	('clockConstraint' '{' cConstraint=ClockConstraintExpression '}')? 
+	('clockConstraint' '{' cConstraint=ClockConstraintExpression '}')?
 	(resetclock=ResetClock)? ';'
 ;
 \end{lstlisting}
