@@ -6,7 +6,7 @@
 \section{Tesztelési célok}
 %----------------------------------------------------------------------------
 
-A generált monitor forráskód tesztelésére a következő célokat fogalmazuk meg:
+A generált monitor forráskód tesztelésére a következő célokat fogalmazzuk meg:
 
 \begin{itemize}
     \item Az összes üzenet típus megjelenése a különböző teszt szcenáriókban
@@ -17,47 +17,58 @@ A generált monitor forráskód tesztelésére a következő célokat fogalmazuk
     \item Összetett szcenárió tesztelése, ami több operátort tartalmaz
     \item Egymást követő elvárt üzeneteket tartalmazó szcenárió tesztelése
     \item Egymást követő \textit{fail} üzeneteket tartalmazó szcenárió tesztelése
-    \item \textit{Regular} üzenet tesztelése (ha megjelenik a rendszer működésében akkor ki kell értékelni a szenárió többi részét, ha nem jelenik meg a monitor helyes működést kell jelezzen és, hogy a követelmény nem teljesült)
+    \item \textit{Regular} üzenet tesztelése (ha megjelenik a rendszer működésében akkor ki kell értékelni a szcenárió többi részét, ha nem jelenik meg a monitor helyes működést kell jelezzen és, hogy a követelmény nem teljesült)
     \item Több óraváltozót tartalmazó szcenárió tesztelése
-    \item Egymást követő üzenetek kombinációinak tesztelése (pl. elvárt üzenetet követő \textit{fail}, elvárt üzenetet követő reguláris, stb.)
+    \item Egymást követő különböző típusú üzenetek kombinációinak tesztelése (pl. elvárt üzenetet követő \textit{fail}, elvárt üzenetet követő reguláris, stb.)
 \end{itemize}
 
 %----------------------------------------------------------------------------
 \clearpage\section{Monitor forráskód generátor tesztelése}
 %----------------------------------------------------------------------------
 
-A generált monitor forráskodját integrációs tesztek segítségével szeretnénk ellenőrizni.
-Az \textit{Xtext} keretrendszer a specifikált \textit{DSL (Domain Specific Language)} nyelvhez generál egy \textit{Maven} \textit{plugin}-t.
-Ezt a \textit{plugin}-t betölthetjük egy egyszerű \textit{Maven} projektbe és használhatjuk is az elkészített \textit{DSL} nyelvünket, azaz létrehozhatunk a projektben a saját \textit{DSL}-ünkhöz tartozó fájlokat, melyekben megadhatjuk saját szcenárióinkat.
+Egy teszt bemenetként egy \textit{TPSC} leírást, egy szimulált esemény szekvenciát és egy elvárt kimenetet fog kapni.
+A tesztelt monitornak kézzel küldünk üzeneteket, egy konkrét esemény szekvencia.
+Ez az esemény szekvencia különböző szempontokból
+A monitor kimenetét összehasonlítjuk az elvárt kimenettel.
+Az elvárt kimenetet kézzel állítjuk össze figyelembe véve azt, hogy a szimulált rendszer működésének elméletben meg kell e felelnie a követelménynek vagy sem.
+Ez két információt tartalmaz, hogy a rendszer jó állapotban van-e és teljesíti-e a követelményt.
+Ha egyezik akkor sikeres a teszt, ellenkező esetben pedig sikertelen.
 
 \begin{figure}[!ht]
     \centering
-    \includegraphics[width=150mm, height=9cm, keepaspectratio]{figures/integration_test_flow.png}
-    \caption{Integrációs tesztelés folyamatábrája.}
+    \includegraphics[width=160mm, keepaspectratio]{figures/test_flowchart.png}
+    \caption{Tesztelés folyamatábrája.}
     \label{testing_figure}
 \end{figure}
 
-A \ref{testing_figure} ábrán megtekinthető az integrációs tesztelés tervének folyamatábrája.
+Az \textit{Xtext} keretrendszer a specifikált \textit{DSL (Domain Specific Language)} nyelvhez generál egy \textit{Maven} \textit{plugin}-t.
+Ezt a \textit{plugin}-t betölthetjük egy egyszerű \textit{Maven} projektbe és használhatjuk is az elkészített \textit{DSL} nyelvünket, azaz létrehozhatunk a projektben a saját \textit{DSL}-ünkhöz tartozó fájlokat, melyekben megadhatjuk saját szcenárióinkat.
 
-Egy integrációs teszt akkor sikeres ha a monitor kimenete megegyezik az elvárt kimenettel.
+Az esemény szekvenciában lévő üzeneteket a monitor \textit{update()} függvényénét használva adjuk át neki.
+A teszteset végén pedig a \textit{JUnit} tesztelési keretrendszer \textit{Assertions} osztályát használjuk, hogy a monitor kimenetét összehasonlítjuk az elvárt kimenettel.
+A teszteredmény ennek az összehasonlításnak az eredménye lesz.
+
+A \ref{testing_figure} ábrán megtekinthető a tesztelés tervének folyamatábrája.
 
 %----------------------------------------------------------------------------
 \clearpage
 %----------------------------------------------------------------------------
 
-Az \textit{Xtext} keretrendszer által nyujtott \textit{Maven plugin}-t felhasználhatjuk az integrációs teszteinkhez.
-Elég csupán egy \textit{Maven} projektet felkonfigurálni a saját \textit{DSL plugin}-ünkkel és elkészítethetjük a saját tesztelési keretrendszerünket.
+Az \textit{Xtext} keretrendszer által nyújtott \textit{Maven plugin}-t felhasználhatjuk a tesztjeinkhez.
+Elég csupán egy \textit{Maven} projektet felkonfigurálni a saját \textit{DSL plugin}-ünkkel és elkészíthetjük a saját tesztelési keretrendszerünket.
+A keretrendszerünk tartalmazza a tesztszcenárióhoz készített \textit{TPSC} szöveges leírásának a fájlját, a monitor forráskód generátort \textit{Maven plugin} formájában és egy \textit{Java} osztályt ami a teszteseteket tartalmazza.
+Ezen kívül függőségként még be kell töltenünk az \textit{util} csomagot, hogy hozzáférhessünk a monitor statikus forráskódjához is.
 Ezek a \textit{Maven} projektek a szülő projektünkben helyezkedhetnek el, így a projekt struktúrában közvetlen a nyelvünk mellett vannak.
-A \ref{integration_test_structure} ábrán  kódrészléten látható egy ilyen integrációs teszthez tartozó \textit{Maven} projekt felépítése
+A \ref{integration_test_structure} ábrán látható egy ilyen teszthez tartozó \textit{Maven} projekt felépítése
 
 \begin{figure}[!ht]
     \centering
-    \includegraphics[width=150mm, height=9cm, keepaspectratio]{figures/integration_test_structure.png}
-    \caption{Példa integrációs teszt projekt struktúrája.}
+    \includegraphics[width=100mm, height=7cm, keepaspectratio]{figures/test_example_structure.png}
+    \caption{Példa \textit{Maven} teszt projekt struktúrája.}
     \label{integration_test_structure}
 \end{figure}
 
-A \ref{integration_test_structure} ábrán lévő \textit{generated} csomag tartalmazza a szcenárióhoz tartozó generált automata forráskódját és a monitor forráskódját.
+A \ref{integration_test_structure} ábrán lévő \textit{generated} csomag tartalmazza a szcenárióhoz tartozó generált automata forráskódját.
 
 \begin{lstlisting}[language=java, frame=single, float=ht!, caption={Integrációs teszteset eredménye.},captionpos=b,label=maven_test_output]
 -------------------------------------------------------
@@ -105,27 +116,26 @@ transition triggered: computer.downloadEmail().server
 q5
 
 Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.025 sec
-
-Results :
-
-Tests run: 1, Failures: 0, Errors: 0, Skipped: 0
 \end{lstlisting}
 
 A \ref{maven_test_output} kódrészlet a \textit{Maven} teszt kimenetét tartalmazza.
+Látható, hogy a kimenet végén, hogy egy teszt futott le, ami sikeres volt.
+Ezen kívül megtekinthetőek a monitor működésének részletes folyamatai.
+Például hogy milyen üzeneteket kapott, milyen állapotokba lépett át és egyes állapotoknak milyen kimenő átmeneteik voltak és a bejövő üzenet melyikre illeszkedett.
 
-Ezt a projekt struktúrát felhasználva a teszteink köré tudunk egy \textit{Maven} alapú \textit{Continuous Integration}-t (\textit{CI}) állítani a generált monitor forráskód folyamatos ellenőrzése érdekében.
+Ezt a projekt struktúrát felhasználva a tesztjeink köré tudunk egy \textit{Maven} alapú \textit{Continuous Integration}-t (\textit{CI}) állítani a generált monitor forráskód folyamatos ellenőrzése érdekében.
 
 %----------------------------------------------------------------------------
 \clearpage\section{Continuous Integration}\subsection{Github Actions CI}
 %----------------------------------------------------------------------------
 
 Az időzített automata és monitor forráskód generátorok automatikus tesztelése a \textit{Github Actions} segítségével történik.
-A \textit{CI} minden feltöltött új commit esetén lefut.
+A \textit{CI} minden feltöltött új \textit{commit} esetén lefut.
 A \textit{CI} különböző fázisai a következők:
 
 \begin{itemize}
     \item I. Teljes \textit{Xtext} projekt fordítása (\textit{Maven})
-    \item II. Intergrációs tesztek futtatása
+    \item II. Tesztek futtatása
 \end{itemize}
 
 A generátorokhoz tartozó \textit{Xtext} projekten lefut egy \textit{Maven build}, amely az új feltöltött verzió tartalmazza.
@@ -133,17 +143,24 @@ Ez a \textit{build} állítja elő a \textit{DSL} nyelvhez tartozó \textit{Mave
 Ezt követően hajtódnak végre az integrációs tesztek, amelyek a frissen fordított \textit{Maven plugin}-t használják.
 Ha az összes fázis sikeresen lefutott, akkor az adott változtatás nem rontott el semmilyen korábbi funkciót.
 A \textit{CI}-hoz tartozó \textit{script}-et a \ref{ci_script} kódrészlet tartalmazza.
+A \textit{script} először az \textit{Xtext} nyelv és a hozzá tartozó monitor forráskód generátor új verzióját fordítja le és készít el belőle a \textit{Maven plugin}-t.
+Ezután végig megy az összes teszt projekten és egyesével fordítja azokat és végrehajtja a hozzájuk tartozó teszteket.
+Ha egyik tesztszcenárió se tért vissza hibával, akkor az új \textit{commit} a tesztek szempontjából be illeszthető a \textit{repository}-ba.
+A \textit{script}-be még azt specifikáltuk, hogy csak a \textit{repository} fő ágán fusson le és a fő ághoz tartozó \textit{pull request}-eken.
+A \ref{commit_ci_check} és \ref{github_actions} ábrákon látható, hogy minden új \textit{commit}-ra, ami a fő ágra kerül le fut a \textit{CI}.
 
 \begin{figure}[!ht]
     \centering
     \includegraphics[width=150mm, keepaspectratio]{figures/github_ci_check.png}
-    \caption{GitHub repository commit-ok és hozzá tartozó CI check-ek.}
+    \caption{GitHub repository \textit{commit}-ok és hozzá tartozó CI \textit{check}-ek.}
+    \label{commit_ci_check}
 \end{figure}
 
 \begin{figure}[!ht]
     \centering
     \includegraphics[width=150mm, keepaspectratio]{figures/github_ci_builds.png}
-    \caption{Github Actions CI build-ek eredményei.}
+    \caption{\textit{Github Actions CI} \textit{build}-ek eredményei.}
+    \label{github_actions}
 \end{figure}
 
 \begin{lstlisting}[language=java, frame=single, float=ht!, caption={Github Actions CI-hoz tartozó .yml script.},captionpos=b,label=ci_script]
@@ -188,75 +205,118 @@ jobs:
 \end{lstlisting}
 
 %----------------------------------------------------------------------------
-\clearpage\section{Tesztesetek}\subsection{Egyszerű időzítési megkötéseket tartalmazó tesztszenárió}
+\clearpage\section{Tesztesetek}
 %----------------------------------------------------------------------------
+
+Ebben a fejezetben az elkészült teszteseteket és hozzájuk tartozó tesztszcenáriókat mutatom be.
+Ezeknek a teszteseteknek az a céljuk, hogy a fejezet elején ismertetett tesztelési célókat teljesítsék.
+Az alfejezetek egy elkészült tesztelési projektnek felel meg, amelyekben bemutatom a hozzá tartozó tesztszcenáriót és az ahhoz tartozó teszteseteket.
+Az egyszerűbb tesztszcenáriókat mutatom be először és a végén térek ki a komplexebb tesztekre.
+
+\subsection{Egyszerű időzítési megkötéseket tartalmazó tesztszcenárió}
 
 A tesztesetekhez tartozó szcenárió követelmény megtalálható az \ref{example_test_scenario} kódrészleten.
 A szcenárióhoz tartozó diagram a \ref{example_test_scenario_diagram} ábrán látható
 
-\begin{lstlisting}[language=java, frame=single, float=ht!, caption={Integrációs tesztesethez tartozó szcenárió szöveges leírása.},captionpos=b,label=example_test_scenario]
-specification Email {
+\begin{lstlisting}[language=java, frame=single, float=ht!, caption={Tesztesethez tartozó szcenárió szöveges leírása.},captionpos=b,label=example_test_scenario]
+specification Email{
 
-	object Computer computer;
-	object Server server;
+    object Computer computer;
+    object Server server;
 
-	integer timeout = 10;
-	string receiver = "John";
-	string subject = "Next meeting";
+    integer timeout = 10;
+    string receiver = "John";
+    string subject = "Next meeting";
 
-	clock x;
+    clock x;
 
-	constraint constraints {
-		message logout() computer -> server;
-	}
+    constraint constraints {
+        message logout() computer -> server;
+    }
 
-	scenario sendEmail{
-		message checkEmail() computer -> computer reset x;
-		required message sendUnsentEmail() computer -> server;
-		pastConstraint {constraints} message newEmail(receiver, subject) computer -> server;
-		message downloadEmail(timeout) computer -> server clockConstraint {>(x,10)};
-	}
+    scenario sendEmail{
+        message checkEmail() computer -> computer reset x;
+        required message sendUnsentEmail() computer -> server;
+        fail message computerError() server -> computer;
+        fail message serverError() computer -> server;
+        pastConstraint {constraints} message newEmail(receiver, subject) computer -> server;
+        message downloadEmail(timeout) computer -> server clockConstraint {>(x,10)};
+    }
 }
 \end{lstlisting}
 
 \begin{figure}[!ht]
     \centering
-    \includegraphics[width=150mm, keepaspectratio]{figures/diagramExample.png}
-    \caption{Szcenárió diagram vizualízációja.}
+    \includegraphics[width=110mm, keepaspectratio]{figures/diagramExample.png}
+    \caption{Szcenárió diagram vizualizációja.}
     \label{example_test_scenario_diagram}
 \end{figure}
 
-A rendszer egy szervergépből és egy felhasználói számitogépből áll.
-A szerver egy \textit{e-mail} szervert szimulál, aminek a számitogép különböző kéréseket küldhet.
+A rendszer egy szervergépből és egy felhasználói számitógépből áll.
+A szerver egy \textit{e-mail} szervert szimulál, aminek a számitógép különböző kéréseket küldhet.
 Például lekérdezheti tőle a kapott \textit{e-mail} vagy új \textit{e-mail} küldhet.
 A követelményben leírjuk, hogy a rendszernek mi a helyes viselkedése \textit{e-mail} küldés esetén.
 Ha a computer a \textit{checkEmail} hívást használva talál elküldendő \textit{e-mail} az továbbítja a szervernek.
 Ezt az \textit{elvárt} \textit{sendUnsentEmail} üzenet jelzi.
+Ha ezt az üzenetet követően egy \textit{computerError()} üzenet jön az a hibát jelent.
+\textit{serverError()} üzenet esetén is hibát fog jelezni a monitor.
 Ezt követően meg kell jelenjen a rendszer működésében a \textit{newEmail} üzenet.
 Ha ehelyett \textit{logout} üzenet érkezik a hibás működést jelent.
 A \textit{newEmail} üzenetet a \textit{downloadEmail} üzenet követi.
 Ezen az üzeneten van egy 10 másodperces időzítési feltétel, ami a letöltést szimulálja.
 
 A szcenárióhoz tartozó tesztesetek a következők:
-
 \begin{itemize}
-    \item testNetworkRequirementSatisfied
-    \item testNetworkNoErrors
-    \item testNetworkWithErrors
-    \item testNetworkWithNoDelay
-    \item testNetworkFirstFail
-    \item testNetworkSecondFail
+    \item \textit{testNetworkRequirementSatisfied}, a rendszer helyes működését szimuláljuk és azt ellenőrizzük, hogy a generált monitor képes ezt érzékelni és jelzi.
+    \item \textit{testNetworkNoErrors}, azt vizsgálja, hogy a monitor képes-e érzékelni, hogy a rendszer nem felelt meg a követelménynek.
+    Itt úgy manipuláljuk a teszt rendszer, hogy lehagyjuk a letöltés részt a működésből.
+    Ilyenkor a rendszer nem felel meg a követelménynek, viszont még jó állapotban marad, mert nem történt hiba.
+    \item \textit{testNetworkWithErrors}, a \textit{sendUnsentEmail} üzenet után egy \textit{logout} üzenetet küldünk a monitor és azt vizsgáljuk képes-e detektálni ezt a hibát.
+    \item \textit{testNetworkWithNoDelay}, túl gyorsan küldjük a működés végén a \textit{downloadEmail} üzenetet és azt ellenőrizzük képes e a monitor ezt a hibát érzékelni.
+    \item \textit{testNetworkFirstFail}, itt a \textit{sendUnsentEmail()} után küldünk egy \textit{computerError()} üzenetet és ellenőrizzük, hogy a monitor ezt hibának jelzi-e.
+    \item \textit{testNetworkSecondFail}, itt ugyanúgy mint az előzőnél, azt ellenőrizzük, hogy a monitor a \textit{serverError()} üzenet megjelenését hibának érzékeli-e.
 \end{itemize}
 
-A \textit{testNetworkRequirementSatisfied} tesztesetben a rendszer helyes működését szimuláljuk és azt ellenőrizzük, hogy a generált monitor képes ezt érzékelni és jelzi.
-A \textit{testNetworkNoErrors} azt vizsgálja, hogy a monitor képes-e érzékelni, hogy a rendszer nem felelt meg a követelménynek.
-Itt úgy manipuláljuk a teszt rendszer, hogy lehagyjuk a letöltés részt a működésből.
-Ilyenkor a rendszer nem felel meg a követelménynek, viszont még jó állapotban marad, mert nem történt hiba.
-A \textit{testNetworkWithErrors} tesztesetnél a \textit{sendUnsentEmail} üzenet után egy \textit{logout} üzenetet küldünk a monitor és azt vizsgáljuk képes-e detektálni ezt a hibát.
-A \textit{testNetworkWithNoDelay}-nél pedig túl gyorsan küldjük a működés végén a \textit{downloadEmail} üzenetet és azt ellenőrizzük képes e a monitor ezt a hibát érzékelni.
+\begin{lstlisting}[language=java, frame=single, float=ht!, caption={\textit{testNetworkRequirementSatisfied} teszteset.},captionpos=b,label=example_test_requirement]
+@Test
+public void testNetworkRequirementSatisfied() {
+    resetValues();
+    Specification specification = new Specification();
+    specification.listAutomatas();
+    IClock clock = new Clock();
+    IMonitor monitor = new Monitor(specification.getAutomata().get(0), clock, this);
+    
+    monitor.update("computer", "computer", "checkEmail", new HashMap<String, Object>());
+    monitor.update("computer", "server", "sendUnsentEmail", new HashMap<String, Object>());
+    monitor.update("computer", "server", "updateEmail", new HashMap<String, Object>());
+    monitor.update("server", "computer", "updateAccount", new HashMap<String, Object>());
+    LinkedHashMap<String, Object> hm = new LinkedHashMap<String, Object>();
+
+    hm.put("receiver", "John");
+    hm.put("subject", "Next meeting");
+    monitor.update("computer", "server", "newEmail", hm);
+    try {
+        TimeUnit.SECONDS.sleep(11);
+    } catch (InterruptedException e) {
+        e.printStackTrace();
+    }
+    monitor.update("computer", "server", "downloadEmail", Map.of("timeout", 10));
+    
+    Assertions.assertTrue(monitor.goodStateReached());
+    Assertions.assertTrue(monitor.requirementSatisfied());
+    Assertions.assertTrue(requirementSatisfied);
+    Assertions.assertFalse(errorDetected);
+}
+\end{lstlisting}
+
+A \ref{example_test_requirement} kódrészlet \textit{testNetworkRequirementSatisfied} teszteset implementációját.
+Először létrehozzuk a monitort és átadjuk neki a szöveges leírás alapján generált időzített automatát.
+Ezután végig megyünk az esemény szekvencián, amit a monitornak az \textit{update()} függvény segítségével juttatunk el.
+A teszteset végén pedig összevetjük a monitor kimenetét az elvárt kimenettel.
+Például ennél a tesztesetnél, a monitornak azt kell jeleznie, hogy a rendszer jó állapotban van, megfelelt a követelménynek és nem történt hiba.
 
 %----------------------------------------------------------------------------
-\clearpage\subsection{Többféle üzenetet és megkötést tartalmazó egyszerű tesztszenárió}
+\subsection{Többféle üzenetet és megkötést tartalmazó egyszerű tesztszcenárió}
 %----------------------------------------------------------------------------
 
 \begin{lstlisting}[language=java, frame=single, float=ht!, caption={Második tesztesethez tartozó szcenárió.},captionpos=b,label=second_scenario_test]
@@ -286,28 +346,28 @@ A \textit{testNetworkWithNoDelay}-nél pedig túl gyorsan küldjük a működés
 
 \begin{figure}[!ht]
     \centering
-    \includegraphics[width=150mm, keepaspectratio]{figures/diagramMobileExample.png}
-    \caption{Második Szcenárióhoz tartozó diagram vizualizációja.}
+    \includegraphics[width=160mm, keepaspectratio]{figures/diagramMobileExample.png}
+    \caption{Második szcenárióhoz tartozó diagram vizualizációja.}
     \label{second_visualization}
 \end{figure}
 
 A tesztrendszerünk egy zene lista generáló alkalmazás, ami egy felhasználót, mobileszközt és adatbázist tartalmaz.
 A felhasználó "\textit{kedve}" alapján generálja a listát, amit az arc kifejezése alapján határoz meg.
-A követelményben a rendszer alap működése van leírva egészen az elejétől, amikor a felhasználó megnyítja az alkalmazást.
+A követelményben a rendszer alap működése van leírva egészen az elejétől, amikor a felhasználó megnyitja az alkalmazást.
 A követelmény leírás megtekinthető az \ref{second_scenario_test} kódrészleten és a hozzá tartozó vizualizáció a \ref{second_visualization} ábrán.
 
 A szcenárióhoz tartozó tesztesetek a következők:
 
 \begin{itemize}
-    \item testMobileRequirementSatisfied
-    \item testMobileFutureConstraint
-    \item testMobileFutureConstraintEarly
-    \item testMobileWithError
-    \item testMobileWithDelay
-    \item testMobileWithTooMuchDelay
-    \item testMobileMissingRequiredMessage
-    \item testMobileRequiredEventually
-    \item testMobileRequiredNotReceived
+    \item testMobileRequirementSatisfied, a követelmény teljesülését ellenőrizzük.
+    \item testMobileFutureConstraint, azt vizsgáljuk hogy a monitor hibát jelez e ha megkötés beli üzenet érkezik.
+    \item testMobileFutureConstraintEarly, azt vizsgáljuk hogy a monitor hibát jelez e ha a megkötés beli üzenet az üzenet szekvencia elején érkezik.
+    \item testMobileWithError, a monitor hibát jelez-e amikor a \textit{cameraOffline()} üzenet érkezik.
+    \item testMobileWithDelay, késleltetjük az \textit{accessWebcam()} üzenet megérkezését úgy, hogy az időzítési feltétel teljesüljön és vizsgáljuk, hogy a monitor ezt helyesen kezeli e.
+    \item testMobileWithTooMuchDelay, késleltetjük az \textit{accessWebcam()} üzenetet  az időzítési feltételt elrontva és azt várjuk el, hogy a monitor ezt hibának jelezze.
+    \item testMobileMissingRequiredMessage, vizsgáljuk hogy a monitor hibát jelezze ha nem kapja meg az \textit{retrieveMood()} elvárt üzenetet.
+    \item testMobileRequiredEventually, a monitor helyes működést kell jelezzen ha az elvárt üzenetet megkapja még ha más üzenetek is előjönnek ez alatt.
+    \item testMobileRequiredNotReceived, a monitor nem érzékeli a \textit{retrieveMusic()} üzenetet ezért hibát kell jelezzen.
 \end{itemize}
 
 A teszteseteket a monitor hiba detektáló képeségét tesztelik.
@@ -316,7 +376,7 @@ A \textit{testMobileWithDelay} 5 másodperces késleltetéssel küldjük az \tex
 Az első esetben a monitornak helyes működést kell érzékelnie a következőben pedig hibás működést.
 
 %----------------------------------------------------------------------------
-\clearpage\subsection{Alt operátort tartalmazó tesztszenárió}
+\subsection{Alt operátort tartalmazó tesztszcenárió}
 %----------------------------------------------------------------------------
 
 A tesztszcenárióhoz tartozó rendszerünk egy banki rendszer.
@@ -351,7 +411,7 @@ specification Bank {
 
 \begin{figure}[!ht]
     \centering
-    \includegraphics[width=150mm, keepaspectratio]{figures/diagramAltExample.png}
+    \includegraphics[width=120mm, keepaspectratio]{figures/diagramAltExample.png}
     \caption{Alt operátort tartalmazó szcenárió diagram}
     \label{third_visualisation}
 \end{figure}
@@ -362,16 +422,16 @@ A \textit{success} paraméter jelzi, hogy melyik működés a helyes.
 A szcenárióhoz tartozó tesztesetek a következők:
 
 \begin{itemize}
-    \item testBankMonitorPassing
-    \item testBankMonitorFailing
-    \item testBankMonitorFalseCasePassing
-    \item testBankMonitorFalseCaseFailing
+    \item testBankMonitorPassing, az operátorban lévő első ágnak megfelelően szimuláljuk a rendszer működését és elvárjuk, hogy a monitor helyes működést jelezzen.
+    \item testBankMonitorFailing, a monitornak hibát kell jeleznie ha az operátor első ágától eltér a működés.
+    \item testBankMonitorFalseCasePassing, a monitornak helyes működést kell jeleznie ha a rendszer úgy szimuláljuk ahogy az operátor második ágában le van írva.
+    \item testBankMonitorFalseCaseFailing, a monitor hibát jelez ha nem az operátor második ága szerint működik a rendszer.
 \end{itemize}
 
 A tesztesetekkel azt vizsgáljuk, hogy a monitor képes-e a helytelen ág lefutását hibának érzékelni és a helyes viselkedés esetén detektálni a követelmény teljesítését.
 
 %----------------------------------------------------------------------------
-\clearpage\subsection{Par operátort tartalmazó tesztszenárió}
+\subsection{Par operátort tartalmazó tesztszenárió}
 %----------------------------------------------------------------------------
 
 \begin{lstlisting}[language=java, frame=single, float=ht!, caption={Integrációs teszteset.},captionpos=b]
@@ -407,14 +467,14 @@ Ehhez a tesztszcenárióhoz az első szenárióban lévő teszt rendszert haszn�
 A szcenárióhoz tartozó tesztesetek a következők:
 
 \begin{itemize}
-    \item testNetworkRequirementSatisfied
-    \item testNetworkOtherRequirementSatisfied
+    \item testNetworkRequirementSatisfied, az első permutáció szerint működtetjük a szimulált rendszert, a monitornak helyes működést kell jeleznie.
+    \item testNetworkOtherRequirementSatisfied, a második permutáció szerint működtetjük a rendszert, a monitornak helyes működést kell jeleznie.
 \end{itemize}
 
 Azt vizsgáljuk, hogy a monitor képes mindkét permutáció esetén érzékelni a követelmény teljesülését.
 
 %----------------------------------------------------------------------------
-\clearpage\subsection{Komplex tesztszenárió loop és alt operátorokkal}
+\subsection{Komplex tesztszenárió loop és alt operátorokkal}
 %----------------------------------------------------------------------------
 
 \begin{lstlisting}[language=java, frame=single, float=ht!, caption={Komplex teszteset szcenáriója.},captionpos=b,label=test_complex_scenario]
@@ -457,7 +517,7 @@ specification Connection {
 
 \begin{figure}[!ht]
     \centering
-    \includegraphics[width=150mm, keepaspectratio]{figures/diagramOperatorExample.png}
+    \includegraphics[width=160mm, keepaspectratio]{figures/diagramOperatorExample.png}
     \caption{Komplex szcenárió diagram vizualizációja.}
     \label{test_complex_diagram}
 \end{figure}
@@ -471,19 +531,23 @@ Utána egy \textit{alt} operátorral mondjuk meg, hogy minek kell történie sik
 
 A tesztszcenárióhoz tartozó tesztesetek:
 \begin{itemize}
-    \item testNetworkRequirementSatisfied
-    \item testNetworkRequirementSatisfiedTwice
-    \item testNetworkRequirementSatisfiedThreeTimes
-    \item testNetworkRequirementSatisfiedFourTimes
-    \item testNetworkAltTrueCase
-    \item testNetworkAltTrueCaseSatisfied
-    \item testNetworkLogoutTooFast
-    \item testNetworkLogoutConstrait
+    \item testNetworkRequirementSatisfied, a követelmény teljesülését ellenőrizzük.
+    \item testNetworkRequirementSatisfiedTwice, a követelménynek akkor is teljesülnie kell ha a \textit{loop} operátorban lévő üzenetek kétszer egymás után jelennek meg.
+    \item testNetworkRequirementSatisfiedThreeTimes, az üzenetek háromszor egymás után jelennek meg.
+    \item testNetworkRequirementSatisfiedFourTimes, a monitornak hibát kell jeleznie ha négyszer érzékeli az üzeneteket, melyek a \textit{loop} operátorban vannak, hiszen az meghaladja a maximumot.
+    \item testNetworkAltTrueCase, a monitor hibát jelez ha úgy működtetjük a szimulált rendszer, hogy az \textit{alt} operátor igaz ágában lévő üzenetek jelenjenek meg.
+    \item testNetworkAltTrueCaseSatisfied, a monitor helyes működést kell jelezzen ha úgyanúgy szimuláljuk a rendszer működését mint az előző tesztesetben.
+    \item testNetworkLogoutTooFast, ha túl gyorsan érkezik meg a \textit{logoutUser()} üzenet akkor a monitor hibát kell jeleznie.
+    \item testNetworkLogoutConstrait, ha olyan üzenet érkezik ami a megkötésben szerepel akkor a monitornak hibát kell jeleznie.
 \end{itemize}
 
 A teszteseteket úgy állítottam össze, hogy ellenőrizem mind a monitor hiba detektáló képességét, mind a helyes működés detektálását.
 
 \clearpage\section{Tesztelés összefoglaló}
+
+A \ref{tab:table1} táblázat mutatja be a tesztelés eredményét.
+Sikerült az összes tesztelési célnak megfelelni, emelett biztosítáni a szisztematikus ellenőrzést.
+Minden teszt sikeresen lefutott.
 
 \begin{longtable}{|p{0.1428\linewidth}|p{0.1428\linewidth}|p{0.1428\linewidth}|p{0.1428\linewidth}|p{0.1428\linewidth}|p{0.1428\linewidth}|}
 \hline
@@ -515,7 +579,7 @@ Egymást követő elvárt üzenetek & - & X & - & - & -\\
 \hline
 Egymást követő fail üzenetek & X & - & - & - & -\\
 \hline
-Sima üzenet tesztelése & X & X & X & X & X\\
+Egyszerű üzenet tesztelése & X & X & X & X & X\\
 \hline
 Több óraváltozó & - & - & - & - & X\\
 \hline
@@ -526,6 +590,3 @@ Fail után elvárt üzenet & - & X & - & - & -\\
 \caption{Összefoglaló táblázat}
 \label{tab:table1}
 \end{longtable}
-
-A \ref{tab:table1} táblázat mutatja be a tesztelés eredményét.
-Sikerült az összes tesztelési célnak megfelelni, emelett biztosítáni a szisztematikus ellenőrzést.
