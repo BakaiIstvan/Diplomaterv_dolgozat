@@ -1,32 +1,35 @@
 %----------------------------------------------------------------------------
 \chapter{\bevezetes}
 %----------------------------------------------------------------------------
-Diplomamunkám során az volt a cél, hogy a „\textit{Monitor komponensek generálása kontextusfüggő viselkedés ellenőrzése}” című szakdolgozatom során elkészített monitor komponens generátort kibővítsem úgy, hogy támogassa időzítési feltételek megadását.
-A szakdolgozat során egy olyan monitor komponens generátor készült el, amely képes volt \textit{PSC} (\textit{Property Sequence Chart}) diagramok szöveges leírásából \textit{Büchi} automatákat generálni.
+Diplomamunkám során az volt a cél, hogy a „\textit{Monitor komponensek generálása kontextusfüggő viselkedés ellenőrzése}” \cite{Bakai} című szakdolgozatom során elkészített monitor komponens generátort kibővítsem úgy, hogy támogassa időzítési feltételek megadását.
+A szakdolgozat során egy olyan monitor komponens generátor készült el, amely képes volt \textit{PSC} (\textit{Property Sequence Chart}) \cite{PSC1} diagramok szöveges leírásából \textit{Büchi} \cite{PSC1} automatákat generálni.
 A generátornak a kimenete a generált \textit{Büchi} automata \textit{Java} implementációja.
 A generált \textit{Büchi} automatát lehet felhasználni monitorozásra.
-Az \textit{Önálló laboratórium} keretében az volt a feladatom, hogy a szakdolgozatom során definiált szöveges \textit{PSC} diagram leíró nyelvet kibővitsem úgy, hogy időzítési feltételeket is meg lehesen adni a szcenáriókban.
-A \textit{Timed Property Sequence Chart} formalizmust választottam az időzített feltételek bevezetéséhez.
+Az \textit{Önálló laboratórium} keretében az volt a feladatom, hogy a szakdolgozatom során definiált szöveges \textit{PSC} diagram leíró nyelvet kibővítsem úgy, hogy időzítési feltételeket is meg lehessen adni a szcenáriókban.
+A \textit{Timed Property Sequence Chart} \cite{TPSC1} formalizmust választottam az időzített feltételek bevezetéséhez.
 Definiáltam a meglévő \textit{PSC} szöveges leíróhoz új nyelvi elemeket, amelyekkel a \textit{TPSC} elemeket lehet szöveges formában leírni.
-Ezután az automata generátort kellett úgy kibővíteni, hogy a \textit{TPSC} diagramokból tudjon \textit{TA} időzített automatákat generálni.
+Ezután az automata generátort kellett úgy kibővíteni, hogy a \textit{TPSC} diagramokból tudjon \textit{TA} időzített automatákat \cite{TPSC1} generálni.
 Ennek érdekében, a szakdolgozat során készített \textit{Büchi} automata generátort bővítettem ki úgy, hogy az új \textit{TPSC} szöveges leírásokból időzített automatákat generáljon.
 Egy monitor forráskód generátor pedig az automata alapján elkészítheti a monitor forráskódját.
 
 A szöveges \textit{TPSC} szcenárió leírása alapján el kell készítenünk a diagram vizualizációját, hogy grafikusan megtekinthessük a definiált szcenáriót.
 Ehhez felhasználható a "\textit{Modell alapú rendszertervezés}" tárgy keretében készített \textit{PSC} diagram szerkesztő alkalmazás.
-A következő a generált monitor forráskód tesztelése, majd ezután ezt illesszük a \textit{Gamma} keretrendszerhez.
+A következő a generált monitor forráskód tesztelése, majd ezután ezt illesszük a \textit{Gamma} keretrendszerhez \cite{Gamma}.
 Ezzel az a célunk, hogy elosztott komponens alapú rendszerek szimulációja közben monitorozható legyen a \textit{TPSC} üzenet szekvencia specifikáció teljesülése illetve az ebben rögzített tulajdonságok megsértése.
 
 Elkészítettem a monitor forráskód generátort és elkezdtem annak tesztelését.
 A hátramaradó feladatok a tesztelés befejezése, a diagramok vizualizációja és a monitor komponens illesztése a \textit{Gamma} keretrendszerhez.
 
 A dolgozatomat a háttérismeretek összefoglaló fejezettel kezdem.
-Először bemutatom a legelterjetebb formalizmusokat, amelyek időfüggő viselkedés specifikálására szolgálnak.
+Először bemutatom a legelterjedtebb formalizmusokat, amelyek időfüggő viselkedés specifikálására szolgálnak.
 Ezután a \textit{TPSC} formalizmust mutatom be és a felhasznált technológiákat.
-A dolgozatomat a kivőbített szöveges \textit{TPSC} leíró nyelv bemutatásával folytatom, amit a harmadik fejezetben írok le.
+A dolgozatomat a kibővített szöveges \textit{TPSC} leíró nyelv bemutatásával folytatom, amit a harmadik fejezetben írok le.
 Ezt a \textit{TPSC} specifikációk vizualizációjáról szóló fejezet követi.
 
 Az ötödik fejezet a monitor forráskód generálásról szól és annak teszteléséről.
 Ezt követi a hatodik fejezet, amely a monitor komponens illesztését mutatja be a \textit{Gamma} keretrendszerhez és elosztott komponensű rendszerek monitorozását.
 Ez a keretrendszer komponens alapú elosztott rendszerek tervezését, kódgenerálását segíti, így ehhez érdemes a monitor generálást illeszteni.
 A dolgozatomat egy összefoglalóval zárom.
+
+A diplomatervhez készített alkalmazások forráskódjai a következő \textit{Github} \textit{repository}-ban elérhetők:
+\url{https://github.com/BakaiIstvan/Minotor}.

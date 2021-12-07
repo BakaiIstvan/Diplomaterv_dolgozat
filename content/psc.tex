@@ -9,18 +9,18 @@ Az \ref{introductory_figure} ábra bemutatja a monitorozás koncepcióját.
 
 \begin{figure}[!ht]
     \includegraphics[width=150mm, height=20cm, keepaspectratio]{figures/introductory_figure.png}
-    \caption{Kontextusfüggő rendszerek monitorozása időzítési feltételekkel.}
+    \caption{Kontextusfüggő rendszerek monitorozása időzítési feltételekkel \cite{Bakai}.}
     \label{introductory_figure}
 \end{figure}
 
 Több monitorozási módszert ismerünk.
-Ilyen például az „\textit{online}” [11] monitorozás.
+Ilyen például az „\textit{online}” \cite{RuntimeVerification1} monitorozás.
 Ebben az esetben a rendszernek olyan érzékelői vannak, amelyek képesek a rendszer viselkedését detektálni, és továbbítani azt egy feldolgozó egységnek.
 Ez utóbbi, a kapott adatok alapján, el tudja dönteni, hogy a rendszer helyesen működik-e, illetve amennyiben hibát érzékel, azt képes jelezni.
 Az olyan monitort, amely a hiba érzékelését követően megpróbálja a hibát helyreállítani, „beavatkozó” monitornak hívjuk.
 A „nem beavatkozó” monitor pedig csak a hibát képes jelezni.
 
-A fentiekben leírt monitorozási módszernek a párja az „\textit{offline}” [11] monitorozás.
+A fentiekben leírt monitorozási módszernek a párja az „\textit{offline}” \cite{RuntimeVerification1} monitorozás.
 Ennél a módszernél a regisztrált viselkedés elemzése nem futásidőben, hanem azon kívül (futás után) történik.
 
 A szcenárió alapú monitorozás során a kommunikáció megfigyelésével szeretnénk felismerni a problémákat a rendszerünkben.
@@ -29,12 +29,12 @@ A követelményt szcenárió formájában adjuk meg az üzenet szekvenciák spec
 Szekvencia diagramok segítségével egyszerűen megadhatunk ilyeneket.
 A diagramokat a későbbiekben olyan alakra kell majd hoznunk, hogy abból a monitor létrehozható legyen.
 
-\section{Időfüggő viselkedés specifikálására alkalmas formalizmusok áttekintése [1] [2] [5] [6] [8]}
-\subsection{MSC - Message Sequence Chart [6] és UML - Unified Modelling Language [8]}
+\section{Időfüggő viselkedés specifikálására alkalmas formalizmusok áttekintése}
+\subsection{MSC - Message Sequence Chart és UML - Unified Modelling Language}
 
-Az egyik legelterjedtebb szcenárió alapú modellezésre használt vizuális formalizmus a \textit{Message Sequence Charts (MSC)}.
+Az egyik legelterjedtebb szcenárió alapú modellezésre használt vizuális formalizmus a \textit{Message Sequence Charts (MSC)} \cite{MSC1}.
 A nyelv célja két, vagy több üzeneteket cserélő objektum között az interakciónak a leírása.
-A \textit{Unified Modelling Language (UML)} 2.0 szekvencia diagram leíró részét nagyban inspirálta ez a nyelv.
+A \textit{Unified Modelling Language (UML)} 2.0 \cite{UML1} szekvencia diagram leíró részét nagyban inspirálta ez a nyelv.
 Az \textit{MSC} főbb elemei:
 
 \begin{itemize}
@@ -47,7 +47,7 @@ Az \textit{MSC} főbb elemei:
 \item Összetett szerkezetek: \textit{alt}, \textit{opt}, \textit{parallel}, \textit{loop} (\textit{high-MSC})
 \end{itemize}
 
-Az összetett szerkezetek a \textit{high-MSC (h-MSC)} nevű \textit{MSC} kiterjesztésben találhatók.
+Az összetett szerkezetek a \textit{high-MSC (h-MSC)} \cite{MSC1} nevű \textit{MSC} kiterjesztésben találhatók.
 
 Ezzel a nyelvvel már könnyedén lehet a szcenárióban lévő üzeneteket specifikálni, és azokat a rendszer komponenseket, amelyek ezeket az üzeneteket egymásnak küldik.
 
@@ -67,7 +67,7 @@ Ez megnehezíti egy követelmény leírását is.
 \begin{figure}[!ht]
     \centering
     \includegraphics[width=40mm, height=5cm, keepaspectratio]{figures/msc_example.png}
-    \caption{Példa MSC diagram.}
+    \caption{Példa MSC diagram \cite{MSC1}.}
     \label{msc_example}
 \end{figure}
 
@@ -75,7 +75,7 @@ A \ref{msc_example} ábrán megtekinthető egy példa MSC diagram.
 
 \clearpage\subsection{MTL - Metric Temporal Logic}
 
-A temporális logikák olyan formális rendszerek amelyekkel kijelentések igazságának logikai időbeli változását vizsgálhatjuk.
+A temporális logikák olyan formális rendszerek amelyekkel kijelentések igazságának logikai időbeli változását vizsgálhatjuk \cite{MTL1}.
 A kijelentések időbeli vizsgálásához temporális operátorokat használunk: \textit{mindig}, \textit{valamikor}, \textit{mielőtt}, \textit{addig, amíg}, \textit{azelőtt, hogy}, \textit{stb...}
 
 A temporális logikákat két osztályba sorolhatjuk:
@@ -88,7 +88,7 @@ A logikai idő egy állapotsorozatnak tekintjük, ahol minden állapotnak egy r�
 Az elágazó temporális logikáknál viszont az összes lehetséges végrehajtást tekintjük.
 A lineárissal ellentétben itt egy állapotnak több rákövetkezője is lehet és a logikai idő egy fa alakjában jelenik meg.
 
-Az \textit{MTL} egy lineáris temporális logika, amellyel logikai jelek időzítésbeli tulajdonságait specifikálhatjuk.
+Az \textit{MTL} \cite{MTL1} egy lineáris temporális logika, amellyel logikai jelek időzítésbeli tulajdonságait specifikálhatjuk.
 Logikai jelek tulajdonságait specifikálhatjuk vele az időben.
 
 A szintaxisa a \textit{Linear Temporal Logic}-hoz hasonlít:
@@ -121,7 +121,7 @@ Az \textit{MTL} megegyezik az előbbi \textit{future-MTL}-el vagy a teljes szint
 
 \subsection{MITL - Metric Interval Temporal Logic}
 
-Az \textit{MITL} egy részhalmaza az \textit{MTL}-nek.
+Az \textit{MITL} \cite{MITL1} egy részhalmaza az \textit{MTL}-nek.
 Az \textit{MITL} temporális logika nem képes a következő követelmény megadására: „\textit{A} esemény pontosan öt időegység óta történt”.
 Ezt gond nélkül megfogalmazhatjuk \textit{MTL}-ben.
 \textit{MITL}-ben csak a következőt tudjuk leírni: „\textit{A} esemény négy és öt időegység között történt”.
@@ -166,12 +166,12 @@ Ebből kifolyólag az \textit{MSC} nem egy alkalmas nyelv arra, hogy az üzenet 
     Ciklus & \textit{h-MSC} & \textit{Loop operator} \\
     \hline %inserts single line
     \end{tabular}
-    \label{psc_táblázat} % is used to refer this table in the text
     \caption{Az \textit{MSC} összehasonlítása a \textit{PSC}-vel} % title of Table
+    \label{psc_tablazat} % is used to refer this table in the text
 \end{table}
 
-A \textit{Property Sequence Chart}[1] az \textit{MSC} egy kiterjesztése.
-Sok új elemet vezet be ami nincs az \textit{MSC}-ben, melyek megtekinthetők a \ref{psc_táblázat} táblázatban, mint az üzenet típusokat: sima üzenet (e), elvárt üzenet (r) és nem kívánt üzenet (f).
+A \textit{Property Sequence Chart} \cite{PSC1} az \textit{MSC} egy kiterjesztése.
+Sok új elemet vezet be ami nincs az \textit{MSC}-ben, melyek megtekinthetők a \ref{psc_tablazat} táblázatban, mint az üzenet típusokat: sima üzenet (e), elvárt üzenet (r) és nem kívánt üzenet (f).
 Így specifikálhatjuk, hogy mely üzenetek azok amik helyes viselkedésre utalnak és azok amelyek nem.
 Szigorú sorrendezésre is ad megoldást a \textit{PSC}, ami azt jelenti, hogy megadhatjuk explicit az üzenetek sorrendjét a követelményünkben.
 A gyenge sorrendezés és a szigorú sorrendezés között az a különbség, hogy szigorú sorrendezés a szekvenciában lévő üzenetek között nem jelenhet meg más üzenet.
@@ -223,7 +223,7 @@ Az üzenetek megkötött sorrendezésének jelölésénél az objektum „\texti
 \begin{figure}[!ht]
     \centering
     \includegraphics[width=150mm, keepaspectratio]{figures/2abra.png}
-    \caption{A \textit{PSC} különböző elemei [1].}
+    \caption{A \textit{PSC} különböző elemei \cite{PSC1}.}
     \label{psc_elemek}
 \end{figure}
 
@@ -232,7 +232,7 @@ Az üzeneteket a következő formában adjuk meg: \textit{Feladó.Üzenet.Címze
 \begin{figure}[!ht]
     \centering
     \includegraphics[width=100mm, height=15cm, keepaspectratio]{figures/3abra.png}
-    \caption{\textit{PSC} diagram egy \textit{ATM} rendszer működésének ellenőrzésére[1].}
+    \caption{\textit{PSC} diagram egy \textit{ATM} rendszer működésének ellenőrzésére \cite{PSC1}.}
     \label{psc_példa}
 \end{figure}
 A \ref{psc_példa} ábrán láthatunk egy példát arra, hogy egy követelményt hogyan lehet definiálni.
@@ -247,7 +247,7 @@ A következőkben az lesz a feladatunk, hogy ezekből a diagramokból valósíts
 %----------------------------------------------------------------------------
 \section{A TPSC bemutatása}
 %----------------------------------------------------------------------------
-A \textit{TPSC}[2] a \textit{PSC}-nek egy kiterjesztése.
+A \textit{TPSC} \cite{TPSC1} a \textit{PSC}-nek egy kiterjesztése.
 A \textit{PSC} üzenetekre időzítési feltételeket specifikálhatunk.
 
 \begin{figure}[!ht]
@@ -287,27 +287,27 @@ Egy akció lehet például egy ilyen óraváltozónak a nullázása.
 Ha a feltétel teljesül és az adott üzenet illeszkedik az állapotátmeneten lévő bemenetre, akkor az megvalósulhat és a rajta lévő akció megtörténik.
 Az automata akkor fogad el egy bemenet sorozatot, ha ennek során elérünk az automata végállapotába.
 Ha hibaállapotot érünk el, akkor az a monitor szempontjából hibát jelent.
-Az alapelv az, hogy minden \textit{TPSC} elemhez tartozik egy minta automata (\textit{pattern}) ami leírja a szemantikáját.
+Az alapelv az, hogy minden \textit{TPSC} elemhez tartozik egy minta automata (\textit{pattern}) \cite{TPSC1} ami leírja a szemantikáját.
 Például a \ref{tpsc_sima} és \ref{tpsc_elvárt} ábrákon láthatók a különböző \textit{PSC} üzenetekhez tartozó minták.
 
 \begin{figure}[!ht]
     \centering
     \includegraphics[width=150mm, keepaspectratio]{figures/sima_tpsc.png}
-    \caption{Sima üzenetekhez tartozó minták [2].}
+    \caption{Sima üzenetekhez tartozó minták \cite{TPSC1}.}
     \label{tpsc_sima}
 \end{figure}
 
 \begin{figure}[!ht]
     \centering
     \includegraphics[width=150mm, keepaspectratio]{figures/elvárt_tpsc.png}
-    \caption{Elvárt üzenetekhez tartozó minták [2].}
+    \caption{Elvárt üzenetekhez tartozó minták \cite{TPSC1}.}
     \label{tpsc_elvárt}
 \end{figure}
 
 \begin{figure}[!ht]
     \centering
     \includegraphics[width=90mm, keepaspectratio]{figures/példa_tpsc.png}
-    \caption{Elvárt múltbéli megkötést tartalmazó üzenethez tartozó minta [2].}
+    \caption{Elvárt múltbéli megkötést tartalmazó üzenethez tartozó minta \cite{TPSC1}.}
     \label{tpsc_példa}
 \end{figure}
 
@@ -336,7 +336,7 @@ Ebben a példában a \ref{tpsc_used_patterns} ábrán lévő baloldali automata 
 \begin{figure}[!ht]
     \centering
     \includegraphics[width=150mm, keepaspectratio]{figures/8abra.png}
-    \caption{Alkalmazott automata minták.}
+    \caption{Alkalmazott automata minták \cite{TPSC1}.}
     \label{tpsc_used_patterns}
 \end{figure}
 

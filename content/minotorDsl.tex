@@ -2,16 +2,16 @@
 \chapter{Szöveges PSC leíró nyelv kibővítése}
 %----------------------------------------------------------------------------
 
-A szakdolgozatom során készített szöveges \textit{PSC} leíró nyelvet az \textit{Xtext} technológia segítségével definiáltam.
+A szakdolgozatom során készített szöveges \textit{PSC} leíró nyelvet \cite{Bakai} az \textit{Xtext} technológia segítségével definiáltam.
 A nyelv fő elemei:
 \begin{itemize}
     \item objektumok (az üzenetekkel kommunikáló rendszerkomponensek)
     \item üzenetek
     \item megkötések
     \item szcenárió
-    \item alt operátor
-    \item loop operátor
-    \item par operátor
+    \item \textit{alt} operátor
+    \item \textit{loop} operátor
+    \item \textit{par} operátor
 \end{itemize}
 
 A nyelvben egy objektumot az „\textit{object}” kulcsszóval lehet bevezetni.
@@ -40,7 +40,7 @@ Ezt a \textit{cConstraint} változóban tárolom.
 A \textit{resetClock} attribútum tárolja a visszaállítandó óraváltozó nevét.
 A teljes nyelvtan definíció megtekinthető a \textit{Függelékben} (\ref{xtext_tpsc_grammar}).
 
-\begin{lstlisting}[language=java, frame=single, float=ht!, caption={Eredeti \textit{Message} nyelvtani szabály.},captionpos=b,label=minotor_message_original]
+\begin{lstlisting}[language=java, frame=single, float=ht!, caption={Eredeti \textit{Message} nyelvtani szabály \cite{Bakai}.},captionpos=b,label=minotor_message_original]
 Message:
     'message' name=Name (required?='required')? (fail?='fail')? (strict?='strict')?
     sender=[Object] '->' receiver=[Object]

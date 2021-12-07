@@ -13,7 +13,7 @@ A kibővített automata generátor bemenetként egy \textit{TPSC} szcenárió sz
 
 A \ref{tpsc_alt} és \ref{tpsc_alt_nc} kódrészleteken látható, hogy a monitor generátor támogatja az összetett operátorokat tartalmazó \textit{TPSC}-khez tartozó \textit{TA}-k generálását is.
 A generátor készít egy szöveges leírást a generált automatához, ehhez a \textit{Never claim} nyelvet használja.
-A \textit{Never claim} a \textit{Promela} nyelv része, ezzel egy rendszer viselkedését lehet definiálni.
+A \textit{Never claim} \cite{NeverClaim} a \textit{Promela} nyelv része, ezzel egy rendszer viselkedését lehet definiálni.
 Egy \textit{Never claim} leírás a \textit{never} kulcsszóval kezdődik és '\{' '\}' jelek között vannak az automata állapotai lista szerűen felsorolva egymás alatt.
 Minden állapothoz tartozó kimenő átmenet az \textit{if} és \textit{fi} kulcssavak között található.
 Egy átmenet leírása a címkéjét tartalmazza és egy \textit{->} jelzi, hogy melyik állapotba visz át.
