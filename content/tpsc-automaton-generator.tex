@@ -134,12 +134,12 @@ Két attribútuma van:
 	\item type(\textit{StateType}): az állapot típusa
 \end{itemize}
 
-Az állapot típusának a megadására a \textit{StateType} enum osztályt definiáltam.
-Az enum a következő értékeket veheti fel:
+Az állapot típusának a megadására a \textit{StateType} \textit{enum} osztályt definiáltam.
+Az \textit{enum} a következő értékeket veheti fel:
 \begin{itemize}
-	\item NORMAL
-	\item ACCEPT
-	\item FINAL
+	\item NORMAL, egy sima állapotot jelöl
+	\item ACCEPT, elfogadó állapot jelöl (a monitor szempontjából ez egy hibaállapot)
+	\item FINAL, a végállapotot jelöli
 \end{itemize}
 
 Az átmenetek implementációjáért felelős osztály a \textit{Transition}.

@@ -8,7 +8,7 @@ Ezen kívül, a monitornak időmérésre is szüksége van, mert a követelmény
 Az \ref{introductory_figure} ábra bemutatja a monitorozás koncepcióját.
 
 \begin{figure}[!ht]
-    \includegraphics[width=150mm, keepaspectratio]{figures/introductory_figure.png}
+    \includegraphics[width=150mm, height=20cm, keepaspectratio]{figures/introductory_figure.png}
     \caption{Kontextusfüggő rendszerek monitorozása időzítési feltételekkel.}
     \label{introductory_figure}
 \end{figure}
@@ -66,7 +66,7 @@ Ez megnehezíti egy követelmény leírását is.
 
 \begin{figure}[!ht]
     \centering
-    \includegraphics[width=80mm, keepaspectratio]{figures/msc_example.png}
+    \includegraphics[width=40mm, height=5cm, keepaspectratio]{figures/msc_example.png}
     \caption{Példa MSC diagram.}
     \label{msc_example}
 \end{figure}
@@ -231,14 +231,14 @@ Az üzeneteket a következő formában adjuk meg: \textit{Feladó.Üzenet.Címze
 
 \begin{figure}[!ht]
     \centering
-    \includegraphics[width=130mm, keepaspectratio]{figures/3abra.png}
+    \includegraphics[width=100mm, height=15cm, keepaspectratio]{figures/3abra.png}
     \caption{\textit{PSC} diagram egy \textit{ATM} rendszer működésének ellenőrzésére[1].}
     \label{psc_példa}
 \end{figure}
 A \ref{psc_példa} ábrán láthatunk egy példát arra, hogy egy követelményt hogyan lehet definiálni.
 Ez a \textit{PSC} diagram egy \textit{ATM} rendszer működését specifikálja.
 Először a felhasználó egy \textit{login} üzenettel bejelentkezik az \textit{ATM}-be majd egy \textit{wReq} üzenettel egy lekérdezést hajt végre.
-Ezen az üzeneten van egy megkötés, az üzenet előtt nem történthet kijelentkezés, \textit{logout}.
+Ezen az üzeneten van egy megkötés, az üzenet előtt nem történhet kijelentkezés, \textit{logout}.
 Az \textit{ATM} ezután, ha nem történt \textit{logout} egy elvárt üzenetet küld a \textit{Bank} adatbázisába.
 
 A szcenárióink specifikálására így rendelkezésünkre áll egy grafikus nyelv.
@@ -267,7 +267,7 @@ Az \textit{e: a} üzenet egy sima üzenet, szóval ha nem történik meg a speci
 Viszont \textit{r: a} üzenetnél ugyanilyen feltétel mellett már elvárt, hogy \textit{t} időn belül megtörténjen. \textit{f: a} üzenet esetében viszont akkor jelez hibát a monitor, ha üzenet megtörtént \textit{t} időn belül.
 
 Egy múltbeli vagy jövőbeli megkötésre is meg lehet adni időzítési feltételt.
-Így megadhatjuk, hogy mennyi ideig nem szabad jönnie a megkötésben szereplő nem kivánt üzenetek egyikének.
+Így megadhatjuk, hogy mennyi ideig nem szabad jönnie a megkötésben szereplő nem kívánt üzenetek egyikének.
 Ha a feltételben megadott idő után történik akkor az nem jelent hibát a monitor szempontjából.
 
 % !TeX spellcheck = hu_HU
@@ -288,7 +288,7 @@ Ha a feltétel teljesül és az adott üzenet illeszkedik az állapotátmeneten 
 Az automata akkor fogad el egy bemenet sorozatot, ha ennek során elérünk az automata végállapotába.
 Ha hibaállapotot érünk el, akkor az a monitor szempontjából hibát jelent.
 Az alapelv az, hogy minden \textit{TPSC} elemhez tartozik egy minta automata (\textit{pattern}) ami leírja a szemantikáját.
-Például a \ref{tpsc_sima} és \ref{tpsc_elvárt} ábrákon láthatóak a különböző \textit{PSC} üzenetekhez tartozó minták.
+Például a \ref{tpsc_sima} és \ref{tpsc_elvárt} ábrákon láthatók a különböző \textit{PSC} üzenetekhez tartozó minták.
 
 \begin{figure}[!ht]
     \centering
@@ -306,7 +306,7 @@ Például a \ref{tpsc_sima} és \ref{tpsc_elvárt} ábrákon láthatóak a kül�
 
 \begin{figure}[!ht]
     \centering
-    \includegraphics[width=150mm, keepaspectratio]{figures/példa_tpsc.png}
+    \includegraphics[width=90mm, keepaspectratio]{figures/példa_tpsc.png}
     \caption{Elvárt múltbéli megkötést tartalmazó üzenethez tartozó minta [2].}
     \label{tpsc_példa}
 \end{figure}
@@ -314,8 +314,8 @@ Például a \ref{tpsc_sima} és \ref{tpsc_elvárt} ábrákon láthatóak a kül�
 A minta automatánkban található szürke állapotok reprezentálják a végállapotokat.
 A megkötéseket a nem kívánt üzenetek negáltjainak az \textit{ÉS} kapcsolata.
 Az időzített automatán egy átmenet formájában jelennek meg.
-Például az \ref{tpsc_példa} ábrán lévő automata mintán látható „b, $\delta ’\&!a, \delta$” címkéjű hurokélen, a „b” címke minden olyan üzenetnek felel meg, amelyek nincsenek a megkötésben lévő nem kivánt üzenetek halmazában.
-A címke teljes jelentése az, hogy ha $\delta$’ időn belül nem jött nem kivánt üzenet és $\delta$ időn belül nem az „a” üzenet jött akkor maradjunk az \textit{s0} állapotban.
+Például az \ref{tpsc_példa} ábrán lévő automata mintán látható „b, $\delta ’\&!a, \delta$” címkéjű hurokélen, a „b” címke minden olyan üzenetnek felel meg, amelyek nincsenek a megkötésben lévő nem kívánt üzenetek halmazában.
+A címke teljes jelentése az, hogy ha $\delta$’ időn belül nem jött nem kívánt üzenet és $\delta$ időn belül nem az „a” üzenet jött akkor maradjunk az \textit{s0} állapotban.
 A „a, $\delta$” címkéjű átmenet az „s0” állapotból az „s1” végállapotba mutat.
 Az átmenet akkor valósul meg ha „a” üzenet érkezik és „$\delta$” időzítési feltétel igaz.
 Ebben az esetben teljesül a feltétel.
@@ -342,7 +342,7 @@ Ebben a példában a \ref{tpsc_used_patterns} ábrán lévő baloldali automata 
 
 \begin{figure}[!ht]
     \centering
-    \includegraphics[width=130mm, keepaspectratio]{figures/9abra.png}
+    \includegraphics[width=90mm, keepaspectratio]{figures/9abra.png}
     \caption{Az összeállított automata.}
     \label{created_automaton}
 \end{figure}
@@ -350,5 +350,5 @@ Ebben a példában a \ref{tpsc_used_patterns} ábrán lévő baloldali automata 
 A monitor szempontjából az automata akkor jelez hibás működést ha olyan bemenetet kap, amely egyik élre sem illeszkedik.
 Ilyenkor a követelmény már nem teljesíthető.
 Ha az automata egy sima állapotban van, akkor az helyes működést jelent viszont a követelmény még ekkor sem teljesült.
-A követelmény akkor teljesül amikor az automata a végső (\textit{FINAL}) állapotba kerül és nem érkezik további üzenet amely elmozditaná őt onnan.
+A követelmény akkor teljesül amikor az automata a végső (\textit{FINAL}) állapotba kerül és nem érkezik további üzenet amely elmozdítaná őt onnan.
 A \ref{created_automaton} ábrán az „s2” szürke állapot a végsőállapot.

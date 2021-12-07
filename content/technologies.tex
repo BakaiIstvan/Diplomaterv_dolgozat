@@ -12,20 +12,20 @@ A diplomaterv során használt \textit{Eclipse} plugin-ek:
     \item \textit{Sirius}
 \end{itemize}
 
-A munkafolyamat egy \textit{workspace}-en belül történik, ahol a fejlesztő létrehozhatja a saját projekteit.
+A munkafolyamat egy \textit{workspace}-en belül történik, ahol a fejlesztő létrehozhatja a saját projektjeit.
 Több \textit{workspace}-t is létre lehet hozni és azok között váltani.
 
 Különböző fajta projekteknek különböző nézetei lehetnek.
 Például egy modellező projektnek van külön modell nézete az eszközön belül vagy egy \textit{Java} projektnek \textit{Java} nézete.
-A nézetek az eszközön megjelenített szövegszerkesztő, fájlkezelő vagy egyéb funkció elhelyezésért, megjelenitéséért felelnek.
+A nézetek az eszközön megjelenített szövegszerkesztő, fájlkezelő vagy egyéb funkció elhelyezésért, megjelenítéséért felelnek.
 
 \subsection{Xtext}
 
-Az \textit{Xtext} \textit{Eclipse} plugin-el programozási és \textit{domain} specifikus nyelveket lehet fejleszteni.
+Az \textit{Xtext} \textit{Eclipse} \textit{plugin}-el programozási és \textit{domain} specifikus nyelveket lehet fejleszteni.
 A nyelvünk elemeit és szabályait egy nyelvtan segítségével definiálhatjuk.
 Az \textit{Xtext} keretrendszer több eszközt nyújt a nyelvünkhöz.
 Például egy \textit{parser}-t, egy fordítót és egy szerkesztőt.
-A plugin még egy \textit{Xtend} alapú kódgenerátort is generál a nyelvünkhöz, amivel a nyelvünkhöz tetszőleges kódot tudunk generálni.
+A \textit{plugin} még egy \textit{Xtend} alapú kódgenerátort is generál a nyelvünkhöz, amivel a nyelvünkhöz tetszőleges kódot tudunk generálni.
 
 \begin{lstlisting}[language=java, frame=single, float=ht!, caption={Xtext nyelvtan elemei.},captionpos=b, label=XtextGrammar]
 Scenario:
@@ -56,11 +56,11 @@ LooseMessage:
 A \ref{XtextGrammar}-es kódrészlet az \textit{Xtext} nyelvtan elemeit mutatja be.
 Egy nyelvtani szabályt egy tetszőleges név megadásával hozhatunk létre.
 A szabályunkat pedig a név után lévő ":" és ";" közzé írhatjuk.
-Idézőjelek közé írhatjuk a nyelvünkhöz tartozó kulcsszavakat, például \textit{'scenario'} vagy idezőjelek között kapcsos zárójel.
+Idézőjelek közé írhatjuk a nyelvünkhöz tartozó kulcsszavakat, például \textit{'scenario'} vagy idézőjelek között kapcsos zárójel.
 Ilyen kulcsszavak megadásával jól tudjuk formázni a nyelvtani szabályunkat.
 Attribútumok megadásával tudjuk tárolni a nyelvi elemünk értékeit, változóit.
 Például a \textit{name} attribútum egy \textit{ID} elemet tárol, ami egy azonosítónak felel meg.
-Egy attribútumba több elemet is rakhatunk lista szerüen.
+Egy attribútumba több elemet is rakhatunk lista szerűen.
 Ezt a \textit{*} karakterrel adhatjuk meg, például \textit{scenariocontents+=ScenarioContent*}, ahol a \textit{scenariocontents} több \textit{ScenarioContent}-beli elemet tárol.
 A \textit{+=} karakterrel pakolhatjuk az új \textit{ScenarioContent}-jeinket a \textit{scenariocontents} tömbbe.
 
@@ -69,7 +69,7 @@ Ilyen szabály például a \textit{Message}.
 Továbbá hivatkozhatunk már létrehozott nyelvi elemekre is a szabályunkban a "[]" szintakszissal.
 Például a \textit{LooseMessage} \textit{sender} attribútuma egy már létrehozott \textit{Object} elemre hivatkozik.
 
-A "?" karakter opciónális nyelvi elemek megadására szolgál.
+A "?" karakter opcionális nyelvi elemek megadására szolgál.
 
 Fordítás után a nyelvi elemeinkből \textit{Xtend} és \textit{Java} osztályok generálodnak.
 
@@ -82,7 +82,7 @@ Az \textit{Xtend} fordító a létrehozott osztályokból \textit{Java} osztály
 Így akár könnyedén ki tudjuk szervezni a projektünket egy \textit{.jar} fájlba.
 
 Egy nagyon hasznos funkciója az \textit{Xtend}-nek a \textit{template}.
-Sablonokat tudunk létrezhozni vele függvényeken belül, amely megkönnyíti a kódgenerálást.
+Sablonokat tudunk létrehozni vele függvényeken belül, amely megkönnyíti a kódgenerálást.
 Így tudunk hivatkozni az \textit{Xtext} nyelvi elemeinkre függvény paramétereken keresztül és egyedi kódgenerátort fejleszteni a nyelvünkhöz.
 A sablon függvényen belül a "«»" karaktereket használva tudunk hivatkozni az \textit{Xtext} nyelvi elemeinkre.
 
@@ -98,14 +98,14 @@ def compile(Scenario scenario)'''
 \end{lstlisting}
 
 A \ref{XtendTemplate} ábra egy \textit{Xtend} sablon függvényt mutat be.
-Láthatjuk, hogy a "«»" karaktereket használva hivatkozhatunk a paraméterben átadott \textit{Xtext} nyelvbeli objektum attribútumaira.
+Láthatjuk, hogy a "«»" karaktereket használva hivatkozhatunk a paraméterben átadott \textit{Xtext} nyelv beli objektum attribútumaira.
 Itt például a \textit{Scenario} \textit{scenariocontents} tömbjén megyünk végig.
 
 \subsection{Sirius}
 
 A \textit{Sirius} eszköz segítségével létrehozhatunk saját grafikus modellező alkalmazásainkat.
 Egy szerkesztő környezetet alkothatunk, amivel a modellünk elemeit hozhatjuk létre vagy szerkeszthetjük grafikusan.
-A plugin az \textit{Entity Modelling Framework} keretrendszer használja a modellek feldolgozásához és ilyen \textit{EMF} modelleket jelenít meg.
+A \textit{plugin} az \textit{Entity Modelling Framework} keretrendszer használja a modellek feldolgozásához és ilyen \textit{EMF} modelleket jelenít meg.
 Ehhez az \textit{EMF} modellünk összes eleméhez meg kell adnunk egy megjelenítést.
 
 Elkészíthetjük saját egyedi szerkesztőnket, de választhatunk a \textit{Sirius} által nyújtott szerkesztőkből is:
@@ -117,4 +117,4 @@ Elkészíthetjük saját egyedi szerkesztőnket, de választhatunk a \textit{Sir
 	\item Táblázat
 \end{itemize}
 
-Emelett alkalmazhatunk feltételes megjelenítést is adott típusú modellelemünkre, ha az adott tulajdonságban eltér a többi elemtől.
+Emellett alkalmazhatunk feltételes megjelenítést is adott típusú modellelemünkre, ha az adott tulajdonságban eltér a többi elemtől.

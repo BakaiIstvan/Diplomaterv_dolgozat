@@ -70,7 +70,7 @@ A \ref{integration_test_structure} ábrán látható egy ilyen teszthez tartozó
 
 A \ref{integration_test_structure} ábrán lévő \textit{generated} csomag tartalmazza a szcenárióhoz tartozó generált automata forráskódját.
 
-\begin{lstlisting}[language=java, frame=single, float=ht!, caption={Integrációs teszteset eredménye.},captionpos=b,label=maven_test_output]
+\begin{lstlisting}[language=java, frame=single, float=ht!, caption={Teszteset eredménye.},captionpos=b,label=maven_test_output]
 -------------------------------------------------------
 T E S T S
 -------------------------------------------------------
@@ -140,7 +140,7 @@ A \textit{CI} különböző fázisai a következők:
 
 A generátorokhoz tartozó \textit{Xtext} projekten lefut egy \textit{Maven build}, amely az új feltöltött verzió tartalmazza.
 Ez a \textit{build} állítja elő a \textit{DSL} nyelvhez tartozó \textit{Maven plugin}-t is.
-Ezt követően hajtódnak végre az integrációs tesztek, amelyek a frissen fordított \textit{Maven plugin}-t használják.
+Ezt követően hajtódnak végre a tesztek, amelyek a frissen fordított \textit{Maven plugin}-t használják.
 Ha az összes fázis sikeresen lefutott, akkor az adott változtatás nem rontott el semmilyen korábbi funkciót.
 A \textit{CI}-hoz tartozó \textit{script}-et a \ref{ci_script} kódrészlet tartalmazza.
 A \textit{script} először az \textit{Xtext} nyelv és a hozzá tartozó monitor forráskód generátor új verzióját fordítja le és készít el belőle a \textit{Maven plugin}-t.
@@ -434,7 +434,7 @@ A tesztesetekkel azt vizsgáljuk, hogy a monitor képes-e a helytelen ág lefut�
 \subsection{Par operátort tartalmazó tesztszenárió}
 %----------------------------------------------------------------------------
 
-\begin{lstlisting}[language=java, frame=single, float=ht!, caption={Integrációs teszteset.},captionpos=b]
+\begin{lstlisting}[language=java, frame=single, float=ht!, caption={Par operátort tartalmazó tesztszcenárió.},captionpos=b]
 specification Email {
     object Computer computer;
     object Server server;
@@ -460,7 +460,7 @@ specification Email {
 \begin{figure}[!ht]
     \centering
     \includegraphics[width=150mm, keepaspectratio]{figures/diagramParExample.png}
-    \caption{Szcenárió diagram.}
+    \caption{Par operátort tartalmazó szcenárió diagram.}
 \end{figure}
 
 Ehhez a tesztszcenárióhoz az első szenárióban lévő teszt rendszert használtuk fel.
