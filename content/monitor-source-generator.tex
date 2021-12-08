@@ -9,12 +9,12 @@
 \begin{figure}[h!]
     \centering
     \includegraphics[width=130mm, keepaspectratio]{figures/monitor_architecture.png}
-    \caption{Architektúra diagram.}
+    \caption{Monitor architektúra diagram.}
 	\label{monitor_architecture}
 \end{figure}
 
-A \ref{monitor_architecture} ábrán látható a megfigyelt rendszerhez és a monitorhoz architektúra diagram.
-A monitorozás alatt lévő rendszer egy közös interfészen keresztül kommunikál a monitorral.
+A \ref{monitor_architecture} ábrán látható a megfigyelt rendszer és a monitorhoz tartozó architektúra diagram.
+A monitorozás alatt lévő rendszer egy \textit{IMonitor} interfészen keresztül kommunikál a monitorral.
 Az interfész \textit{Java} implementációja a \ref{IMonitor_interface} kódrészleten tekinthető meg.
 A monitor azt vizsgálja, hogy a rendszer a szcenárió szerint viselkedik-e.
 Monitornak a következő interfészt kell megvalósítania:
