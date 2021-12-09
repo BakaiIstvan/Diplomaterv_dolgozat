@@ -8,8 +8,8 @@
 
 Az \textit{önálló laboratórium} során elkészített automata generátort kibővítettem úgy, hogy támogassa a \textit{TPSC} elemekhez tartozó automata minták generálását.
 Az eredeti automata generátor \textit{PSC} szöveges leírásokhoz tartozó \textit{Büchi} automatákat tudta összeállítani.
-Az volt a feladatom, hogy a meglévő \textit{Büchi} automata mintákat lecseréljem a korábban ismertetett időzített automata mintákra és felvegyem a hiányzó mintákat, amik az időzítési feltételeket tartalmazó üzenetekhez tartoznak.
-A kibővített automata generátor bemenetként egy \textit{TPSC} szcenárió szöveges leírását kapja meg amiből a minta alapú módszerrel generál egy \textit{TA} automatát.
+Az volt a feladatom, hogy a meglévő \textit{Büchi} automata mintákat lecseréljem a korábban ismertetett időzített automata mintákra és felvegyem a hiányzó mintákat, amelyek az időzítési feltételeket tartalmazó üzenetekhez tartoznak.
+A kibővített automata generátor bemenetként egy \textit{TPSC} szcenárió szöveges leírását kapja meg, amelyből a minta alapú módszerrel generál egy \textit{TA} automatát.
 
 A \ref{tpsc_alt} és \ref{tpsc_alt_nc} kódrészleteken látható, hogy a monitor generátor támogatja az összetett operátorokat tartalmazó \textit{TPSC}-khez tartozó \textit{TA}-k generálását is.
 A generátor készít egy szöveges leírást a generált automatához, ehhez a \textit{Never claim} nyelvet használja.
@@ -130,7 +130,7 @@ Az időzített automaták generálásához egy adatstruktúrát definiáltam, am
 Az automatában lévő állapotok implementációja a \textit{State} osztályban található.
 Két attribútuma van:
 \begin{itemize}
-	\item id(\textit{String}): a címkéje tárolására
+	\item id(\textit{String}): az állapot címkéje
 	\item type(\textit{StateType}): az állapot típusa
 \end{itemize}
 
@@ -143,9 +143,9 @@ Az \textit{enum} a következő értékeket veheti fel:
 \end{itemize}
 
 Az átmenetek implementációjáért felelős osztály a \textit{Transition}.
-Három tag változója van:
+Három tagváltozója van:
 \begin{itemize}
-	\item id(\textit{String}): az üzenet
+	\item id(\textit{String}): az átmenet címkéje
 	\item reset(\textit{String}): visszaállítandó óraváltozó neve
 	\item sender(\textit{State}): a forrás állapot
 	\item receiver(\textit{State}): a cél állapot
@@ -156,8 +156,7 @@ Három tag változója van:
 Az időzített automata implementációja az \textit{Automaton} osztályban található.
 Itt tároljuk az automatában lévő állapotokat és a köztük lévő átmeneteket egy-egy listában.
 Az \textit{Automaton} osztály \textit{addState(State)} és \textit{addTransition(Transition)} függvényeivel lehet új állapotot és átmenetet hozzáadni az automatához, a \textit{collapse(Automaton)} függvényével pedig két automatát egyesíteni.
-Ezt a függvényt használtam az implementációban a minta automaták egyesítésére.
-Ezen kívül az osztálynak van egy \textit{merge(ArrayList<Automaton>)} függvénye.
+Ezt a függvényt használtam az implementációban a minta automaták egyesítésére, ezen kívül az osztálynak van egy \textit{merge(ArrayList<Automaton>)} függvénye.
 Ez a függvény az \textit{alt} operátor ágaiban lévő minta automaták összefésülésére szolgál.
 
 A \textit{Specification} osztály feladata, hogy összeállítsa a szöveges leírásban specifikált \textit{TPSC} szcenárióhoz tartozó időzített automatát.

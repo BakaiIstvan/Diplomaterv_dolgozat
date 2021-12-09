@@ -13,21 +13,21 @@
 	\label{monitor_architecture}
 \end{figure}
 
-A \ref{monitor_architecture} ábrán látható a megfigyelt rendszer és a monitorhoz tartozó architektúra diagram.
+A \ref{monitor_architecture} ábrán látható a megfigyelt rendszer és monitor architektúra diagramja.
 A monitorozás alatt lévő rendszer egy \textit{IMonitor} interfészen keresztül kommunikál a monitorral.
 Az interfész \textit{Java} implementációja a \ref{IMonitor_interface} kódrészleten tekinthető meg.
 A monitor azt vizsgálja, hogy a rendszer a szcenárió szerint viselkedik-e.
-Monitornak a következő interfészt kell megvalósítania:
+A monitornak a következő interfészt kell megvalósítania:
 \begin{itemize}
     \item \textit{update()}: ezzel a függvénnyel lehet továbbítani a rendszer üzeneteit a monitor számára.
 	Bemenetként az üzenet feladóját, címzettjét, nevét és paramétereit kapja.
 	A monitor frissíti a belső automatájának állapotát.
-    \item \textit{goodStateReached()}: a rendszer ezen a függvényen keresztül kérdezi le a monitortól, hogy jó állapotban van-e a követelmény szempontjából, azaz nem történt e hiba.
+    \item \textit{goodStateReached()}: a rendszer ezen a függvényen keresztül kérdezi le a monitortól, hogy jó állapotban van-e a követelmény szempontjából, azaz nem történt-e hiba.
     Visszatérési értéke egy \textit{boolean} érték.
-    \item \textit{requirementSatisfied()}: a rendszer ezzel a függvénnyel kérdezheti le, megfelel-e a követelménynek.
+    \item \textit{requirementSatisfied()}: a rendszer ezzel a függvénnyel kérdezheti le, hogy megfelel-e a követelménynek.
     Visszatérési értéke egy \textit{boolean} érték.
 	\item \textit{errorDetected()}: ez a függvény tartalmazza a hibaelhárító funkcionalitás implementációját.
-	A rendszer ezt a függvényt használhatja erre a célra hiba esetén.
+	A rendszer ezt a függvényt használhatja hibaelhárításra hiba detektálás esetén.
 	Bemenetként azt az üzenetet kapja meg, amely hatására előjött a hiba az \textit{update()} függvényhez hasonlóan.
     \item \textit{noMoreMessages()}: a rendszer ezen a függvényen keresztül jelzi a monitornak a kommunikáció végét.
 \end{itemize}
@@ -62,17 +62,17 @@ public interface IClock {
 }
 \end{lstlisting}
 
-A \ref{IClock_interface} kódrészlet tartalmazza az időzítő interfész implementációját, a \textit{IClock} \textit{Java} interfészt.
+Az \ref{IClock_interface} kódrészlet tartalmazza az időzítő interfész implementációját, az \textit{IClock} \textit{Java} interfészt.
 
 A monitor az \textit{ISystem} interfészen keresztül tud a rendszernek üzeneteket küldeni a megfigyelt viselkedésről.
 Ezt az interfészt a monitorozott rendszer valósítja meg.
 Három függvénye van:
 \begin{itemize}
 	\item \textit{receiveMonitorStatus()}: a monitor jelzi a rendszer felé a követelmény alapján az aktuális státuszt.
-	Bementként a monitor által küldött üzenetet kapja meg.
-	\item \textit{receiveMonitorError()}: a monitor jelzi a rendszer felé ha hibát detektált.
+	Bemenetként a monitor által küldött üzenetet kapja meg.
+	\item \textit{receiveMonitorError()}: a monitor jelzi a rendszer felé, ha hibát detektált.
 	Bemenetként két üzenetet kap: a hibát okozó üzenetet és az utolsó üzenetet, amikor még a rendszer jó állapotban volt a követelmény szempontjából.
-	\item \textit{receiveMonitorSuccess()}: a monitor jelzi a rendszer felé ha teljesült a követelmény.
+	\item \textit{receiveMonitorSuccess()}: a monitor jelzi a rendszer felé, ha teljesült a követelmény.
 \end{itemize}
 
 \begin{lstlisting}[language=java,frame=single, float=h!, caption={Rendszer interfész Java implementációja.},captionpos=b, label=ISystem_interface]
@@ -83,7 +83,7 @@ public interface ISystem {
 }
 \end{lstlisting}
 
-Az \ref{ISystem_interface}-es kódrészlet tartalmazza az \textit{ISystem} java interfészt.
+Az \ref{ISystem_interface}-es kódrészlet tartalmazza az \textit{ISystem} \textit{Java} interfészt.
 
 %----------------------------------------------------------------------------
 \subsection{A monitor forráskód megvalósítása}
@@ -98,10 +98,10 @@ A statikus részbe az időzített automata \textit{Java} osztályai kerülnek:
 Ezek segédosztályok, amelyek a generált automata reprezentálására szolgálnak.
 A statikus rész a \textit{hu.bme.mit.dipterv.text.util} csomagban található meg, amely a \ref{util_csomag} ábrán látható.
 
-A monitor interfész, a monitor Java osztálya, az időzítő interfész és a hozzá tartozó java osztály is ebbe a részbe tartozik.
+A monitor interfész, a monitor \textit{Java} osztálya, az időzítő interfész és a hozzá tartozó \textit{Java} osztály is ebbe a részbe tartozik.
 
-A dinamikus részben található a \textit{Specification} Java osztály, ami a szcenárió alapján generált automata forráskódját tartalmazza.
-Az osztály konstruktorába jön létre egy \textit{Automaton} objektum, amihez hozzáadjuk a leírás alapján a megfelelő állapotokat és átmeneteket \textit{State} és \textit{Transition} objektumokat használva.
+A dinamikus részben található a \textit{Specification} \textit{Java} osztály, ami a szcenárió alapján generált automata forráskódját tartalmazza.
+Az osztály konstruktorában jön létre egy \textit{Automaton} objektum, amihez hozzáadjuk a leírás alapján a megfelelő állapotokat és átmeneteket \textit{State} és \textit{Transition} objektumokat használva.
 
 \begin{figure}[!ht]
     \centering
@@ -116,17 +116,17 @@ A szükséges forráskódok generálásához az \textit{Xtend} technológiát ha
 \clearpage\subsection{Mintapélda}
 %----------------------------------------------------------------------------
 
-A \ref{mintapélda} kódrészleten látható egy szcenárió követelmény szöveges leírása, amit egy okos telefon működésére specifikáltunk.
+A \ref{mintapélda} kódrészleten látható egy szcenárió követelmény szöveges leírása, amit egy okostelefon működésére specifikáltunk.
 A \ref{monitor_visualisation} ábrán látható a leíráshoz tartozó diagram vizualizációja, az \ref{okos_nc} kódrészlet pedig a generált automata leírását tartalmazza.
 
-Az okos telefonon van egy zene lejátszási lista generáló alkalmazás.
-A követelményben azt várjuk el, hogy ha a felhasználó megnyitja az alkalmazást akkor a belső kamera készít az arcáról egy képet.
+Az okostelefonon van egy zene lejátszási lista generáló alkalmazás.
+A követelményben azt várjuk el, hogy ha a felhasználó megnyitja az alkalmazást akkor az előlapi kamera készít az arcáról egy képet.
 A kép alapján eldönti, hogy milyen a felhasználó kedve és az alapján előállít egy zene lejátszási listát.
 
-A \ref{okos_kapcsolat} kódrészleten látható az okos telefon és a monitor közti kapcsolat megvalósítása \textit{Java} kódban.
+A \ref{okos_kapcsolat} kódrészleten látható az okostelefon és a monitor közti kapcsolat megvalósítása \textit{Java} kódban.
 A rendszerben lévő \textit{User}, \textit{Device} és \textit{Database} osztályok mind attribútumként átveszik a \textit{Monitor} osztályt, amely megvalósítja az \textit{IMonitor} interfészt.
 
-\begin{lstlisting}[frame=single, float=ht!, caption={Okos telefon működésére megadott szcenárió követelmény.},captionpos=b, label=mintapélda]
+\begin{lstlisting}[frame=single, float=ht!, caption={Okostelefon működésére megadott szcenárió követelmény.},captionpos=b, label=mintapélda]
 specification Photo{
 
 	object User user;
@@ -268,7 +268,7 @@ public class Device {
 }
 \end{lstlisting}
 
-A \ref{okos_device} kódrészlet az okos telefon \textit{Java} osztálya.
+A \ref{okos_device} kódrészlet az okostelefon \textit{Java} osztálya.
 Megtekinthető a monitor és az eszköz közti kommunikáció megvalósítása is.
 A \textit{Device} osztály a tágváltozójaként tárolt \textit{IMonitor}-nak küldi az üzeneteket az \textit{update()} függvény használatával.
 
@@ -299,9 +299,8 @@ q12
 \end{lstlisting}
 
 A \ref{okos_monitor} kódrészleten látszik, hogy a rendszer a működése elején nem felelt meg a monitor követelményének.
-Amikor a működése végére ért akkor a monitor jelezte, hogy a rendszer jó állapotban van a „\textit{Good state}” üzenettel és, hogy a követelmény teljesült a "\textit{Requirement Satisfied}" üzenettel.
-A mintapéldához tartozó \textit{Specification} osztály a \textit{Függelékben} található (\ref{specification_class}).
-A generált automatát a konstruktorában állítja elő.
+Amikor a működése végére ért, akkor a monitor jelezte, hogy a rendszer jó állapotban van a „\textit{Good state}” üzenettel és, hogy a követelmény teljesült a "\textit{Requirement Satisfied}" üzenettel.
+A mintapéldához tartozó \textit{Specification} osztály a \textit{Függelékben} található (\ref{specification_class}), amelynek a konstruktorában található a generált időzített automata.
 
 %----------------------------------------------------------------------------
 \clearpage\subsection{Összetett szerkezetek}
@@ -410,6 +409,6 @@ q5
 \end{lstlisting}
 
 Az óraváltozók és időzítések megvalósításához az "\textit{org.apache.commons.lang3}" könyvtár "\textit{time}" csomag \textit{StopWatch} osztályát használtam.
-Ha az automata élén van egy időzítési feltétel akkor a monitor komponens az időzítő komponenstől elkéri a feltételben szereplő óraváltozóban tárol időt és kiértekeli a feltételt.
+Ha az automata élén van egy időzítési feltétel, akkor a monitor komponens az időzítő komponenstől elkéri a feltételben szereplő óraváltozóban tárolt időt és kiértekeli a feltételt.
 Ha a feltétel teljesül, akkor az időzítés szempontjából a tranzíció megtörténhet.
-A monitor akkor jelez hibát ha az átmeneten lévő időzítési feltétel nem teljesült és az üzenet más átmenetre se illeszkedik.
+A monitor akkor jelez hibát, ha az átmeneten lévő időzítési feltétel nem teljesült és az üzenet más átmenetre sem illeszkedik.

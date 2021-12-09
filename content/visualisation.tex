@@ -5,9 +5,7 @@
 A specifikációk vizualizációjához a \textit{Modell alapú rendszertervezés} tárgy során készített \textit{PSC} vizualizációs \textit{Sirius} alkalmazást használtam fel.
 Az alkalmazással egy szerkesztő segítségével tudunk \textit{PSC} diagramokat rajzolni.
 Egy palettáról lehet kiválasztani az egyes elemeket és az egérrel elhelyezni őket a diagramon.
-Ezután pedig megadhatok a paramétereik.
-Például egy üzenetnél, hogy melyik objektum a küldője és fogadója vagy hogy milyen megkötések vannak rajta.
-Egy objektumnál, hogy mi a neve és típusa.
+Ezután pedig megadhatók a paramétereik, például egy üzenetnél, hogy melyik objektum a küldője és fogadója, vagy hogy milyen megkötések vannak rajta, egy objektumnál, hogy mi a neve és típusa.
 A \ref{sirius_psc} ábrán megtekinthető a paletta és néhány példa diagram.
 
 \begin{figure}[!ht]
@@ -19,8 +17,8 @@ A \ref{sirius_psc} ábrán megtekinthető a paletta és néhány példa diagram.
 
 Először kiegészítettem az alkalmazást \textit{TPSC} elemek vizualizációjával.
 Ehhez az alkalmazáshoz tartozó \textit{EMF} modellben fel kellett vegyem, hogy egy üzeneten elhelyezhető legyen időzítési feltétel is.
-Ezt ugyanígy meg kellett tegyem a megkötéseknél is és ezen kívül még óraváltozók nullázását adtam hozzá a modellhez.
-Majd a vizualizációhoz hozzáadtam, hogy az időzítési feltétel és az óraváltozó nullázása megjelenjen az átmenetek címkéin.
+Ezt ugyanígy meg kellett tegyem a megkötéseknél is és ezen kívül az óraváltozók nullázását is hozzáadtam a modellhez.
+Ezután a vizualizációhoz hozzáadtam, hogy az időzítési feltétel és az óraváltozó nullázása megjelenjen az átmenetek címkéin.
 Készítettem egy \textit{Xtend} alapú \textit{XML} generátort, ami képes a szöveges \textit{TPSC} leírás alapján legenerálni a hozzá tartozó \textit{XML} leírást.
 Ezt a leírást képes a \textit{Sirius} alkalmazás feldolgozni és előállítani a hozzá tartozó diagramot.
 Egy ilyen generált \textit{XMl} fájl megtekinthető a \ref{sirius_xml} kódrészleten.
@@ -77,9 +75,8 @@ specification Email{
 </minotor:SequenceDiagram>
 \end{lstlisting}
 
-A diagramon az egyes objektumok kék \textit{lifeline} formájában jelenek meg.
-Minden üzenethez tartozik egy nyíl.
-A nyíl címkéjére írjuk az üzenet összes tulajdonságát.
+A vizualizációs diagramon az egyes objektumok kék \textit{lifeline} formájában jelenek meg.
+Minden üzenethez tartozik egy nyíl, amely címkéjére írjuk az üzenet összes tulajdonságát.
 Például a megkötések '\{' '\}' jelek között jelennek meg.
 Egy \textit{P} betű jelöli, hogy a megkötés múltbéli és egy \textit{F} betű ha jövőbeli.
 A nyíl eleje és vége \textit{lifeline}-okat kötnek össze, amik az üzenet feladóját és fogadóját jelzik.
