@@ -11,7 +11,7 @@
 A futásidőbeli monitorozással történő hibadetektálás kiemelt fontosságú egy kritikus rendszer működtetésében és karbantartásában.
 A monitorozás sok hibát fel tud deríteni, amiket a tesztek nem feltétlenül tudnak.
 
-A diplomaterv célja az volt, hogy a korábban elkészített monitor komponens generátort kiegészítsem úgy, hogy időzített üzenet szekvencia specifikáció alapján is képes legyen monitor komponenseket generálni.
+A diplomaterv projektem célja az volt, hogy a szakdolgozatom során elkészített monitor komponens generátort kiegészítsem úgy, hogy időzített üzenet szekvencia specifikáció alapján is képes legyen monitor komponenseket generálni.
 A generált monitor feladata az üzenet szekvencia által specifikált viselkedés ellenőrzése.
 Ilyen követelményeket egyszerűen specifikálhatunk \textit{TPSC} (\textit{Timed Property Sequence Chart}) diagramokkal.
 A szakdolgozatom során elkészített \textit{Xtext} alapú \textit{PSC} nyelvet kiegészítettem a \textit{TPSC} tulajdonságaival.
@@ -23,8 +23,8 @@ A szakdolgozatomban készített automata generátort kibővítettem úgy, hogy k
 A szöveges szcenárió leírásból generált automata alapján legenerálható a monitor forráskódja.
 A monitor forráskód generátor előállítja a monitor \textit{Java} implementációját, ami képes egy rendszer monitorozására adott követelmény alapján.
 
-A diplomaterv további feladatai közzé tartozik a \textit{TPSC} szcenáriók vizualizációja, a generált forráskódok szisztematikus tesztelése és a generált monitor komponens illesztése a \textit{Gamma} keretrendszerrel.
-A cél az, hogy elosztott komponens alapú rendszerek szimulációja közben monitorozható legyen a \textit{TPSC} üzenet szekvencia specifikáció teljesülése illetve az ebben rögzített tulajdonságok megsértése.
+A diplomatervezés feladatom része továbbá a \textit{TPSC} szcenáriók vizualizációja, a generált forráskódok szisztematikus tesztelése és a generált monitor komponens illesztése a \textit{Gamma} keretrendszerrel.
+A cél az, hogy elosztott komponens alapú rendszerek szimulációja közben monitorozható legyen a \textit{TPSC} üzenet szekvencia specifikáció teljesülése, illetve az ebben rögzített tulajdonságok megsértése.
 Végezetül az utolsó feladat a monitorozás működésének demonstrációja.
 
 \vfill
@@ -45,7 +45,7 @@ During my \textit{BSc} thesis, I have developped a language using \textit{Xtext}
 I have extended this language so that \textit{TPSC} diagrams can be created using a textual format.
 
 The next step of monitor generation is to convert the \textit{TPSC} scenarios into \textit{Timed Automata}.
-The \textit{TA} will serve as the representation which indicates if the system's behaviour has satisfied the TPSC requirement or not.
+The \textit{TA} will serve as the representation which indicates if the system's behaviour has satisfied the \textit{TPSC} requirement or not.
 I have further enhanced the automaton generator created during my \textit{BSc} thesis so that it is able to generate \textit{Timed Automata} from \textit{TPSC}s.
 
 We can synthesize the monitor source code using the generated automaton from the \textit{TPSC} scenario.
