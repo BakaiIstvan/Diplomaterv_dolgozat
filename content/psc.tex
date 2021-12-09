@@ -94,12 +94,14 @@ A szintaxisa a \textit{Linear Temporal Logic}-hoz hasonlít:
     \item $\neg$ és $\lor$ logikai operátorok
     \item $U_I$ (\textit{Until}) temporális modális operátor, ahol \textit{I} egy nem negatív számokból álló intervallum
     \item $S_I$ (\textit{Since}) temporális modális operátor
+    \item $F_I$ (\textit{Finally}) temporális modális operátor
+    \item $G_I$ (\textit{Globally}) temporális modális operátor
 \end{itemize}
 
 A $p U_I q$ („\textit{p Until q}”) kifejezés akkor lesz igaz $t$ időben, ha létezik olyan $t' \in I + t$ idő amire a következők teljesülnek:
 \begin{itemize}
     \item $t'$ időben $q$ igaz
-    \item minden egyes $t'' \in T$ ahol $t < t'' < t'$ és $T 	\subseteq {R} _{+}$ időben $p$ igaz
+    \item minden egyes $t'' \in T$ ahol $t < t'' < t'$ és $T \subseteq {R} _{+}$ időben $p$ igaz
 \end{itemize}
 
 A $p S_I q$ („\textit{p Since q}”) kifejezés akkor lesz igaz $t$ időben, ha létezik olyan $t' \in I - t$ idő amire a következők teljesülnek:
@@ -108,7 +110,10 @@ A $p S_I q$ („\textit{p Since q}”) kifejezés akkor lesz igaz $t$ időben, h
     \item minden egyes $t'' \in T$ ahol $t' < t'' < t$ időben $p$ igaz
 \end{itemize}
 
-Például a $p U_{1} q$ \textit{MTL} formula azt követeli meg, hogy minden egy időegységgel előtti állapotban ahol $q$ teljesül, $p$-nek teljesülnie.
+A $F_I q$ („\textit{Finally q}”) kifejezés akkor teljesül $t$ időben, ha létezik olyan $t' \in I + t$ idő, amiben $q$ teljesül.
+A $G_I q$ („\textit{Globally q}”) kifejezés akkor teljesül $t$ időben, ha minden $t' \in I + t$ időben $q$ teljesül.
+
+Például a $G(p \,\to\, F_{1} q)$ \textit{MTL} formula azt követeli meg, hogy minden olyan állapotot, amelyben $p$ igaz pontosan egy időegységgel később egy olyan állapotnak kell követnie, amelyben $q$ teljesül \cite{MTL1}.
 
 A \textit{past-MTL} megfelel a teljes \textit{MTL}-nek az \textit{Until} operátor kivételével.
 Hasonlóan, a \textit{future-MTL} a teljes \textit{MTL} a \textit{Since} operátor nélkül.
@@ -123,7 +128,7 @@ Az \textit{MITL} temporális logika nem képes a következő követelmény megad
 Ezt gond nélkül megfogalmazhatjuk \textit{MTL}-ben.
 \textit{MITL}-ben csak a következőt tudjuk leírni: „\textit{A} esemény négy és öt időegység között történt”.
 
-Például a $p U_{0,1} q$ \textit{MITL} formula azt fejezi ki, hogy minden állapotot amiben $q$ teljesül és egy időegységnyi távolságra van előtt, $p$-nek kell teljesülnie.
+Például a $G(F_{0,1}p)$ \textit{MITL} formula azt fejezi ki, hogy minden egy hosszú intervallumban megjelenik $p$ \cite{MITL1}.
 
 A temporális logikák nagy hátránya az, hogy ha hosszú szekvenciális követelményeket szeretnénk leírni, akkor nagyon hosszú és bonyolult formulákat kell használnunk.
 Ezeket viszont nagyon nehéz megírni és nehezen olvasható ki belőlük a követelmény.
