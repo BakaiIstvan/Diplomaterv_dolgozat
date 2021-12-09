@@ -6,7 +6,7 @@
 \subsection{Az automata generátor célja}
 %----------------------------------------------------------------------------
 
-Az \textit{önálló laboratórium} során elkészített automata generátort kibővítettem úgy, hogy támogassa a \textit{TPSC} elemekhez tartozó automata minták generálását.
+Az \textit{Önálló laboratórium} során elkészített automata generátort kibővítettem úgy, hogy támogassa a \textit{TPSC} elemekhez tartozó automata minták generálását.
 Az eredeti automata generátor \textit{PSC} szöveges leírásokhoz tartozó \textit{Büchi} automatákat tudta összeállítani.
 Az volt a feladatom, hogy a meglévő \textit{Büchi} automata mintákat lecseréljem a korábban ismertetett időzített automata mintákra és felvegyem a hiányzó mintákat, amelyek az időzítési feltételeket tartalmazó üzenetekhez tartoznak.
 A kibővített automata generátor bemenetként egy \textit{TPSC} szcenárió szöveges leírását kapja meg, amelyből a minta alapú módszerrel generál egy \textit{TA} automatát.
@@ -21,7 +21,7 @@ A \ref{tpsc_alt} kódrészleten lévő szöveges \textit{TPSC} leíráshoz tarto
 Továbbá a generátor képes az üzenet paraméterek kezelésére.
 %Például az \textit{alt} operátor feltételét képes feldolgozni és azt elhelyezni a generált automata megfelelő élén.
 
-\begin{lstlisting}[language=java,frame=single, float=h!, caption={Alt operátort tartalmazó szcenárió.},captionpos=b,label=tpsc_alt]
+\begin{lstlisting}[language=java,frame=single, float=h!, caption={\textit{Alt} operátort tartalmazó szcenárió.},captionpos=b,label=tpsc_alt]
 specification Bank {
 
 	object UserInterface ui;
@@ -48,7 +48,7 @@ specification Bank {
 }
 \end{lstlisting}
 
-\begin{lstlisting}[language=java,frame=single, float=h!, caption={Alt operátort tartalmazó szcenárió never claim leírása.},captionpos=b,label=tpsc_alt_nc]
+\begin{lstlisting}[language=java,frame=single, float=h!, caption={\textit{Alt} operátort tartalmazó szcenárió \textit{never claim} leírása.},captionpos=b,label=tpsc_alt_nc]
 bool success = true;
 
 never{ /*transactionMonitor*/
@@ -166,7 +166,7 @@ Ezt követően az automata \textit{Never Claim} leírását egy \textit{.txt} ki
 \subsection{Mintapélda}
 %----------------------------------------------------------------------------
 
-\begin{lstlisting}[language=java,frame=single, float=h!, caption={TPSC scenario szöveges leírása.},captionpos=b,label=tpsc_example_text]
+\begin{lstlisting}[language=java,frame=single, float=h!, caption={\textit{TPSC} szcenárió szöveges leírása.},captionpos=b,label=tpsc_example_text]
 specification Bank {
 
 	object User_Interface ui;
@@ -190,11 +190,11 @@ specification Bank {
 \begin{figure}[h!]
     \centering
     \includegraphics[width=130mm, keepaspectratio]{figures/tpsc_automaton_generator_sirius.png}
-    \caption{Példa TPSC diagram.}
+    \caption{A \ref{tpsc_example_text} kódrészlet \textit{TPSC} szcenáriójának diagramja.}
 	\label{tpsc_example_diagram}
 \end{figure}
 
-\begin{lstlisting}[language=java,frame=single, float=h!, caption={Generált időzített automata never claim formátumban.},captionpos=b,label=tpsc_example_nc]
+\begin{lstlisting}[language=java,frame=single, float=h!, caption={Generált időzített automata \textit{never claim} formátumban.},captionpos=b,label=tpsc_example_nc]
 never{ /*transactionMonitor*/
 T0_init:
  if
