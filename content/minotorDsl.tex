@@ -22,8 +22,8 @@ Elég csupán a megkötés nevét megadni és '\{' '\}' jelek közt, a megköté
 Egy sima üzenet megadásához a „\textit{message}” kulcsszó szükséges.
 A „\textit{message}” kulcsszó előtt lévő „\textit{fail}” vagy „\textit{required}” kulcssavakkal adhatunk meg nem kívánt vagy elvárt üzeneteket.
 A „\textit{strict}” kulcsszóval adhatjuk meg, hogy az üzenet sorrendje megkötött.
-Az üzenet küldőjét és fogadóját „\textit{<küldő> -> <fogadó>}” formában jelezzük.
-Múltbéli vagy jövőbeli megkötéseket a „\textit{pastConstraint}" vagy „\textit{futureConstraint}" kulcsszavakkal adhatunk meg.
+Az üzenet küldőjét és fogadóját „\textit{<küldő> $\,\to\,$ <fogadó>}” formában jelezzük.
+Múltbeli vagy jövőbeli megkötéseket a „\textit{pastConstraint}" vagy „\textit{futureConstraint}" kulcsszavakkal adhatunk meg.
 A kulcsszó után, '\{' '\}' jelek közt adhatjuk meg, hogy melyik előzőleg definiált megkötést helyezzük el az üzeneten.
 Egy üzenet definíció végére szükséges ’;’-t tenni, így elválasztjuk a többi üzenettől.
 
@@ -82,7 +82,7 @@ Definiálhatjuk a diagramban szereplő objektumokat, a megkötéseket, amelyeket
     \label{xtext_message}
 \end{figure}
 
-A \ref{xtext_message} megjelenik a \textit{clockConstraint} kulcsszó ami egy időzítési feltétel megadására szolgál.
+A \ref{xtext_message} ábrán megjelenik a \textit{clockConstraint} kulcsszó, amely egy időzítési feltétel megadására szolgál.
 A kulcsszó után kapcsos zárójelek közt megadható a feltétel.
 Egy időzítési feltételt egy adott óraváltozóra adhatunk meg.
 Négy operátort definiál ehhez a nyelv:

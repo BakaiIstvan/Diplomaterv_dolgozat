@@ -26,7 +26,7 @@ A nyelvünk elemeit és szabályait egy nyelvtan segítségével definiálhatjuk
 Az \textit{Xtext} keretrendszer több eszközt nyújt a nyelvünkhöz, például egy \textit{parser}-t, egy fordítót és egy szerkesztőt.
 A \textit{plugin} még egy \textit{Xtend} alapú kódgenerátort is generál a nyelvünkhöz, amivel a nyelvünkhöz tetszőleges kódot tudunk generálni.
 
-\begin{lstlisting}[language=java, frame=single, float=ht!, caption={Xtext nyelvtan elemei.},captionpos=b, label=XtextGrammar]
+\begin{lstlisting}[language=java, frame=single, float=ht!, caption={\textit{Xtext} nyelvtan elemei.},captionpos=b, label=XtextGrammar]
 Scenario:
 	'scenario' name=ID '{'
 	scenariocontents+=ScenarioContent*
@@ -81,7 +81,7 @@ Egy nagyon hasznos funkciója az \textit{Xtend}-nek a \textit{template}, amely s
 Így tudunk hivatkozni az \textit{Xtext} nyelvi elemeinkre függvény paramétereken keresztül és egyedi kódgenerátort fejleszteni a nyelvünkhöz.
 A sablon függvényen belül a "«»" karaktereket használva tudunk hivatkozni az \textit{Xtext} nyelvi elemeinkre.
 
-\begin{lstlisting}[language=java, frame=single, float=ht!, caption={Xtend template.},captionpos=b, label=XtendTemplate]
+\begin{lstlisting}[language=java, frame=single, float=ht!, caption={\textit{Xtend template.}},captionpos=b, label=XtendTemplate]
 def compile(Scenario scenario)'''
 	«FOR sc : scenario.scenariocontents»
 		«FOR m : sc.message»
@@ -98,7 +98,7 @@ Itt például a \textit{Scenario} \textit{scenariocontents} tömbjén megyünk v
 
 \subsection{Sirius}
 
-A \textit{Sirius} \cite{Sirius} eszköz segítségével létrehozhatunk saját grafikus modellező alkalmazásainkat.
+A \textit{Sirius} \cite{Sirius} eszköz segítségével létrehozhatunk saját grafikus modellező alkalmazásokat.
 Egy szerkesztő környezetet alkothatunk, amivel a modellünk elemeit hozhatjuk létre, vagy szerkeszthetjük grafikusan.
 A \textit{plugin} az \textit{Entity Modelling Framework} \cite{EMF} keretrendszert használja a modellek feldolgozásához és ilyen \textit{EMF} modelleket jelenít meg.
 Ehhez az \textit{EMF} modellünk összes eleméhez meg kell adnunk egy megjelenítést.

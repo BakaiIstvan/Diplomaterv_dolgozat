@@ -9,7 +9,7 @@
 A generált monitor forráskód tesztelésére a következő célokat fogalmazzuk meg:
 
 \begin{itemize}
-    \item Az összes üzenet típus megjelenése a különböző teszt szcenáriókban
+    \item Az összes üzenet típus megjelenése a különböző tesztszcenáriókban
     \item Időzített feltételek helyes kiértékelése
     \item Üzenet megkötések tesztelése
     \item \textit{Alt} és \textit{Par} operátorok esetén, az üzenet szekvencia ágak helyes kiértékelése
@@ -27,7 +27,7 @@ A generált monitor forráskód tesztelésére a következő célokat fogalmazzu
 %----------------------------------------------------------------------------
 
 Egy teszt bemenetként egy \textit{TPSC} leírást, egy szimulált esemény szekvenciát és egy elvárt kimenetet fog kapni.
-A tesztelt monitornak kézzel küldünk üzeneteket, konkrét esemény lefutását.
+A tesztelt monitornak kézzel küldünk üzeneteket, konkrét események lefutását.
 A monitor kimenetét összehasonlítjuk az elvárt kimenettel, amelyet kézzel állítunk össze figyelembe véve, hogy a szimulált rendszer működésének elméletben meg kell-e felelnie a követelménynek vagy sem.
 Ez két információt tartalmaz, hogy a rendszer jó állapotban van-e és teljesíti-e a követelményt.
 Ha egyezik akkor sikeres a teszt, ellenkező esetben pedig sikertelen.
@@ -43,7 +43,7 @@ Az \textit{Xtext} keretrendszer a specifikált \textit{DSL (Domain Specific Lang
 Ezt a \textit{plugin}-t betölthetjük egy egyszerű \textit{Maven} projektbe és használhatjuk is az elkészített \textit{DSL} nyelvünket, azaz létrehozhatunk a projektben a saját \textit{DSL}-ünkhöz tartozó fájlokat, melyekben megadhatjuk saját szcenárióinkat.
 
 Az esemény szekvenciában lévő üzeneteket a monitor \textit{update()} függvényénét használva adjuk át neki.
-A teszteset végén pedig a \textit{JUnit} tesztelési keretrendszer \textit{Assertions} osztályát használjuk, hogy a monitor kimenetét összehasonlítsuk az elvárt kimenettel.
+A teszteset végén pedig a \textit{JUnit} \cite{JUnit} tesztelési keretrendszer \textit{Assertions} osztályát használjuk, hogy a monitor kimenetét összehasonlítsuk az elvárt kimenettel.
 A teszteredmény ennek az összehasonlításnak az eredménye lesz.
 
 A \ref{testing_figure} ábrán megtekinthető a tesztelés tervének folyamatábrája.
@@ -141,7 +141,7 @@ Ezt követően hajtódnak végre a tesztek, amelyek a frissen fordított \textit
 Ha az összes fázis sikeresen lefutott, akkor az adott változtatás nem rontott el semmilyen korábbi funkciót.
 A \textit{CI}-hoz tartozó \textit{script}-et a \ref{ci_script} kódrészlet tartalmazza.
 A \textit{script} először az \textit{Xtext} nyelv és a hozzá tartozó monitor forráskód generátor új verzióját fordítja le és készíti el belőle a \textit{Maven plugin}-t.
-Ezután végig megy az összes teszt projekten,egyesével fordítja azokat és végrehajtja a hozzájuk tartozó teszteket.
+Ezután végig megy az összes teszt projekten, egyesével lefordítja azokat és végrehajtja a hozzájuk tartozó teszteket.
 Ha egyik tesztszcenárió se tért vissza hibával, akkor az új \textit{commit} a tesztek szempontjából beilleszthető a \textit{repository}-ba.
 A \textit{script}-et úgy állítottam be, hogy az ellenőrzés a \textit{master} ágon minden \textit{commit}-ra, illetve a \textit{master} ágra irányuló összes \textit{pull request}-re fusson le.
 A \ref{commit_ci_check} és \ref{github_actions} ábrákon látható, hogy minden új \textit{commit}-ra, amely a fő ágra kerül, lefut a \textit{CI}.
@@ -149,7 +149,7 @@ A \ref{commit_ci_check} és \ref{github_actions} ábrákon látható, hogy minde
 \begin{figure}[!ht]
     \centering
     \includegraphics[width=150mm, keepaspectratio]{figures/github_ci_check.png}
-    \caption{GitHub repository \textit{commit}-ok és hozzá tartozó CI \textit{check}-ek.}
+    \caption{\textit{GitHub repository} \textit{commit}-ok és hozzá tartozó \textit{CI} \textit{check}-ek.}
     \label{commit_ci_check}
 \end{figure}
 
@@ -213,7 +213,7 @@ Az egyszerűbb tesztszcenáriókat mutatom be először és a végén térek ki 
 \subsection{Egyszerű időzítési megkötéseket tartalmazó tesztszcenárió}
 
 A tesztesetekhez tartozó szcenárió követelmény megtalálható a \ref{example_test_scenario} kódrészleten.
-A szcenárióhoz tartozó diagram a \ref{example_test_scenario_diagram} ábrán látható
+A szcenárióhoz tartozó diagram a \ref{example_test_scenario_diagram} ábrán látható.
 
 \begin{lstlisting}[language=java, frame=single, float=ht!, caption={Tesztesethez tartozó szcenárió szöveges leírása.},captionpos=b,label=example_test_scenario]
 specification Email{
@@ -253,9 +253,9 @@ A rendszer egy szervergépből és egy felhasználói számítógépből áll.
 A szerver egy \textit{e-mail} szervert szimulál, aminek a számítógép különböző kéréseket küldhet.
 Például lekérdezheti tőle a kapott \textit{e-mail}-t vagy új \textit{e-mail}-t küldhet.
 A követelményben leírjuk, hogy a rendszernek mi a helyes viselkedése \textit{e-mail} küldés esetén.
-Ha a computer a \textit{checkEmail} hívást használva talál elküldendő \textit{e-mail}-t az továbbítja a szervernek.
+Ha a computer a \textit{checkEmail} hívást használva talál elküldendő \textit{e-mail}-t azt továbbítja a szervernek.
 Ezt az \textit{elvárt} \textit{sendUnsentEmail} üzenet jelzi.
-Ha ezt az üzenetet követően egy \textit{computerError()} üzenet jön, az a hibát jelent.
+Ha ezt az üzenetet követően egy \textit{computerError()} üzenet jön, az hibát jelent.
 \textit{serverError()} üzenet esetén is hibát fog jelezni a monitor.
 Ezt követően meg kell jelenjen a rendszer működésében a \textit{newEmail} üzenet.
 Ha ehelyett \textit{logout} üzenet érkezik, az hibás működést jelent.
@@ -356,19 +356,19 @@ A követelmény leírás megtekinthető a \ref{second_scenario_test} kódrészle
 A szcenárióhoz tartozó tesztesetek a következők:
 
 \begin{itemize}
-    \item testMobileRequirementSatisfied, a követelmény teljesülését ellenőrizzük.
-    \item testMobileFutureConstraint, azt vizsgáljuk, hogy a monitor hibát jelez-e, ha megkötésbeli üzenet érkezik.
-    \item testMobileFutureConstraintEarly, azt vizsgáljuk hogy a monitor hibát jelez-e, ha a megkötésbeli üzenet az üzenet szekvencia elején érkezik.
-    \item testMobileWithError, a monitor hibát jelez-e, amikor a \textit{cameraOffline()} üzenet érkezik.
-    \item testMobileWithDelay, késleltetjük az \textit{accessWebcam()} üzenet megérkezését úgy, hogy az időzítési feltétel teljesüljön és vizsgáljuk, hogy a monitor ezt helyesen kezeli-e.
-    \item testMobileWithTooMuchDelay, késleltetjük az \textit{accessWebcam()} üzenetet  az időzítési feltételt elrontva és azt várjuk el, hogy a monitor ezt hibának jelezze.
-    \item testMobileMissingRequiredMessage, vizsgáljuk hogy a monitor hibát jelez-e, ha nem kapja meg az \textit{retrieveMood()} elvárt üzenetet.
-    \item testMobileRequiredEventually, a monitor helyes működést kell jelezzen, ha az elvárt üzenetet megkapja, még ha más üzenetek is előjönnek ez alatt.
-    \item testMobileRequiredNotReceived, a monitor nem érzékeli a \textit{retrieveMusic()} üzenetet, ezért hibát kell jelezzen.
+    \item \textit{testMobileRequirementSatisfied}, a követelmény teljesülését ellenőrizzük.
+    \item \textit{testMobileFutureConstraint}, azt vizsgáljuk, hogy a monitor hibát jelez-e, ha megkötésbeli üzenet érkezik.
+    \item \textit{testMobileFutureConstraintEarly}, azt vizsgáljuk hogy a monitor hibát jelez-e, ha megkötésbeli üzenet az üzenet szekvencia elején érkezik.
+    \item \textit{testMobileWithError}, a monitor hibát jelez-e, amikor a \textit{cameraOffline()} üzenet érkezik.
+    \item \textit{testMobileWithDelay}, késleltetjük az \textit{accessWebcam()} üzenet megérkezését úgy, hogy az időzítési feltétel teljesüljön és vizsgáljuk, hogy a monitor ezt helyesen kezeli-e.
+    \item \textit{testMobileWithTooMuchDelay}, késleltetjük az \textit{accessWebcam()} üzenetet  az időzítési feltételt elrontva és azt várjuk el, hogy a monitor ezt hibának jelezze.
+    \item \textit{testMobileMissingRequiredMessage}, vizsgáljuk hogy a monitor hibát jelez-e, ha nem kapja meg az \textit{retrieveMood()} elvárt üzenetet.
+    \item \textit{testMobileRequiredEventually}, a monitor helyes működést kell jelezzen, ha az elvárt üzenetet megkapja, még ha más üzenetek is előjönnek ez alatt.
+    \item \textit{testMobileRequiredNotReceived}, a monitor nem érzékeli a \textit{retrieveMusic()} üzenetet, ezért hibát kell jelezzen.
 \end{itemize}
 
 A tesztesetek a monitor hibadetektáló képeségét tesztelik.
-A \textit{testMobileWithDelay} és \textit{testMobileWithTooMuchDelay} tesztesetek az \textit{x <= 5} időzítési feltétel beteljesülését ellenőrzik.
+A \textit{testMobileWithDelay} és \textit{testMobileWithTooMuchDelay} tesztesetek az \textit{x $\leq$ 5} időzítési feltétel beteljesülését ellenőrzik.
 A \textit{testMobileWithDelay} tesztesetben 5 másodperces késleltetéssel küldjük az \textit{accessWebcam} üzenetet, míg a másiknál 6 másodperces késleltetéssel.
 Az első esetben a monitornak helyes működést kell érzékelnie, a következőben pedig hibás működést.
 
@@ -379,7 +379,7 @@ Az első esetben a monitornak helyes működést kell érzékelnie, a következ�
 A tesztszcenárióhoz tartozó rendszerünk egy banki rendszer.
 A szcenárió megtalálható az \ref{thrid_test_scenario} kódrészleten és a hozzá tartozó vizualizáció a \ref{third_visualisation} ábrán látható.
 
-\begin{lstlisting}[language=java, frame=single, float=ht!, caption={Alt operátort tartalmazó tesztszcenárió.},captionpos=b,,label=thrid_test_scenario]
+\begin{lstlisting}[language=java, frame=single, float=ht!, caption={\textit{Alt} operátort tartalmazó tesztszcenárió.},captionpos=b,,label=thrid_test_scenario]
 specification Bank {
 
     object UserInterface ui;
@@ -409,7 +409,7 @@ specification Bank {
 \begin{figure}[!ht]
     \centering
     \includegraphics[width=120mm, keepaspectratio]{figures/diagramAltExample.png}
-    \caption{Alt operátort tartalmazó szcenárió diagram}
+    \caption{\textit{Alt} operátort tartalmazó szcenárió diagram}
     \label{third_visualisation}
 \end{figure}
 
@@ -419,19 +419,19 @@ A \textit{success} paraméter jelzi, hogy melyik működés a helyes.
 A szcenárióhoz tartozó tesztesetek a következők:
 
 \begin{itemize}
-    \item testBankMonitorPassing, az operátorban levő első ágnak megfelelően szimuláljuk a rendszer működését és elvárjuk, hogy a monitor helyes működést jelezzen.
-    \item testBankMonitorFailing, a monitornak hibát kell jeleznie, ha az operátor első ágától eltér a működés.
-    \item testBankMonitorFalseCasePassing, a monitornak helyes működést kell jeleznie, ha a rendszert úgy szimuláljuk ahogy az operátor második ágában le van írva.
-    \item testBankMonitorFalseCaseFailing, a monitor hibát jelez, ha nem az operátor második ága szerint működik a rendszer.
+    \item \textit{testBankMonitorPassing}, az operátorban levő első ágnak megfelelően szimuláljuk a rendszer működését és elvárjuk, hogy a monitor helyes működést jelezzen.
+    \item \textit{testBankMonitorFailing}, a monitornak hibát kell jeleznie, ha az operátor első ágától eltér a működés.
+    \item \textit{testBankMonitorFalseCasePassing}, a monitornak helyes működést kell jeleznie, ha a rendszert úgy szimuláljuk, ahogy az operátor második ágában le van írva.
+    \item \textit{testBankMonitorFalseCaseFailing}, a monitor hibát jelez, ha nem az operátor második ága szerint működik a rendszer.
 \end{itemize}
 
 A tesztesetekkel azt vizsgáljuk, hogy a monitor képes-e a helytelen ág lefutását hibának érzékelni és a helyes viselkedés esetén detektálni a követelmény teljesítését.
 
 %----------------------------------------------------------------------------
-\subsection{Par operátort tartalmazó tesztszenárió}
+\subsection{Par operátort tartalmazó tesztszcenárió}
 %----------------------------------------------------------------------------
 
-\begin{lstlisting}[language=java, frame=single, float=ht!, caption={Par operátort tartalmazó tesztszcenárió.},captionpos=b]
+\begin{lstlisting}[language=java, frame=single, float=ht!, caption={\textit{Par} operátort tartalmazó tesztszcenárió.},captionpos=b,label=test_par_scenario]
 specification Email {
     object Computer computer;
     object Server server;
@@ -457,15 +457,17 @@ specification Email {
 \begin{figure}[!ht]
     \centering
     \includegraphics[width=150mm, keepaspectratio]{figures/diagramParExample.png}
-    \caption{Par operátort tartalmazó szcenárió diagram.}
+    \caption{\textit{Par} operátort tartalmazó szcenárió diagram.}
+    \label{test_par_diagram}
 \end{figure}
 
-Ehhez a tesztszcenárióhoz az első szcenárióban lévő teszt rendszert használtam fel.
+Ehhez a tesztszcenárióhoz az első szcenárióban levő teszt rendszert használtam fel.
+A tesztszcenárió megtekinthető a \ref{test_par_scenario} kódrészleten és a hozzá tartozó diagram a \ref{test_par_diagram} ábrán látható.
 A szcenárióhoz tartozó tesztesetek a következők:
 
 \begin{itemize}
-    \item testNetworkRequirementSatisfied, az első permutáció szerint működtetjük a szimulált rendszert, a monitornak helyes működést kell jeleznie.
-    \item testNetworkOtherRequirementSatisfied, a második permutáció szerint működtetjük a rendszert, a monitornak helyes működést kell jeleznie.
+    \item \textit{testNetworkRequirementSatisfied}, az első permutáció szerint működtetjük a szimulált rendszert, a monitornak helyes működést kell jeleznie.
+    \item \textit{testNetworkOtherRequirementSatisfied}, a második permutáció szerint működtetjük a rendszert, a monitornak helyes működést kell jeleznie.
 \end{itemize}
 
 Azt vizsgáljuk, hogy a monitor képes-e mindkét permutáció esetén érzékelni a követelmény teljesülését.
@@ -528,14 +530,14 @@ Utána egy \textit{alt} operátorral mondjuk meg, hogy minek kell történnie si
 
 A tesztszcenárióhoz tartozó tesztesetek:
 \begin{itemize}
-    \item testNetworkRequirementSatisfied, a követelmény teljesülését ellenőrizzük.
-    \item testNetworkRequirementSatisfiedTwice, a követelménynek akkor is teljesülnie kell, ha a \textit{loop} operátorban lévő üzenetek kétszer egymás után jelennek meg.
-    \item testNetworkRequirementSatisfiedThreeTimes, az üzenetek háromszor egymás után jelennek meg.
-    \item testNetworkRequirementSatisfiedFourTimes, a monitornak hibát kell jeleznie, ha négyszer érzékeli az üzeneteket, melyek a \textit{loop} operátorban vannak, hiszen az meghaladja a maximumot.
-    \item testNetworkAltTrueCase, a monitor hibát jelez, ha úgy működtetjük a szimulált rendszer, hogy az \textit{alt} operátor igaz ágában lévő üzenetek jelenjenek meg.
-    \item testNetworkAltTrueCaseSatisfied, a monitor helyes működést kell jelezzen, ha ugyanúgy szimuláljuk a rendszer működését, mint az előző tesztesetben.
-    \item testNetworkLogoutTooFast, ha túl gyorsan érkezik meg a \textit{logoutUser()} üzenet, akkor a monitornak hibát kell jeleznie.
-    \item testNetworkLogoutConstrait, ha olyan üzenet érkezik, amely a megkötésben szerepel, akkor a monitornak hibát kell jeleznie.
+    \item \textit{testNetworkRequirementSatisfied}, a követelmény teljesülését ellenőrizzük.
+    \item \textit{testNetworkRequirementSatisfiedTwice}, a követelménynek akkor is teljesülnie kell, ha a \textit{loop} operátorban lévő üzenetek kétszer egymás után jelennek meg.
+    \item \textit{testNetworkRequirementSatisfiedThreeTimes}, az üzenetek háromszor egymás után jelennek meg.
+    \item \textit{testNetworkRequirementSatisfiedFourTimes}, a monitornak hibát kell jeleznie, ha négyszer érzékeli az üzeneteket, melyek a \textit{loop} operátorban vannak, hiszen az meghaladja a maximumot.
+    \item \textit{testNetworkAltTrueCase}, a monitor hibát jelez, ha úgy működtetjük a szimulált rendszert, hogy az \textit{alt} operátor igaz ágában lévő üzenetek jelenjenek meg.
+    \item \textit{testNetworkAltTrueCaseSatisfied}, a monitor helyes működést kell jelezzen.
+    \item \textit{testNetworkLogoutTooFast}, ha túl gyorsan érkezik meg a \textit{logoutUser()} üzenet, akkor a monitornak hibát kell jeleznie.
+    \item \textit{testNetworkLogoutConstrait}, ha olyan üzenet érkezik, amely a megkötésben szerepel, akkor a monitornak hibát kell jeleznie.
 \end{itemize}
 
 A teszteseteket úgy állítottam össze, hogy ellenőriztem mind a monitor hibadetektáló képességét, mind a helyes működés detektálását.
@@ -548,41 +550,41 @@ Minden teszt sikeresen lefutott.
 
 \begin{longtable}{|p{0.1428\linewidth}|p{0.1428\linewidth}|p{0.1428\linewidth}|p{0.1428\linewidth}|p{0.1428\linewidth}|p{0.1428\linewidth}|}
 \hline
-\textbf{Tesztelési célok} & \textbf{Egyszerű tesztszcenárió} & \textbf{Több üzenetet tartalmazó tesztszcenárió} & \textbf{Alt operátort tartalmazó tesztszcenárió} & \textbf{Par operátort tartalmazó tesztszcenárió} & \textbf{Komplex tesztszcenárió}\\
+\textbf{Tesztelési célok} & \textbf{Egyszerű tesztszcenárió} & \textbf{Több üzenetet tartalmazó tesztszcenárió} & \textbf{\textit{Alt} operátort tartalmazó tesztszcenárió} & \textbf{\textit{Par} operátort tartalmazó tesztszcenárió} & \textbf{Komplex tesztszcenárió}\\
 \hline
 Egyszerű üzenet megjelenése & X & X & X & X & X\\
 \hline
 Elvárt üzenet megjelenése & X & X & X & - & X\\
 \hline
-Nem kivánt (fail) üzenet megjelenése & X & X & - & - & -\\
+Nem kivánt (\textit{fail}) üzenet megjelenése & X & X & - & - & -\\
 \hline
-Strict üzenet tesztelése & - & X & - & - & -\\
+\textit{Strict} üzenet tesztelése & - & X & - & - & -\\
 \hline
 Időzítési feltételek tesztelése & X & X & - & - & X\\
 \hline
-Past megkötés tesztelése & X & - & X & X & X\\
+\textit{Past} megkötés tesztelése & X & - & X & X & X\\
 \hline
-Future megkötés tesztelése & - & X & - & - & X\\
+\textit{Future} megkötés tesztelése & - & X & - & - & X\\
 \hline
-Alt operátor tesztelése & - & - & X & - & X\\
+\textit{Alt} operátor tesztelése & - & - & X & - & X\\
 \hline
-Par operátor tesztelése & - & - & - & X & -\\
+\textit{Par} operátor tesztelése & - & - & - & X & -\\
 \hline
-Loop operátor tesztelése & - & - & - & - & X\\
+\textit{Loop} operátor tesztelése & - & - & - & - & X\\
 \hline
-Több operátort tartalmazó szenárió tesztelése & - & - & - & - & X\\
+Több operátort tartalmazó szcenárió tesztelése & - & - & - & - & X\\
 \hline
 Egymást követő elvárt üzenetek & - & X & - & - & -\\
 \hline
-Egymást követő fail üzenetek & X & - & - & - & -\\
+Egymást követő \textit{fail} üzenetek & X & - & - & - & -\\
 \hline
 Egyszerű üzenet tesztelése & X & X & X & X & X\\
 \hline
 Több óraváltozó & - & - & - & - & X\\
 \hline
-Elvárt után fail üzenet & X & - & - & - & -\\
+Elvárt után \textit{fail} üzenet & X & - & - & - & -\\
 \hline
-Fail után elvárt üzenet & - & X & - & - & -\\
+\textit{Fail} után elvárt üzenet & - & X & - & - & -\\
 \hline
 \caption{Összefoglaló táblázat}
 \label{tab:table1}

@@ -5,7 +5,7 @@ Egy monitor feladata, hogy egy rendszert futási időben megfigyeljen, elemezzen
 Az utóbbit jelzi a rendszernek, de esetenként a rendszer működését is befolyásolhatja.
 Ez egy kritikus rendszernél különösen fontos lehet, mivel egy ilyen rendszernél elvárt, hogy folyamatosan biztonságosan tudjon működni.
 Ezen kívül a monitornak időmérésre is szüksége van, mert a követelmény tartalmazhat időzítéseket is.
-Az \ref{introductory_figure} ábra bemutatja a monitorozás koncepcióját.
+A \ref{introductory_figure} ábra bemutatja a monitorozás koncepcióját.
 
 \begin{figure}[!ht]
     \includegraphics[width=150mm, height=20cm, keepaspectratio]{figures/introductory_figure.png}
@@ -132,7 +132,7 @@ Például a $G(F_{0,1}p)$ \textit{MITL} formula azt fejezi ki, hogy minden egy h
 A temporális logikák nagy hátránya, hogy ha hosszú szekvenciális követelményeket szeretnénk leírni, akkor nagyon hosszú és bonyolult formulákat kell használnunk.
 Ezeket viszont nagyon nehéz megírni, illetve nehezen olvasható ki belőlük a követelmény.
 A szcenárió alapú formalizmusok sokkal intuitívabbak és ilyen követelmények megadására sokkal alkalmasabbak.
-Egy szcenárió egy konkrét lefutást ír le, amíg a temporális logikák egy állapotára tudnak követelményt specifikálni.
+Egy szcenárió egy konkrét lefutást ír le, amíg a temporális logikák a rendszer egy állapotára tudnak követelményt specifikálni.
 
 \subsection{PSC – Property Sequence Chart}
 %----------------------------------------------------------------------------
@@ -174,7 +174,7 @@ Ebből kifolyólag az \textit{MSC} nem alkalmas az üzenet szekvenciák részlet
 A \textit{Property Sequence Chart} \cite{PSC1} az \textit{MSC} egy kiterjesztése.
 Sok új elemet vezet be, például az üzenet típusokat: sima üzenet (e), elvárt üzenet (r) és nem kívánt üzenet (f), lásd \ref{psc_tablazat}.
 Így specifikálhatjuk, hogy mely üzenetek utalnak helyes viselkedésre és melyek nem.
-Szigorú sorrendezésre is ad megoldást a \textit{PSC}; a követelményükben explicit megadhatjuk az üzenetek sorrendjét.
+Szigorú sorrendezésre is ad megoldást a \textit{PSC}; a követelményünkben explicit megadhatjuk az üzenetek sorrendjét.
 A gyenge sorrendezés és a szigorú sorrendezés között az a különbség, hogy szigorú sorrendezés esetében a szekvenciában lévő üzenetek között nem jelenhet meg más üzenet.
 Gyenge sorrendezésnél megengedjük, hogy az üzenetek között más üzenetek is megjelenjenek, amelyeket nem vettünk be a követelménybe.
 A \textit{PSC}-ben egy üzenetre megkötést is adhatunk.
@@ -238,8 +238,7 @@ Először a felhasználó egy \textit{login} üzenettel bejelentkezik az \textit
 Ezen az üzeneten van egy megkötés: az üzenet előtt nem történhet kijelentkezés, \textit{logout}.
 Ezt követően az \textit{ATM}, ha nem történt \textit{logout}, egy elvárt üzenetet küld a \textit{Bank} adatbázisába.
 
-így a szcenárióink specifikálására rendelkezésünkre áll egy grafikus nyelv.
-A következőkben az lesz a feladatom, hogy ezekből a diagramokból valósítsam meg a monitor kódjának generálását.
+Így a szcenárióink specifikálására rendelkezésünkre áll egy grafikus nyelv.
 
 %----------------------------------------------------------------------------
 \section{A TPSC bemutatása}
@@ -259,8 +258,7 @@ A nullázással adott eseménytől (pl. üzenet vételétől) kezdve indul az id
 
 A \ref{psc_clock_improvement} ábrán látható, hogy például az \textit{e: a} sima üzenet \textit{e: a; x < t, y := 0} üzenetre bővül.
 Elvárjuk, hogy az \textit{a} üzenet \textit{t} idő előtt történjen meg és egy \textit{y} óraváltozót nullázunk.
-Az \textit{e: a} üzenet egy sima üzenet, vagyis ha nem történik meg a specifikált idő intervallumban, az nem jelent hibát.
-Viszont \textit{r: a} üzenetnél ugyanilyen feltétel mellett már elvárt, hogy \textit{t} időn belül megtörténjen. \textit{f: a} üzenet esetében viszont akkor jelez hibát a monitor, ha az üzenet megtörtént \textit{t} időn belül.
+Az \textit{r: a} üzenetnél elvárt, hogy \textit{t} időn belül megtörténjen. \textit{f: a} üzenet esetében viszont akkor jelez hibát a monitor, ha az üzenet megtörtént \textit{t} időn belül.
 
 Egy múltbeli vagy jövőbeli megkötésre is meg lehet adni időzítési feltételt, így például megadhatjuk, hogy mennyi ideig nem szabad jönnie a megkötésben szereplő nem kívánt üzenetek egyikének.
 
@@ -276,13 +274,13 @@ Egy \textit{TA} állapotokból, elfogadó állapotokból, feltételekből, akci�
 Ezek a következő sorrendben jelennek meg az állapotátmeneteken: bemenet, feltétel és akció.
 A bemenet lehet egy konkrét esemény, ilyen például az „\textit{a}” üzenet, vagy több eseményre utaló kifejezés.
 Például a „\textit{!a}” kifejezés minden olyan üzenet, amelyik nem az „\textit{a}” üzenet.
-Egy feltétel ebben az esetben egy időzítési feltétel, ezekhez óraváltozókat használhatók.
+Egy feltétel ebben az esetben egy időzítési feltétel, ezekhez óraváltozók használhatók.
 Egy akció lehet például egy ilyen óraváltozónak a nullázása.
 Ha a feltétel teljesül és az adott üzenet illeszkedik az állapot-átmeneten lévő bemenetre, akkor az megvalósulhat és a rajta lévő akció megtörténik.
 Az automata akkor fogad el egy bemenet sorozatot, ha ennek során elérünk az automata végállapotába.
 Ha hibaállapotot érünk el, akkor az a monitor szempontjából hibát jelent.
 Az alapelv az, hogy minden \textit{TPSC} elemhez tartozik egy minta automata (\textit{pattern}) \cite{TPSC1}, ami leírja a szemantikáját.
-Például a \ref{tpsc_sima} és \ref{tpsc_elvárt} ábrákon láthatók a különböző \textit{PSC} üzenetekhez tartozó minták.
+Például a \ref{tpsc_sima} és \ref{tpsc_elvárt} ábrákon láthatók a különböző \textit{TPSC} üzenetekhez tartozó minták.
 
 \begin{figure}[!ht]
     \centering
