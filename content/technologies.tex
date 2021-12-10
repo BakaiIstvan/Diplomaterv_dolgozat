@@ -2,9 +2,9 @@
 \subsection{Eclipse}
 
 Az \textit{Eclipse} \cite{Eclipse} egy nyílt forráskódú, platformfüggetlen keretrendszer.
-Első sorban fejlesztői környezetként használják a fejlesztők.
+Első sorban fejlesztői környezetként használják.
 A keretrendszert tovább lehet bővíteni mindenféle \textit{plugin} telepítésével, így például modellezésre is alkalmas lehet.
-A projektem során a következő \textit{Eclipse} \textit{plugin}-okat használtam::
+A projektem során használt \textit{Eclipse} \textit{plugin}-ok:
 
 \begin{itemize}
     \item \textit{Xtext} \cite{Xtext}
@@ -26,7 +26,7 @@ A nyelvünk elemeit és szabályait egy nyelvtan segítségével definiálhatjuk
 Az \textit{Xtext} keretrendszer több eszközt nyújt a nyelvünkhöz, például egy \textit{parser}-t, egy fordítót és egy szerkesztőt.
 A \textit{plugin} még egy \textit{Xtend} alapú kódgenerátort is generál a nyelvünkhöz, amivel a nyelvünkhöz tetszőleges kódot tudunk generálni.
 
-\begin{lstlisting}[language=java, frame=single, float=ht!, caption={Xtext nyelvtan elemei.},captionpos=b, label=XtextGrammar]
+\begin{lstlisting}[language=java, frame=single, float=ht!, caption={\textit{Xtext} nyelvtan elemei.},captionpos=b, label=XtextGrammar]
 Scenario:
 	'scenario' name=ID '{'
 	scenariocontents+=ScenarioContent*
@@ -61,7 +61,7 @@ Egy attribútumba több elemet is rakhatunk lista szerűen.
 Ezt a \textit{*} karakterrel adhatjuk meg, például \textit{scenariocontents+=ScenarioContent*}, ahol a \textit{scenariocontents} több \textit{ScenarioContent}-beli elemet tárol.
 A \textit{+=} karakterrel pakolhatjuk az új \textit{ScenarioContent}-jeinket a \textit{scenariocontents} tömbbe.
 
-A nyelvtanukban megadhatunk elágazó szabályokat is a "|" karakterrel.
+A nyelvtanunkban megadhatunk elágazó szabályokat is a "|" karakterrel.
 Ilyen szabály például a \textit{Message}.
 Továbbá hivatkozhatunk már létrehozott nyelvi elemekre is a szabályunkban a "[]" szintakszissal.
 Például a \textit{LooseMessage} \textit{sender} attribútuma egy már létrehozott \textit{Object} elemre hivatkozik.
@@ -81,7 +81,7 @@ Egy nagyon hasznos funkciója az \textit{Xtend}-nek a \textit{template}, amely s
 Így tudunk hivatkozni az \textit{Xtext} nyelvi elemeinkre függvény paramétereken keresztül és egyedi kódgenerátort fejleszteni a nyelvünkhöz.
 A sablon függvényen belül a "«»" karaktereket használva tudunk hivatkozni az \textit{Xtext} nyelvi elemeinkre.
 
-\begin{lstlisting}[language=java, frame=single, float=ht!, caption={Xtend template.},captionpos=b, label=XtendTemplate]
+\begin{lstlisting}[language=java, frame=single, float=ht!, caption={\textit{Xtend template.}},captionpos=b, label=XtendTemplate]
 def compile(Scenario scenario)'''
 	«FOR sc : scenario.scenariocontents»
 		«FOR m : sc.message»
@@ -93,12 +93,12 @@ def compile(Scenario scenario)'''
 \end{lstlisting}
 
 A \ref{XtendTemplate} ábra egy \textit{Xtend} sablon függvényt mutat be.
-Láthatjuk, hogy a "«»" karaktereket használva hivatkozhatunk a paraméterben átadott \textit{Xtext} nyelv béli objektum attribútumaira.
+A "«»" karaktereket használva hivatkozhatunk a paraméterben átadott \textit{Xtext} nyelvbeli objektum attribútumaira.
 Itt például a \textit{Scenario} \textit{scenariocontents} tömbjén megyünk végig.
 
 \subsection{Sirius}
 
-A \textit{Sirius} \cite{Sirius} eszköz segítségével létrehozhatunk saját grafikus modellező alkalmazásainkat.
+A \textit{Sirius} \cite{Sirius} eszköz segítségével létrehozhatunk saját grafikus modellező alkalmazásokat.
 Egy szerkesztő környezetet alkothatunk, amivel a modellünk elemeit hozhatjuk létre, vagy szerkeszthetjük grafikusan.
 A \textit{plugin} az \textit{Entity Modelling Framework} \cite{EMF} keretrendszert használja a modellek feldolgozásához és ilyen \textit{EMF} modelleket jelenít meg.
 Ehhez az \textit{EMF} modellünk összes eleméhez meg kell adnunk egy megjelenítést.

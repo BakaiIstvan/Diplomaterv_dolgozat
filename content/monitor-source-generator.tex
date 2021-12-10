@@ -35,7 +35,7 @@ A monitornak a következő interfészt kell megvalósítania:
 Az üzenetek megfigyeléséhez szükséges segédfüggvényeket a kommunikációs infrastruktúrához kézzel kell megírni.
 Ezek a monitort az \textit{update()} függvényen keresztül hívják.
 
-\begin{lstlisting}[language=java,frame=single, float=h!, caption={Monitor interfész Java implementációja.},captionpos=b,label=IMonitor_interface]
+\begin{lstlisting}[language=java,frame=single, float=h!, caption={Monitor interfész \textit{Java} implementációja.},captionpos=b,label=IMonitor_interface]
 public interface IMonitor {
 	public boolean goodStateReached();
 	public void update(String sender, String receiver, String messageType, Map<String, Object> parameters);
@@ -55,7 +55,7 @@ Két függvénye van:
     \item \textit{resetClock(String clock)}: óraváltozó nullázása név alapján.
 \end{itemize}
 
-\begin{lstlisting}[language=java,frame=single, float=h!, caption={Időzitő interfész Java implementációja.},captionpos=b,label=IClock_interface]
+\begin{lstlisting}[language=java,frame=single, float=h!, caption={Időzitő interfész \textit{Java} implementációja.},captionpos=b,label=IClock_interface]
 public interface IClock {
 	public long getClock(String clock);
 	public void resetClock(String clock);
@@ -75,7 +75,7 @@ Három függvénye van:
 	\item \textit{receiveMonitorSuccess()}: a monitor jelzi a rendszer felé, ha teljesült a követelmény.
 \end{itemize}
 
-\begin{lstlisting}[language=java,frame=single, float=h!, caption={Rendszer interfész Java implementációja.},captionpos=b, label=ISystem_interface]
+\begin{lstlisting}[language=java,frame=single, float=h!, caption={Rendszer interfész \textit{Java} implementációja.},captionpos=b, label=ISystem_interface]
 public interface ISystem {
 	public void receiveMonitorStatus(String message);
 	public void receiveMonitorError(String actualMessage, String lastAcceptedMessage);
@@ -91,9 +91,9 @@ Az \ref{ISystem_interface}-es kódrészlet tartalmazza az \textit{ISystem} \text
 A generált forráskód struktúrája egy statikus és egy generált dinamikus részből áll.
 A statikus részbe az időzített automata \textit{Java} osztályai kerülnek:
 \begin{itemize}
-    \item State: egy állapotot leíró osztály
-    \item Transition: egy átmenetet reprezentáló osztály
-    \item Automaton: egy automatát megvalósító osztály
+    \item \textit{State}: egy állapotot leíró osztály
+    \item \textit{Transition}: egy átmenetet reprezentáló osztály
+    \item \textit{Automaton}: egy automatát megvalósító osztály
 \end{itemize}
 Ezek segédosztályok, amelyek a generált automata reprezentálására szolgálnak.
 A statikus rész a \textit{hu.bme.mit.dipterv.text.util} csomagban található meg, amely a \ref{util_csomag} ábrán látható.
@@ -106,7 +106,7 @@ Az osztály konstruktorában jön létre egy \textit{Automaton} objektum, amihez
 \begin{figure}[!ht]
     \centering
     \includegraphics[width=180mm, height= 13cm, keepaspectratio]{figures/util_csomag.png}
-    \caption{Az \textit{util} csomag tartalma.}
+    \caption{A \textit{util} csomag tartalma.}
 	\label{util_csomag}
 \end{figure}
 
@@ -156,7 +156,7 @@ specification Photo{
 	\label{monitor_visualisation}
 \end{figure}
 
-\begin{lstlisting}[frame=single, float=ht!, caption={Generált automata Never claim formátumba.},captionpos=b,label=okos_nc]
+\begin{lstlisting}[frame=single, float=ht!, caption={Generált automata \textit{Never claim} formátumba.},captionpos=b,label=okos_nc]
 never{ /*playlist_generationMonitor*/
 T0_init:
  if
@@ -213,7 +213,7 @@ T0_q11:
 }
 \end{lstlisting}
 
-\begin{lstlisting}[language=java, frame=single, float=ht!, caption={Az okos telefon és hozzá tartozó monitor fel konfigurálásának Java implementációja.},captionpos=b,label=okos_kapcsolat]
+\begin{lstlisting}[language=java, frame=single, float=ht!, caption={Az okostelefon és hozzá tartozó monitor fel konfigurálásának \textit{Java} implementációja.},captionpos=b,label=okos_kapcsolat]
 public class Main {
 	public static void monitorStatus(String status) {
 		System.out.println(status);
@@ -240,7 +240,7 @@ public class Main {
 }
 \end{lstlisting}
 
-\begin{lstlisting}[language=java, frame=single, float=ht!, caption={Az okos telefon Java osztálya.},captionpos=b,label=okos_device]
+\begin{lstlisting}[language=java, frame=single, float=ht!, caption={Az okostelefon \textit{Java} osztálya.},captionpos=b,label=okos_device]
 public class Device {
 	public IMonitor monitor;
 	public User user;
@@ -307,7 +307,7 @@ A mintapéldához tartozó \textit{Specification} osztály a \textit{Függelékb
 %----------------------------------------------------------------------------
 
 A monitor forráskód generátor támogatja az \textit{alt}, \textit{par} vagy \textit{loop} operátorokat tartalmazó szcenáriókat is.
-Ezt funkcionalitást a tesztelés során mutatom be részletesebben.
+Ezt a funkcionalitást a tesztelés során mutatom be részletesebben.
 
 %----------------------------------------------------------------------------
 \subsection{Időzítési feltételek}
@@ -317,12 +317,12 @@ A monitor forráskód generátor támogatja az időzítési feltételeket tartal
 A \ref{computer_scenario} kódrészletben található szcenárió első üzenetén a "\textit{reset x}" címke jelzi a monitornak, hogy az "\textit{x}" óraváltozót nullázni kell.
 Egy óraváltozó felvételét is a "\textit{reset}" címkével lehet végrehajtani.
 Ezt az óraváltozót használhatjuk majd a szcenáriónk későbbi üzeneteinél időzítési feltételek megadására.
-Például a \ref{computer_scenario} kódrészletben lévő szcenárió esetén, ha a monitor megkapja a \textit{checkEmail()} üzenetet, akkor létrehozz egy "\textit{x}" óraváltozót mivel ilyen még nem létezett előtte.
+Például a \ref{computer_scenario} kódrészletben levő szcenárió esetén, ha a monitor megkapja a \textit{checkEmail()} üzenetet, akkor létrehozz egy "\textit{x}" óraváltozót mivel ilyen még nem létezett előtte.
 Ha a szcenárió végére érünk és a monitor megkapja a \textit{downloadEmail()} üzenetet, akkor a monitor kiértékeli az üzeneten lévő időzítési feltételt az óraváltozóban tárolt időérték alapján.
 Ha az előbbi feltétel teljesült akkor tovább lépteti az időzített automatát.
 A \ref{computer_main} kódrészlet a példához tartozó \textit{Main} \textit{Java} osztály leírását tartalmazza, a \ref{computer_java} kódrészlet pedig a rendszerhez tartozó \textit{Computer} \textit{Java} osztályt.
 A \ref{computer_monitor} kódrészleten megtekinthető a monitor kimenete.
-A kimenet végén lévő "\textit{System is in good state.}" üzenet jelzi, hogy a rendszer jó állapotban van.
+A kimenet végén levő "\textit{System is in good state.}" üzenet jelzi, hogy a rendszer jó állapotban van.
 
 \begin{lstlisting}[language=java, frame=single, float=ht!, caption={Időzítési feltételeket tartalmazó szcenárió},captionpos=b,label=computer_scenario]
 specification Email {
@@ -349,7 +349,7 @@ specification Email {
 }
 \end{lstlisting}
 
-\begin{lstlisting}[language=java, frame=single, float=ht!, caption={Időzítéses példához tartozó Main osztály.},captionpos=b,label=computer_main]
+\begin{lstlisting}[language=java, frame=single, float=ht!, caption={Időzítéses példához tartozó \textit{Main} osztály.},captionpos=b,label=computer_main]
 public class Main {
 	public static void monitorStatus(String status) {
 		System.out.println(status);
@@ -367,7 +367,7 @@ public class Main {
 }
 \end{lstlisting}
 
-\begin{lstlisting}[language=java, frame=single, float=ht!, caption={A Computer java osztálya.},captionpos=b,label=computer_java]
+\begin{lstlisting}[language=java, frame=single, float=ht!, caption={\textit{Computer} \textit{Java} osztály.},captionpos=b,label=computer_java]
 public class Computer {
 	public Server server;
 	public IMonitor monitor;
@@ -408,7 +408,7 @@ q5
 [System]Received status from monitor: Requirement satisfied
 \end{lstlisting}
 
-Az óraváltozók és időzítések megvalósításához az "\textit{org.apache.commons.lang3}" könyvtár "\textit{time}" csomag \textit{StopWatch} osztályát használtam.
+Az óraváltozók és időzítések megvalósításához az "\textit{org.apache.commons.lang3}" \cite{Maven} könyvtár "\textit{time}" csomag \textit{StopWatch} osztályát használtam.
 Ha az automata élén van egy időzítési feltétel, akkor a monitor komponens az időzítő komponenstől elkéri a feltételben szereplő óraváltozóban tárolt időt és kiértekeli a feltételt.
 Ha a feltétel teljesül, akkor az időzítés szempontjából a tranzíció megtörténhet.
 A monitor akkor jelez hibát, ha az átmeneten lévő időzítési feltétel nem teljesült és az üzenet más átmenetre sem illeszkedik.

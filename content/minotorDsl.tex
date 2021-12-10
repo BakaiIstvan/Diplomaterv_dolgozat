@@ -22,8 +22,8 @@ Elég csupán a megkötés nevét megadni és '\{' '\}' jelek közt, a megköté
 Egy sima üzenet megadásához a „\textit{message}” kulcsszó szükséges.
 A „\textit{message}” kulcsszó előtt lévő „\textit{fail}” vagy „\textit{required}” kulcssavakkal adhatunk meg nem kívánt vagy elvárt üzeneteket.
 A „\textit{strict}” kulcsszóval adhatjuk meg, hogy az üzenet sorrendje megkötött.
-Az üzenet küldőjét és fogadóját „\textit{<küldő> -> <fogadó>}” formában jelezzük.
-Múltbéli vagy jövőbeli megkötéseket a „\textit{pastConstraint}" vagy „\textit{futureConstraint}" kulcsszavakkal adhatunk meg.
+Az üzenet küldőjét és fogadóját „\textit{<küldő> $\,\to\,$ <fogadó>}” formában jelezzük.
+Múltbeli vagy jövőbeli megkötéseket a „\textit{pastConstraint}" vagy „\textit{futureConstraint}" kulcsszavakkal adhatunk meg.
 A kulcsszó után, '\{' '\}' jelek közt adhatjuk meg, hogy melyik előzőleg definiált megkötést helyezzük el az üzeneten.
 Egy üzenet definíció végére szükséges ’;’-t tenni, így elválasztjuk a többi üzenettől.
 
@@ -35,7 +35,7 @@ A nyelvet két új elemmel bővítettem ki:
 Az új nyelvi elemek bevezetéséhez az eredeti üzenet leíró \textit{Xtext} szabályt (\textit{Message}) kellett kibővítenem.
 A kibővített nyelvtani szabályt a \ref{minotor_message} kódrészlet tartalmazza.
 Az eredeti nyelvtani szabályt a \ref{minotor_message_original} kódrészlet tartalmazza.
-Bevezettem egy új \textit{clockConstraint} kulcsszót, amivel egy időzítési feltételt lehet megadni.
+Bevezettem egy új \textit{clockConstraint} kulcsszót, amellyel egy időzítési feltételt lehet megadni.
 Ezt a \textit{cConstraint} változóban tárolom.
 A \textit{resetClock} attribútum tárolja a visszaállítandó óraváltozó nevét.
 A teljes nyelvtan definíció megtekinthető a \textit{Függelékben} (\ref{xtext_tpsc_grammar}).
@@ -73,7 +73,7 @@ LooseMessage:
 \end{figure}
 
 A \ref{xtext_language_example} ábrán látható, hogy egy \textit{TPSC} diagramot hogyan tudunk leírni a nyelvünk segítségével.
-Definiálhatjuk a diagramban szereplő objektumokat, a megkötéseket amiket használni fogunk és végül, hogy milyen üzenetek vannak a követelményünkben.
+Definiálhatjuk a diagramban szereplő objektumokat, a megkötéseket, amelyeket használni fogunk és végül, hogy milyen üzenetek vannak a követelményünkben.
 
 \begin{figure}[!ht]
     \centering
@@ -82,7 +82,7 @@ Definiálhatjuk a diagramban szereplő objektumokat, a megkötéseket amiket has
     \label{xtext_message}
 \end{figure}
 
-A \ref{xtext_message} ábrán látszik, hogy megjelenik a \textit{clockConstraint} kulcsszó ami egy időzítési feltétel megadására szolgál.
+A \ref{xtext_message} ábrán megjelenik a \textit{clockConstraint} kulcsszó, amely egy időzítési feltétel megadására szolgál.
 A kulcsszó után kapcsos zárójelek közt megadható a feltétel.
 Egy időzítési feltételt egy adott óraváltozóra adhatunk meg.
 Négy operátort definiál ehhez a nyelv:

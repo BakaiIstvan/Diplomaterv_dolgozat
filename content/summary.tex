@@ -9,11 +9,11 @@ Az automata generátor támogatja a \textit{TPSC} tulajdonságokhoz tartozó min
 A generátor támogatja az \textit{alt}, \textit{loop} és \textit{par} operátorokat tartalmazó \textit{TPSC}-khez tartozó időzített automaták generálását.
 
 A szcenáriókat a szöveges leírásuk alapján diagramok formájában vizualizálom.
-Egy \textit{XML} generátor teszi ezt lehetővé, amely a szöveges leírás alapján elkészíti a hozzá tartozó diagram \textit{XML} leírását.
+Ezt egy \textit{XML} generátor teszi lehetővé, amely a szöveges leírás alapján elkészíti a hozzá tartozó diagram \textit{XML} leírását.
 
 A monitor forráskód generátor a szcenárióhoz tartozó automata alapján képes egy monitor forráskódjának generálására.
-Legenerálja a megfelelő interfészeket, amelyek a monitor és rendszer közti kommunikációhoz szükségesek.
-Ha az üzenetek megfigyeléséhez szükséges segédfüggvényeket a kommunikációs infrastruktúrához megvalósítják, akkor a monitor képes a rendszer viselkedésének ellenőrzésére.
+Legenerálja a megfelelő interfészeket, amelyek a monitor és a rendszer közti kommunikációhoz szükségesek.
+Ha a kommunikációs infrastruktúrát kiegészítik az üzenetek megfigyeléséhez szükséges segédfüggvények megvalósításával, akkor a monitor képes a rendszer viselkedésének ellenőrzésére.
 A monitor forráskód generátor a \textit{par}, \textit{loop} és \textit{alt} operátorokat támogatja.
 Továbbá az időzítési feltételeket tartalmazó üzeneteket is tudja értelmezni.
 
@@ -22,7 +22,7 @@ A monitor forráskód szisztematikus helyességét egy \textit{CI} rendszerrel e
 
 Végezetül a monitor komponenst illesztettem a \textit{Gamma} keretrendszerhez, így demonstrálva a monitorozás működését egy elosztott komponensű rendszer viselkedésének ellenőrzésével.
 
-A monitor forráskód generátor tovább bővíthető úgy hogy, láncolt megkötéseket is támogasson.
+A monitor forráskód generátor úgy bővíthető tovább hogy, láncolt megkötéseket is támogasson.
 A szcenárió követelményünkben hasznos lehet olyan megkötéseket definiálni, amelyek nem egy üzenet halmazra vonatkoznak, hanem egy kisebb üzenet szekvenciára.
 Elképzelhető olyan eset, ahol adott üzenetek külön-külön nem jelentenek hibát a rendszer működésére nézve, viszont ha adott sorrendben érkeznek, az már hibás lehet.
 Ehhez bevezethető egy új nyelvi elem a meglévő \textit{TPSC} leíró nyelvbe, amely ilyen láncolt megkötések megadására szolgál.

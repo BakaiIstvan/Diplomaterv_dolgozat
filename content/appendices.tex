@@ -367,7 +367,7 @@ public class Specification{
 \clearpage\section{Monitor forráskód generátor - operátorok támogatása}
 %----------------------------------------------------------------------------
 
-\begin{lstlisting}[language=java, frame=single, float=ht!, caption={7.1. szcenárióhoz tartozó Main osztály.},captionpos=b]
+\begin{lstlisting}[language=java, frame=single, float=ht!, caption={7.1. szcenárióhoz tartozó \textit{Main} osztály.},captionpos=b]
 public class Main {
 	public static void monitorStatus(String status) {
 		System.out.println(status);
@@ -457,7 +457,7 @@ qfinal1
 System is in good state.
 \end{lstlisting}
 
-\begin{lstlisting}[language=java, frame=single, float=ht!, caption={Loop operátort tartalmazó scenario.},captionpos=b]
+\begin{lstlisting}[language=java, frame=single, float=ht!, caption={\textit{Loop} operátort tartalmazó szcenárió.},captionpos=b,label=fuggelek_scenario]
 specification spec1{
 
 	object Computer computer;
@@ -476,7 +476,7 @@ specification spec1{
 }
 \end{lstlisting}
 
-\begin{lstlisting}[language=java, frame=single, float=ht!, caption={F.2.4. scenariohoz tartozó monitor kimenet.},captionpos=b]
+\begin{lstlisting}[language=java, frame=single, float=ht!, caption={\ref{fuggelek_scenario} szcenárióhoz tartozó monitor kimenet.},captionpos=b]
 Received Message: computer.checkEmail().computer
 Transition: epsilon; loop2
 PrevTransition: epsilon; loop2
@@ -509,7 +509,7 @@ qfinal1
 System is in good state.
 \end{lstlisting}
 
-\begin{lstlisting}[language=java, frame=single, float=ht!, caption={F.2.4. scenariohoz tartozó Main osztály.},captionpos=b]
+\begin{lstlisting}[language=java, frame=single, float=ht!, caption={\ref{fuggelek_scenario} szcenárióhoz tartozó \textit{Main} osztály.},captionpos=b]
 public class Main {
 	public static void monitorStatus(String status) {
 		System.out.println(status);
@@ -526,7 +526,7 @@ public class Main {
 }
 \end{lstlisting}
 
-\section{Gamma illesztéshez tartozó monitor kimenetek}
+\clearpage\section{Gamma illesztéshez tartozó monitor kimenetek}
 
 \begin{lstlisting}[language=java, caption={\textit{Gamma} monitor kimenet.},captionpos=b,label=gamma_monitor_output1]
 [Automaton] Setting final transition
@@ -735,10 +735,10 @@ q7
 transition triggered: epsilon, q7->qfinal1
 qfinal1
 [GammaMonitorTest] Received status from monitor: Requirement satisfied
-[GammaMonitorTest] Monitor reported that the requirement was satisfied    
+[GammaMonitorTest] Monitor reported that the requirement was satisfied
 \end{lstlisting}
 
-\section{3. fezetben ismertett TPSC szöveges leíró nyelvhez tartozó Xtext nyelvtan}
+\clearpage\section{3. fezetben ismertett TPSC szöveges leíró nyelvhez tartozó Xtext nyelvtan}
 
 \begin{lstlisting}[language=java, caption={\textit{Xtext} nyelvtan specifikációja.},captionpos=b,label=xtext_tpsc_grammar]
 grammar hu.bme.mit.dipterv.text.MinotorDsl with org.eclipse.xtext.common.Terminals

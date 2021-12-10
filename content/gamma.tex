@@ -4,16 +4,16 @@
 
 \section{Gamma keretrendszer}
 
-A \textit{Gamma} keretrendszerrel komponensalapú reaktív rendszereket lehet tervezni, és az a célja hogy támogassa az elosztott rendszerek modellalapú fejlesztését.
+A \textit{Gamma} keretrendszerrel \cite{Gamma} komponensalapú reaktív rendszereket lehet tervezni, és célja hogy támogassa az elosztott rendszerek modellalapú fejlesztését.
 A létrehozott rendszert a keretrendszerrel lehet tesztelni, ellenőrizni és szimulálni is.
-A modellhez generálhatók tesztesetek, vagy akár verifikálható az \textit{UPPAAL} modell ellenőrző eszköz használatával.
-A keretrendszer a \textit{Yakindu} modellező eszközt használja, amit kiegészít egy modellező réteggel ahol leírhatók a komponensek közötti interakciók.
+A modellhez generálhatók tesztesetek, vagy akár verifikálható az \textit{UPPAAL} \cite{UPPAAL} modell ellenőrző eszköz használatával.
+A keretrendszer a \textit{Yakindu} \cite{Yakindu} modellező eszközt használja, amelyet kiegészít egy modellező réteggel ahol leírhatók a komponensek közötti interakciók.
 A tervezett rendszerhez a keretrendszer képes \textit{Java} forráskódot is generálni.
 
 A monitor illesztéséhez a \textit{Gamma} \textit{tutorial} csomagjában lévő példarendszert használtam.
-Ez egy irányitórendszer modellje, ami egy kereszteződésben lévő közlekedési lámpák működtetésért felel.
-A jelző lámpák általános három fokozatú lámpák és a piros-zöld-sárga-piros jelzéseket ismétlik.
-A rendszer támogat még egy megszakító állapotot, amit a rendőrség kapcsolhat be.
+Ez egy irányitórendszer modellje, amely egy kereszteződésben lévő közlekedési lámpák működtetésért felel.
+A jelző lámpák általános három fokozatú lámpák, a piros-zöld-sárga-piros jelzéseket ismétlik.
+A rendszer támogat még egy megszakító állapotot, amelyet a rendőrség kapcsolhat be.
 Ilyenkor minden lámpa sárgán villog.
 
 \section{Generált monitor integrációja}
@@ -22,7 +22,7 @@ A keretrendszer a \textit{gamma.monitor} csomagba generálja a beépített monit
 A példarendszer monitorozott kereszteződésének az implementációja a \textit{gamma.monitoredcrossroad} csomagban található.
 Ez a csomag a \textit{ReflectiveMonitoredCrossroad} és a \textit{MonitoredCrossroadInterface} interfészt megvalósító \textit{MonitoredCrossroad} osztályokat tartalmazza.
 A \textit{MonitoredCrossroad} osztály attribútumai között megtalálható a \textit{MonitorInterface} interfészt megvalósító eredeti \textit{Monitor} objektum.
-Ezt az eredeti monitort cseréltem le a saját a monitor komponensemhez tartozó forráskóddal megvalósítva a szükséges interfészeket.
+Ezt az eredeti monitort cseréltem le, a saját a monitor komponensemhez tartozó forráskóddal megvalósítva a szükséges interfészeket.
 
 \begin{lstlisting}[language=java, frame=single, float=ht!, caption={Monitor komponenshez tartozó kódrészlet.},captionpos=b,label=gamma_integration_code]
 public void runComponent() {
@@ -51,10 +51,10 @@ public void runComponent() {
 \end{lstlisting}
 
 A \textit{Gamma} rendszer és a monitor komponens közti kommunikáció megvalósítása a \ref{gamma_integration_code}-es kódrészletben látható.
-Ez a kódrészlet az általam készített \textit{GammaMonitor} osztálynak a része, ami leszármazik a generált monitor \textit{Java} osztályából, ami az \textit{util} csomagban található.
-A rendszer eseményeket detektálja és olyan alakra alakítja az \textit{update()} függvény segítségével, amellyel a monitor képes értelmezni azokat.
+Ez a kódrészlet az általam készített \textit{GammaMonitor} osztálynak a része, ami leszármazik a generált monitor \textit{Java} osztályából, amely a \textit{util} csomagban található.
+A rendszer az eseményeket detektálja, és olyanra alakítja az \textit{update()} függvény segítségével, amellyel a monitor képes értelmezni azokat.
 
-\begin{lstlisting}[language=java, frame=single, float=ht!, caption={Szenárió szöveges leírása.},captionpos=b, label=gamma_red_scenario]
+\begin{lstlisting}[language=java, frame=single, float=ht!, caption={Szcenárió szöveges leírása.},captionpos=b, label=gamma_red_scenario]
 specification Light{
 
     object TrafficLight light;
@@ -100,7 +100,7 @@ q3
 A \ref{gamma_red_monitor} kódrészlet a monitor kimenetét tartalmazza.
 A monitor helyes működést érzékelt, a rendszer jó állapotban van és megfelelt a követelménynek.
 
-\begin{lstlisting}[language=java, frame=single, float=ht!, caption={Szenárió szöveges leírása.},captionpos=b,label=gamma_complex_scenario]
+\begin{lstlisting}[language=java, frame=single, float=ht!, caption={Második \textit{Gamma} szcenárió szöveges leírása.},captionpos=b,label=gamma_complex_scenario]
 specification Light{
 
     object TrafficLight light;
@@ -129,14 +129,14 @@ specification Light{
 }
 \end{lstlisting}
 
-A \ref{gamma_complex_scenario}-es kódrészlet egy másik követelményt tartalmaz, amit a rendszeren szeretnénk vizsgálni.
+A \ref{gamma_complex_scenario}-es kódrészlet egy másik követelményt tartalmaz, amelyet a rendszeren szeretnénk vizsgálni.
 Azt várjuk, hogy ha történt rendőrség általi \textit{interrupt} kérés, akkor a lámpa sárgán villogjon.
 Ha pedig nem volt ilyen \textit{interrupt}, akkor azt várjuk el, hogy a lámpa helyesen viselkedjen.
 Ennek a követelménynek az ellenőrzéséhez már nem volt elég csupán az eredeti \textit{Monitor} osztályt lecserélni, hanem a \textit{MonitoredCrossroad} osztályba is segédfüggvényeket kellett készíteni az illesztés érdekében.
 A \ref{gamma_police_improvement} kódrészlet tartalmazza az illesztés kiegészítését.
 Itt a rendőrségi \textit{interrupt} kérést továbbítjuk a monitornak.
 A \ref{gamma_lamp_improvement} kódrészlet tartalmazza a \textit{MonitoredCrossroad} osztály \textit{PriorityOutput}-jának kiegészítését.
-Így továbbítja a kereszteződés a lámpájának állásait a monitor felé.
+Így továbbítja a kereszteződés lámpájának állásait a monitor felé.
 A rendszer mindkét esetben a követelménynek megfelelően működött.
 A szcenárióhoz tartozó monitor kimenetek a \textit{Függelékben} találhatók meg (\ref{gamma_monitor_output1}, \ref{gamma_monitor_output2}).
 
