@@ -15,7 +15,7 @@ A \ref{introductory_figure} ábra bemutatja a monitorozás koncepcióját.
 
 Több monitorozási módszert ismerünk, ilyen például az „\textit{online}” \cite{RuntimeVerification1} monitorozás, amelynél futási időben történik az ellenőrzés.
 Ebben az esetben a rendszernek olyan érzékelői vannak, amelyek képesek a rendszer viselkedését detektálni, és továbbítani azt egy feldolgozó egységnek.
-A kapott adatok alapján, az utóbbi, el tudja dönteni, hogy a rendszer helyesen működik-e, illetve amennyiben hibát érzékel, azt képes jelezni.
+A kapott adatok alapján, az utóbbi el tudja dönteni, hogy a rendszer helyesen működik-e, illetve amennyiben hibát érzékel, azt képes jelezni.
 Az olyan monitort, amely a hiba érzékelését követően megpróbálja a hibát helyreállítani, „beavatkozó” monitornak hívjuk.
 A „nem beavatkozó” monitor pedig csak a hibát képes jelezni.
 
@@ -254,7 +254,7 @@ A \textit{TPSC} \cite{TPSC1} a \textit{PSC}-nek egy kiterjesztése, melynek seg�
 
 A \textit{TPSC} óraváltozókat (pl. x, y) használ az időzítéshez.
 Ezekre meg lehet adni feltételeket, valamint az óraváltozót nullázni lehet.
-A nullázással adott eseménytől (pl. üzenet vételétől) kezdve indul az időzítés, majd rákövetkező események időbeliségét ez alapján lehet ellenőrizni.
+A nullázással adott eseménytől (pl. üzenet vételétől) kezdve indul az időzítés, majd a rákövetkező események időbeliségét ez alapján lehet ellenőrizni.
 
 A \ref{psc_clock_improvement} ábrán látható, hogy például az \textit{e: a} sima üzenet \textit{e: a; x < t, y := 0} üzenetre bővül.
 Elvárjuk, hogy az \textit{a} üzenet \textit{t} idő előtt történjen meg és egy \textit{y} óraváltozót nullázunk.
@@ -299,20 +299,20 @@ Például a \ref{tpsc_sima} és \ref{tpsc_elvárt} ábrákon láthatók a külö
 \begin{figure}[!ht]
     \centering
     \includegraphics[width=90mm, keepaspectratio]{figures/példa_tpsc.png}
-    \caption{Elvárt múltbéli megkötést tartalmazó üzenethez tartozó minta \cite{TPSC1}.}
+    \caption{Elvárt múltbeli megkötést tartalmazó üzenethez tartozó minta \cite{TPSC1}.}
     \label{tpsc_példa}
 \end{figure}
 
 A minta automatánkban található szürke állapotok reprezentálják a végállapotokat.
 Egy megkötés nem kívánt üzenetek negáltjainak az \textit{ÉS} kapcsolata, az időzített automatán egy átmenet formájában jelenik meg.
 Például a \ref{tpsc_példa} ábrán lévő automata mintán látható „b, $\delta ’\&!a, \delta$” címkéjű hurokélen, a „b” címke minden olyan üzenetnek felel meg, amely nincs a megkötésben lévő nem kívánt üzenetek halmazában.
-A címke teljes jelentése, hogy ha $\delta$’ időn belül nem jött nem kívánt üzenet és $\delta$ időn belül nem az „a” üzenet jött akkor maradjunk az \textit{s0} állapotban.
+A címke teljes jelentése, hogy ha $\delta$’ időn belül nem jött nem kívánt üzenet, és $\delta$ időn belül nem az „a” üzenet jött, akkor maradjunk az \textit{s0} állapotban.
 A „a, $\delta$” címkéjű átmenet az „s0” állapotból az „s1” végállapotba mutat.
 Az átmenet akkor valósul meg, ha „a” üzenet érkezik és „$\delta$” időzítési feltétel igaz.
 Ha viszont a megkötésben szereplő nem kívánt üzenet érkezik és „$\delta$’” igaz, vagy „a” üzenet érkezik „$\delta$” előtt, vagy bármilyen üzenet érkezik „$\delta$” után, akkor a hibaállapotba lépünk át.
 
 Ezekből az automata részekből lesznek meghatározott illesztési szabályokkal a szcenárióhoz tartozó teljes időzített automaták.
-Ennek az az alapelve, hogy a szcenárión végig menve az előző minta végállapotát a következő minta kezdőállapotával kell egyesíteni.
+Ennek alapelve, hogy a szcenárión végig menve az előző minta végállapotát a következő minta kezdőállapotával kell egyesíteni.
 Ezt a folyamatot mutatják be a \ref{tpsc_subset}, \ref{tpsc_used_patterns} és \ref{created_automaton} ábrák.
 Ebben a példában a \ref{tpsc_used_patterns} ábrán lévő baloldali automata „s1” állapotát kellett egyesíteni a jobb oldali automata „s0” állapotával.
 

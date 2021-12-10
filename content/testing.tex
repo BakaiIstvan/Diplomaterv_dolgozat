@@ -13,7 +13,7 @@ A generált monitor forráskód tesztelésére a következő célokat fogalmazzu
     \item Időzített feltételek helyes kiértékelése
     \item Üzenet megkötések tesztelése
     \item \textit{Alt} és \textit{Par} operátorok esetén, az üzenet szekvencia ágak helyes kiértékelése
-    \item \textit{Loop} operátor esetén a minimális és maximálás üzenet ismétlődések tesztelése
+    \item \textit{Loop} operátor esetén a minimális és maximális üzenet ismétlődések tesztelése
     \item Összetett szcenárió tesztelése, ami több operátort tartalmaz
     \item Egymást követő elvárt üzeneteket tartalmazó szcenárió tesztelése
     \item Egymást követő \textit{fail} üzeneteket tartalmazó szcenárió tesztelése
@@ -253,7 +253,7 @@ A rendszer egy szervergépből és egy felhasználói számítógépből áll.
 A szerver egy \textit{e-mail} szervert szimulál, aminek a számítógép különböző kéréseket küldhet.
 Például lekérdezheti tőle a kapott \textit{e-mail}-t vagy új \textit{e-mail}-t küldhet.
 A követelményben leírjuk, hogy a rendszernek mi a helyes viselkedése \textit{e-mail} küldés esetén.
-Ha a computer a \textit{checkEmail} hívást használva talál elküldendő \textit{e-mail}-t azt továbbítja a szervernek.
+Ha a \textit{computer} objektum a \textit{checkEmail} hívást használva talál elküldendő \textit{e-mail}-t azt továbbítja a szervernek.
 Ezt az \textit{elvárt} \textit{sendUnsentEmail} üzenet jelzi.
 Ha ezt az üzenetet követően egy \textit{computerError()} üzenet jön, az hibát jelent.
 \textit{serverError()} üzenet esetén is hibát fog jelezni a monitor.
@@ -348,7 +348,7 @@ Például ennél a tesztesetnél a monitornak azt kell jeleznie, hogy a rendszer
     \label{second_visualization}
 \end{figure}
 
-A tesztrendszerünk egy zene lista generáló alkalmazás, ami egy felhasználót, mobileszközt és adatbázist tartalmaz.
+A tesztrendszerünk egy zenelista generáló alkalmazás, amely egy felhasználót, mobileszközt és adatbázist tartalmaz.
 A felhasználó "\textit{kedve}" alapján generálja a listát, amit az arckifejezése alapján határoz meg.
 A követelményben a rendszer alap működése van leírva egészen az elejétől, amikor a felhasználó megnyitja az alkalmazást.
 A követelmény leírás megtekinthető a \ref{second_scenario_test} kódrészleten és a hozzá tartozó vizualizáció a \ref{second_visualization} ábrán.
@@ -362,12 +362,12 @@ A szcenárióhoz tartozó tesztesetek a következők:
     \item \textit{testMobileWithError}, a monitor hibát jelez-e, amikor a \textit{cameraOffline()} üzenet érkezik.
     \item \textit{testMobileWithDelay}, késleltetjük az \textit{accessWebcam()} üzenet megérkezését úgy, hogy az időzítési feltétel teljesüljön és vizsgáljuk, hogy a monitor ezt helyesen kezeli-e.
     \item \textit{testMobileWithTooMuchDelay}, késleltetjük az \textit{accessWebcam()} üzenetet  az időzítési feltételt elrontva és azt várjuk el, hogy a monitor ezt hibának jelezze.
-    \item \textit{testMobileMissingRequiredMessage}, vizsgáljuk hogy a monitor hibát jelez-e, ha nem kapja meg az \textit{retrieveMood()} elvárt üzenetet.
+    \item \textit{testMobileMissingRequiredMessage}, vizsgáljuk, hogy a monitor hibát jelez-e, ha nem kapja meg az \textit{retrieveMood()} elvárt üzenetet.
     \item \textit{testMobileRequiredEventually}, a monitor helyes működést kell jelezzen, ha az elvárt üzenetet megkapja, még ha más üzenetek is előjönnek ez alatt.
     \item \textit{testMobileRequiredNotReceived}, a monitor nem érzékeli a \textit{retrieveMusic()} üzenetet, ezért hibát kell jelezzen.
 \end{itemize}
 
-A tesztesetek a monitor hibadetektáló képeségét tesztelik.
+A tesztesetek a monitor hibadetektáló képességét tesztelik.
 A \textit{testMobileWithDelay} és \textit{testMobileWithTooMuchDelay} tesztesetek az \textit{x $\leq$ 5} időzítési feltétel beteljesülését ellenőrzik.
 A \textit{testMobileWithDelay} tesztesetben 5 másodperces késleltetéssel küldjük az \textit{accessWebcam} üzenetet, míg a másiknál 6 másodperces késleltetéssel.
 Az első esetben a monitornak helyes működést kell érzékelnie, a következőben pedig hibás működést.
@@ -461,7 +461,7 @@ specification Email {
     \label{test_par_diagram}
 \end{figure}
 
-Ehhez a tesztszcenárióhoz az első szcenárióban levő teszt rendszert használtam fel.
+Ehhez a tesztszcenárióhoz az első szcenárióban levő tesztrendszert használtam fel.
 A tesztszcenárió megtekinthető a \ref{test_par_scenario} kódrészleten és a hozzá tartozó diagram a \ref{test_par_diagram} ábrán látható.
 A szcenárióhoz tartozó tesztesetek a következők:
 

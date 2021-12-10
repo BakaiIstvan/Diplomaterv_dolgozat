@@ -100,8 +100,8 @@ A statikus rész a \textit{hu.bme.mit.dipterv.text.util} csomagban található m
 
 A monitor interfész, a monitor \textit{Java} osztálya, az időzítő interfész és a hozzá tartozó \textit{Java} osztály is ebbe a részbe tartozik.
 
-A dinamikus részben található a \textit{Specification} \textit{Java} osztály, ami a szcenárió alapján generált automata forráskódját tartalmazza.
-Az osztály konstruktorában jön létre egy \textit{Automaton} objektum, amihez hozzáadjuk a leírás alapján a megfelelő állapotokat és átmeneteket \textit{State} és \textit{Transition} objektumokat használva.
+A dinamikus részben található a \textit{Specification} \textit{Java} osztály, amely a szcenárió alapján generált automata forráskódját tartalmazza.
+Az osztály konstruktorában jön létre egy \textit{Automaton} objektum, amelyhez hozzáadjuk a leírás alapján a megfelelő állapotokat és átmeneteket \textit{State} és \textit{Transition} objektumokat használva.
 
 \begin{figure}[!ht]
     \centering
@@ -156,7 +156,7 @@ specification Photo{
 	\label{monitor_visualisation}
 \end{figure}
 
-\begin{lstlisting}[frame=single, float=ht!, caption={Generált automata \textit{Never claim} formátumba.},captionpos=b,label=okos_nc]
+\begin{lstlisting}[frame=single, float=ht!, caption={Generált automata \textit{Never claim} formátumban.},captionpos=b,label=okos_nc]
 never{ /*playlist_generationMonitor*/
 T0_init:
  if

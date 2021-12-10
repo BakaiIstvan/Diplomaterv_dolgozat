@@ -5,7 +5,7 @@
 A célként kitűzött szcenárió alapú monitor generátor kibővítése sikerült.
 
 A szöveges szcenárió leíró nyelv támogatja \textit{TPSC} diagramok specifikálását.
-Az automata generátor támogatja a \textit{TPSC} tulajdonságokhoz tartozó minta automaták generálását és képes az üzenet paramétereket is értelmezni.
+Az automata generátor támogatja a \textit{TPSC} tulajdonságokhoz tartozó minta automaták generálását és képes az üzenetparamétereket is értelmezni.
 A generátor támogatja az \textit{alt}, \textit{loop} és \textit{par} operátorokat tartalmazó \textit{TPSC}-khez tartozó időzített automaták generálását.
 
 A szcenáriókat a szöveges leírásuk alapján diagramok formájában vizualizálom.
@@ -22,8 +22,8 @@ A monitor forráskód szisztematikus helyességét egy \textit{CI} rendszerrel e
 
 Végezetül a monitor komponenst illesztettem a \textit{Gamma} keretrendszerhez, így demonstrálva a monitorozás működését egy elosztott komponensű rendszer viselkedésének ellenőrzésével.
 
-A monitor forráskód generátor úgy bővíthető tovább hogy, láncolt megkötéseket is támogasson.
-A szcenárió követelményünkben hasznos lehet olyan megkötéseket definiálni, amelyek nem egy üzenet halmazra vonatkoznak, hanem egy kisebb üzenet szekvenciára.
+A monitor forráskód generátor úgy bővíthető tovább, hogy láncolt megkötéseket is támogasson.
+A szcenárió követelményünkben hasznos lehet olyan megkötéseket definiálni, amelyek nem egy üzenethalmazra vonatkoznak, hanem egy kisebb üzenet szekvenciára.
 Elképzelhető olyan eset, ahol adott üzenetek külön-külön nem jelentenek hibát a rendszer működésére nézve, viszont ha adott sorrendben érkeznek, az már hibás lehet.
 Ehhez bevezethető egy új nyelvi elem a meglévő \textit{TPSC} leíró nyelvbe, amely ilyen láncolt megkötések megadására szolgál.
 Az automata generátorhoz is hozzáadhatók az új nyelvi elemekhez tartozó automata minták.

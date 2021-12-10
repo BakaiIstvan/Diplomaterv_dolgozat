@@ -21,7 +21,7 @@ Ezt ugyanígy meg kellett tegyem a megkötéseknél is és ezen kívül az órav
 Ezután a vizualizációhoz hozzáadtam, hogy az időzítési feltétel és az óraváltozó nullázása megjelenjen az átmenetek címkéin.
 Készítettem egy \textit{Xtend} alapú \textit{XML} generátort, ami képes a szöveges \textit{TPSC} leírás alapján legenerálni a hozzá tartozó \textit{XML} leírást.
 Ezt a leírást képes a \textit{Sirius} alkalmazás feldolgozni és előállítani a hozzá tartozó diagramot.
-Egy ilyen generált \textit{XMl} fájl megtekinthető a \ref{sirius_xml} kódrészleten.
+Egy ilyen generált \textit{XML} fájl megtekinthető a \ref{sirius_xml} kódrészleten.
 
 \begin{lstlisting}[language=java, frame=single, float=ht!, caption={Szcenárió szöveges leírása.},captionpos=b, label=sirius_tpsc_text]
 specification Email{
@@ -55,7 +55,7 @@ specification Email{
     \label{sirius_diagram}
 \end{figure}
 
-\begin{lstlisting}[language=java, frame=single, float=ht!, caption={Szcenárió diagram xml leírása.},captionpos=b, label=sirius_xml]
+\begin{lstlisting}[language=java, frame=single, float=ht!, caption={Szcenárió diagram \textit{XML} leírása.},captionpos=b, label=sirius_xml]
 <?xml version="1.0" encoding="UTF-8"?>
 <minotor:SequenceDiagram xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:minotor="hu.bme.mit.mdsd.xboyz.erdiagram" Name="Email">
 
@@ -79,7 +79,7 @@ A vizualizációs diagramon az egyes objektumok kék \textit{lifeline} formájá
 Minden üzenethez tartozik egy nyíl, amely címkéjére írjuk az üzenet összes tulajdonságát.
 Például a megkötések '\{' '\}' jelek között jelennek meg.
 Egy \textit{P} betű jelöli, hogy a megkötés múltbeli és egy \textit{F} betű ha jövőbeli.
-A nyíl eleje és vége \textit{lifeline}-okat kötnek össze, amik az üzenet feladóját és fogadóját jelzik.
+A nyíl eleje és vége \textit{lifeline}-okat kötnek össze, amelyek az üzenet feladóját és fogadóját jelzik.
 A megkötéseket egy sárga táblázat formájában reprezentáljuk, amelybe bele írjuk az összes megkötésben szereplő üzenetet.
 Egy ilyen diagramot mutat be a \ref{sirius_diagram} ábra.
 A diagram szöveges leírását pedig a \ref{sirius_tpsc_text} kódrészlet tartalmazza.
@@ -99,5 +99,5 @@ A diagram szöveges leírását pedig a \ref{sirius_tpsc_text} kódrészlet tart
     \label{sirius_operators}
 \end{figure}
 
-A diagramon keretek formájában jelenek meg az operátorok.
+A diagramon keretek formájában jelennek meg az operátorok.
 Ilyen operátorokat a \ref{sirius_operators} diagramon lehet megtekinteni.
